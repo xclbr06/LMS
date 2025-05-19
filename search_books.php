@@ -7,7 +7,7 @@ $searchResults = [];
 
 if ($searchQuery !== '') {
     $like = '%' . $searchQuery . '%';
-    $stmt = $conn->prepare("SELECT id, title, author, year_published, category, cover_image FROM books WHERE title LIKE ? OR author LIKE ? OR category LIKE ? ORDER BY title ASC");
+    $stmt = $conn->prepare("SELECT id, title, author, year_published, category, cover_image, total_borrow, total_rating FROM books WHERE title LIKE ? OR author LIKE ? OR category LIKE ? ORDER BY title ASC");
     $stmt->bind_param("sss", $like, $like, $like);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -66,6 +66,11 @@ if ($searchQuery !== '') {
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <div class="search-section">
     <h2>Search Results for "<?= htmlspecialchars($searchQuery) ?>"</h2>
@@ -83,6 +88,8 @@ if ($searchQuery !== '') {
                         <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                         <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
                         <div><?= htmlspecialchars($book['category']) ?></div>
+                        <div class="book-borrow">Borrowed: <?= htmlspecialchars($book['total_borrow']) ?></div>
+                        <div class="book-rating">Rating: <?= htmlspecialchars($book['total_rating']) ?></div>
                     </div>
                 </a>
             <?php endforeach; ?>

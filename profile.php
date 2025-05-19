@@ -166,6 +166,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <div class="profile-section">
     <h2>Profile</h2>

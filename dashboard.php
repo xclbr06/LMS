@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -18,8 +17,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["logout"])) {
 
 require_once "config.php";
 
-// Helper function to fetch 5 random books for a section
-function getRandomBooks($conn, $limit = 5) {
+// Most Popular (by total_borrow)
+$popularBooks = [];
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_borrow FROM books ORDER BY total_borrow DESC LIMIT 7");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) $popularBooks[] = $row;
+$stmt->close();
+
+// Most Rated (by total_rating)
+$mostRatedBooks = [];
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_rating FROM books ORDER BY total_rating DESC LIMIT 7");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) $mostRatedBooks[] = $row;
+$stmt->close();
+
+// New Releases (already by year_published)
+$newReleases = [];
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, year_published FROM books ORDER BY year_published DESC LIMIT 7");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) $newReleases[] = $row;
+$stmt->close();
+
+// Helper function to fetch 7 random books for a section
+function getRandomBooks($conn, $limit = 7) {
     $books = [];
     $sql = "SELECT id, title, author, year_published, category, cover_image FROM books ORDER BY RAND() LIMIT ?";
     $stmt = $conn->prepare($sql);
@@ -33,27 +56,8 @@ function getRandomBooks($conn, $limit = 5) {
     return $books;
 }
 
-// Helper function to fetch 5 most recent books by year
-function getNewReleasesBooks($conn, $limit = 5) {
-    $books = [];
-    $sql = "SELECT id, title, author, year_published, category, cover_image FROM books ORDER BY year_published DESC, id DESC LIMIT ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $limit);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $books[] = $row;
-    }
-    $stmt->close();
-    return $books;
-}
-
 // Fetch books for each section
-$mostPopularBooks = getRandomBooks($conn, 5);
-$mostBorrowedBooks = getRandomBooks($conn, 5);
-$mostRatedBooks = getRandomBooks($conn, 5);
-$newReleasesBooks = getNewReleasesBooks($conn, 5);
-$randomBooks = getRandomBooks($conn, 5);
+$randomBooks = getRandomBooks($conn, 7);
 ?>
 <!DOCTYPE html>
 <html>
@@ -119,31 +123,22 @@ $randomBooks = getRandomBooks($conn, 5);
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <div class="dashboard-section">
     <div class="section-title">Most Popular</div>
     <div class="books-row">
-        <?php foreach ($mostPopularBooks as $book): ?>
+        <?php foreach ($popularBooks as $book): ?>
             <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
                 <div class="book-card">
                     <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
                     <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                     <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
-                    <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
-                </div>
-            </a>
-        <?php endforeach; ?>
-    </div>
-
-    <div class="section-title">Most Borrowed</div>
-    <div class="books-row">
-        <?php foreach ($mostBorrowedBooks as $book): ?>
-            <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
-                <div class="book-card">
-                    <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
-                    <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
-                    <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
-                    <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                    <div>Total Borrowed: <?= $book['total_borrow'] ?></div>
                 </div>
             </a>
         <?php endforeach; ?>
@@ -157,7 +152,7 @@ $randomBooks = getRandomBooks($conn, 5);
                     <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
                     <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                     <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
-                    <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                    <div>Rating: <?= $book['total_rating'] ?></div>
                 </div>
             </a>
         <?php endforeach; ?>
@@ -165,7 +160,7 @@ $randomBooks = getRandomBooks($conn, 5);
 
     <div class="section-title">New Releases</div>
     <div class="books-row">
-        <?php foreach ($newReleasesBooks as $book): ?>
+        <?php foreach ($newReleases as $book): ?>
             <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
                 <div class="book-card">
                     <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">

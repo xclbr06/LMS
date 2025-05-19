@@ -144,6 +144,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <h2>Registration Form</h2>
 <?php if ($success): ?>
     <p class="success">Registration successful! You can now <a href="login.php">login</a>.</p>

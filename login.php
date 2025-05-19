@@ -70,24 +70,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Login Form</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .error {
+            color: #ff7675;
+            font-size: 0.97em;
+            margin: 4px 0 8px 0;
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <h2>Login Form</h2>
-<?php if ($loginErr): ?>
-    <p class="error"><?= htmlspecialchars($loginErr) ?></p>
-<?php endif; ?>
 <div class="form-section">
     <form method="post" action="login.php" autocomplete="off">
         <label>Email:
             <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
-            <span class="error"><?= $emailErr ?></span>
-            <br>
         </label>
+        <?php if ($emailErr): ?>
+            <span class="error"><?= $emailErr ?></span>
+        <?php endif; ?>
         <label>Password:
             <input type="password" name="password" required>
-            <span class="error"><?= $passwordErr ?></span>
-            <br>
         </label>
+        <?php if ($passwordErr): ?>
+            <span class="error"><?= $passwordErr ?></span>
+        <?php endif; ?>
+        <?php if ($loginErr): ?>
+            <span class="error"><?= htmlspecialchars($loginErr) ?></span>
+        <?php endif; ?>
         <button type="submit">Login</button>
         <div class="register-link">
             No account? <a href="register.php">Register Here!</a>

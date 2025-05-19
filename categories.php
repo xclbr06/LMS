@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -27,12 +26,13 @@ $categories = [
     "Mathematics"
 ];
 
-// Helper function to fetch up to 5 books for a category
-function getBooksByCategory($conn, $category, $limit = 5) {
+// Helper function to fetch up to 7 books for a category
+function getBooksByCategory($conn, $category, $limit = 7) {
     $books = [];
-    $sql = "SELECT id, title, author, year_published, category, cover_image FROM books WHERE category = ? ORDER BY RAND() LIMIT ?";
+    // Directly inject $limit (safe because it's an integer)
+    $sql = "SELECT * FROM books WHERE category = ? ORDER BY title ASC LIMIT $limit";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $category, $limit);
+    $stmt->bind_param("s", $category);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
@@ -45,7 +45,7 @@ function getBooksByCategory($conn, $category, $limit = 5) {
 // Fetch books for each category
 $categoryBooks = [];
 foreach ($categories as $cat) {
-    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 5);
+    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 7);
 }
 ?>
 
@@ -103,6 +103,11 @@ foreach ($categories as $cat) {
             font-size: 0.93rem;
             color: #b2bec3;
         }
+        .book-rating {
+            font-size: 0.9rem;
+            color: #f39c12;
+            margin-top: 0.3rem;
+        }
         a.book-link {
             text-decoration: none;
             color: inherit;
@@ -110,6 +115,11 @@ foreach ($categories as $cat) {
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <!-- Categories Content -->
     <div class="dashboard-section">
@@ -124,6 +134,7 @@ foreach ($categories as $cat) {
                                 <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                                 <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                                 <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                                <div class="book-rating">Rating: <?= htmlspecialchars($book['total_rating']) ?></div>
                             </div>
                         </a>
                     <?php endforeach; ?>

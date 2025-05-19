@@ -211,6 +211,11 @@ if ($preselectBookId) {
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <div class="reservation-section">
     <?php if ($overdueMsg): ?>

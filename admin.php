@@ -334,6 +334,11 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC")->fetch_all(MYSQLI_
     </style>
 </head>
 <body>
+    <!-- Layered background image and blue overlay -->
+<div class="body-bg">
+    <img src="school.png" alt="Background" class="bg-img">
+    <div class="bg-overlay"></div>
+</div>
 <?php include 'navbar.php'; ?>
 <div class="admin-section">
     <h1>Admin Panel</h1>

@@ -1,77 +1,105 @@
-
 body {
-    background: linear-gradient(-45deg, #0139ad, #0057cd, #01177f, #0139ad);
-    background-size: 400% 400%;
-    animation: gradientBG 12s ease-in-out infinite;
-    color: #EEEEEE;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    position: relative;
+    z-index: 1;
+    color: #eaf6fb;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.body-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.body-bg .bg-img,
+.body-bg .bg-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.body-bg .bg-img {
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.body-bg .bg-overlay {
+    background: rgba(9, 132, 227, 0.5); /* blue with 50% opacity */
+    z-index: 2;
+}
+
+body > *:not(.body-bg) {
+    position: relative;
+    z-index: 10;
 }
 
 h2 {
-    color: #EEEEEE;
+    color: #eaf6fb;
     text-align: center;
     margin-top: 40px;
-    text-shadow: 0 2px 8px rgba(30, 10, 10, 0.25), 0 1px 0 #8E1616;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
     letter-spacing: 1px;
 }
 
 h3 {
-    color: #EEEEEE;
+    color: #eaf6fb;
     margin-top: 0;
     margin-bottom: 18px;
     text-align: center;
     font-size: 1.3em;
     font-weight: 700;
     letter-spacing: 0.5px;
-    text-shadow: 0 2px 8px rgba(30, 10, 10, 0.18), 0 1px 0 #8E1616;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
 }
 
 a {
-    color: #D84040;
+    color: #0984e3;
     text-decoration: underline;
     transition: color 0.2s;
 }
 
 a:hover {
-    color: #8E1616;
+    color: #ffb347;
 }
 
 .form-section {
-    background: rgba(29, 22, 22, 0.75);
-    border: 1px solid #8E1616;
+    background: rgba(9, 132, 227, 0.85);
+    border: 1.5px solid #0984e3;
     border-radius: 8px;
     max-width: 500px;
     margin: 36px auto 32px auto;
     padding: 28px 24px 20px 24px;
-    box-shadow: 0 2px 12px rgba(30, 10, 10, 0.13);
+    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
 
 .form-section h3 {
-    color: #EEEEEE;
+    color: #eaf6fb;
     margin-top: 0;
     margin-bottom: 18px;
     text-align: center;
     font-size: 1.3em;
     font-weight: 700;
     letter-spacing: 0.5px;
-    text-shadow: 0 2px 8px rgba(30, 10, 10, 0.18), 0 1px 0 #8E1616;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    color: #EEEEEE;
+    color: #eaf6fb;
     font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 input[type="text"],
@@ -81,27 +109,28 @@ input[type="password"] {
     padding: 10px 12px;
     margin-top: 6px;
     margin-bottom: 2px;
-    border: 1px solid #8E1616;
+    border: 1.5px solid #0984e3;
     border-radius: 4px;
-    background-color: #1D1616;
-    color: #EEEEEE;
+    background-color: #f7fafc;
+    color: #222f3e;
     font-size: 1rem;
     box-sizing: border-box;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s;
     display: block;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-    border-color: #D84040;
+    border-color: #74b9ff;
+    background: #e3f0fa;
     outline: none;
 }
 
 /* Light blue buttons */
 button[type="submit"]:not(.logout-btn) {
-    background-color: #4A90E2;
-    color: #EEEEEE;
+    background-color: #ffb347; /* orange for contrast */
+    color: #222f3e;
     border: none;
     border-radius: 4px;
     padding: 12px 0;
@@ -109,43 +138,49 @@ button[type="submit"]:not(.logout-btn) {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
     margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(9, 132, 227, 0.10);
 }
 
 button[type="submit"]:not(.logout-btn):hover {
-    background-color: #357ABD;
+    background-color: #ff9800;
+    color: #fff;
 }
 
 .logout-btn {
     display: block;
     margin: 24px auto 0 auto;
     padding: 10px 36px;
-    background-color: #4A90E2;
-    color: #EEEEEE;
+    background-color: #d7263d; /* red for logout */
+    color: #fff;
     border: none;
     border-radius: 4px;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(30, 10, 10, 0.10);
+    box-shadow: 0 2px 8px rgba(9, 132, 227, 0.10);
     transition: background 0.2s, color 0.2s;
     letter-spacing: 0.5px;
     width: auto;
 }
 
 .logout-btn:hover {
-    background-color: #357ABD;
-    color: #EEEEEE;
+    background-color: #b71c1c;
+    color: #fff;
 }
 
 .error {
-    color: #D84040;
+    color: #d7263d;
     font-size: 0.95em;
     display: block;
     margin-top: 8px;
     margin-bottom: 2px;
     margin-left: 0;
+    font-weight: bold;
+    background: rgba(255,255,255,0.85);
+    padding: 4px 8px;
+    border-radius: 4px;
 }
 
 .success {
@@ -153,9 +188,9 @@ button[type="submit"]:not(.logout-btn):hover {
     max-width: 400px;
     margin: 24px auto 0 auto;
     padding: 16px 20px;
-    background: rgba(238, 238, 238, 0.12);
-    color: #EEEEEE;
-    border: 1.5px solid #8E1616;
+    background: #43b581;
+    color: #fff;
+    border: 1.5px solid #0984e3;
     border-radius: 8px;
     text-align: center;
     font-size: 1.1em;
@@ -168,23 +203,23 @@ button[type="submit"]:not(.logout-btn):hover {
 }
 
 .success a {
-    color: #cf9595;
+    color: #fff;
     text-decoration: underline;
     font-weight: bold;
 }
 
 .success a:hover {
-    color: #8E1616;
+    color: #ffb347;
 }
 
 table {
     width: 90%;
     margin: 32px auto 40px auto;
     border-collapse: collapse;
-    background: rgba(29, 22, 22, 0.80);
+    background: rgba(9, 132, 227, 0.80);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(30, 10, 10, 0.13);
+    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
 }
@@ -195,18 +230,18 @@ th, td {
 }
 
 th {
-    background-color: #8E1616;
-    color: #EEEEEE;
+    background-color: #0984e3;
+    color: #fff;
     font-size: 1.08em;
     font-weight: 700;
-    border-bottom: 2px solid #D84040;
+    border-bottom: 2px solid #74b9ff;
     letter-spacing: 0.5px;
 }
 
 td {
-    background-color: rgba(29, 22, 22, 0.85);
-    color: #EEEEEE;
-    border-bottom: 1px solid #8E1616;
+    background-color: rgba(9, 132, 227, 0.85);
+    color: #eaf6fb;
+    border-bottom: 1px solid #0984e3;
     font-size: 1em;
 }
 
@@ -215,19 +250,20 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background-color: rgba(216, 64, 64, 0.10);
-    transition: background 0.2s;
+    background-color: #ffb347;
+    color: #222f3e;
+    transition: background 0.2s, color 0.2s;
 }
 
 table a {
-    color: #D84040;
+    color: #0984e3;
     font-weight: bold;
     text-decoration: underline;
     transition: color 0.2s;
 }
 
 table a:hover {
-    color: #8E1616;
+    color: #74b9ff;
 }
 
 hr {
@@ -284,7 +320,7 @@ p {
     display: inline-block;
     padding: 10px 28px;
     background: rgba(216, 64, 64, 0.18);
-    color: #EEEEEE;
+    color: #0984e3;
     border: 1.5px solid #8E1616;
     border-radius: 6px;
     font-size: 1.12em;
@@ -299,7 +335,7 @@ p {
 
 .back-dashboard-link:hover {
     background: rgba(216, 64, 64, 0.28);
-    color: #cfbdbd;
+    color: #74b9ff;
     border-color: #D84040;
 }
 
@@ -312,7 +348,7 @@ p {
 }
 
 .cancel-link {
-    color: #D84040;
+    color: #0984e3;
     font-weight: 600;
     font-size: 1em;
     text-decoration: underline;
@@ -325,7 +361,7 @@ p {
 }
 
 .cancel-link:hover {
-    color: #8E1616;
+    color: #74b9ff;
     text-decoration: underline;
 }
 
@@ -337,13 +373,13 @@ p {
     letter-spacing: 0.2px;
 }
 .login-link a {
-    color: #D84040;
+    color: #ffb347;
     font-weight: bold;
     text-decoration: underline;
     transition: color 0.2s;
 }
 .login-link a:hover {
-    color: #8E1616;
+    color: #fff;
 }
 
 .register-link {
@@ -355,14 +391,14 @@ p {
 }
 
 .register-link a {
-    color: #D84040;
+    color: #ffb347;
     font-weight: bold;
     text-decoration: underline;
     transition: color 0.2s;
 }
 
 .register-link a:hover {
-    color: #8E1616;
+    color: #fff;
 }
 
 .welcome {
