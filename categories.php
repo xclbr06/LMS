@@ -62,7 +62,6 @@ foreach ($categories as $cat) {
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            color: #2c3e50;
         }
         .books-row {
             display: flex;

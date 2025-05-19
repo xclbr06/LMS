@@ -58,6 +58,7 @@ if (!$book) {
         .details-table {
             width: 100%;
             margin-top: 0.5rem;
+            margin-bottom: 0.2rem;
             border-collapse: collapse;
             font-size: 1.07rem;
             background: #f7fafc;
@@ -143,6 +144,20 @@ if (!$book) {
     </div>
     <?php include 'navbar.php'; ?>
     <div class="details-section">
+        <?php
+        // Determine where to go back
+        $backTo = 'dashboard.php';
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            if (strpos($_SERVER['HTTP_REFERER'], 'categories.php') !== false) {
+                $backTo = 'categories.php';
+            } elseif (strpos($_SERVER['HTTP_REFERER'], 'dashboard.php') !== false) {
+                $backTo = 'dashboard.php';
+            }
+        }
+        ?>
+        <a href="<?= $backTo ?>" title="Back" style="position: absolute; right: 32px; top: 32px; font-size: 2rem; color: #0984e3; text-decoration: none; z-index: 10;">
+            &#8592;
+        </a>
         <div style="display: flex; flex-direction: column; align-items: center;">
             <h2 class="details-title"
                 style="text-align:center; color:#0984e3; font-size:2rem; font-weight:700; letter-spacing:0.5px; margin-bottom:1.1rem; margin-top:0rem; width:100%;">
@@ -172,7 +187,7 @@ if (!$book) {
         </div>
         <div class="details-synopsis">
             <strong>Synopsis:</strong><br>
-            <?= nl2br(htmlspecialchars($book['synopsis'] ?? 'No synopsis available.')) ?>
+            <?= !empty($book['synopsis']) ? nl2br(htmlspecialchars($book['synopsis'])) : 'No synopsis available.' ?>
         </div>
         <div class="reserve-btn-center">
             <a class="reserve-link" href="reservation.php?reserve_book_id=<?= $book['id'] ?>">Reserve this Book</a>
