@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - School Library Management System</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+</head>
+<body>
+    <div class="body-bg">
+        <img src="../img/school.png" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <?php include '../php/navbar.php'; ?>
+    <div class="admin-section">
+        <h1>Admin Panel</h1>
+
+        <div>
+            <div class="section-title">Inventory</div>
+            <table>
+                <tr>
+                    <th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>Copies</th><th>Status</th><th>Actions</th>
+                </tr>
+                <?php foreach ($books as $book): ?>
+                <tr>
+                    <form method="post">
+                        <td><?= $book['id'] ?><input type="hidden" name="book_id" value="<?= $book['id'] ?>"></td>
+                        <td><input type="text" name="title" value="<?= htmlspecialchars($book['title']) ?>" required></td>
+                        <td><input type="text" name="author" value="<?= htmlspecialchars($book['author']) ?>" required></td>
+                        <td><input type="text" name="category" value="<?= htmlspecialchars($book['category']) ?>" required></td>
+                        <td><input type="number" name="copies" value="<?= $book['copies'] ?>" required style="width:60px;"></td>
+                        <td>
+                            <select name="availability_status" required>
+                                <option value="available" <?= $book['availability_status']=='available'?'selected':''; ?>>Available</option>
+                                <option value="not_available" <?= $book['availability_status']=='not_available'?'selected':''; ?>>Not Available</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="hidden" name="isbn" value="<?= htmlspecialchars($book['isbn']) ?>">
+                            <input type="hidden" name="publisher" value="<?= htmlspecialchars($book['publisher']) ?>">
+                            <input type="hidden" name="year_published" value="<?= $book['year_published'] ?>">
+                            <input type="hidden" name="cover_image" value="<?= htmlspecialchars($book['cover_image']) ?>">
+                            <input type="hidden" name="shelf_location" value="<?= htmlspecialchars($book['shelf_location']) ?>">
+                            <button type="submit" name="edit_book">Save</button>
+                            <button type="submit" name="delete_book" onclick="return confirm('Delete this book?')">Delete</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <button class="add-btn" id="openAddBookModal">Add Books</button>
+        </div>
+
+        <div>
+            <div class="section-title">Categories</div>
+            <table>
+                <tr>
+                    <th>Category</th><th>Actions</th>
+                </tr>
+                <?php foreach ($categories as $cat): ?>
+                <tr>
+                    <form method="post">
+                        <td><input type="text" name="category" value="<?= htmlspecialchars($cat['category']) ?>" readonly></td>
+                        <td>
+                            <button type="submit" name="delete_category" onclick="return confirm('Delete this category and all its books?')">Delete</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <button class="add-btn" id="openAddCategoryModal">Add Category</button>
+        </div>
+
+        <div>
+            <div class="section-title">Users</div>
+            <table>
+                <tr>
+                    <th>ID</th><th>First Name</th><th>Middle Name</th><th>Last Name</th><th>Email</th><th>Student ID</th><th>Phone</th><th>Role</th><th>Actions</th>
+                </tr>
+                <?php foreach ($users as $user): ?>
+                <tr>
+                    <form method="post">
+                        <td><?= $user['id'] ?><input type="hidden" name="user_id" value="<?= $user['id'] ?>"></td>
+                        <td><input type="text" name="first_name" value="<?= htmlspecialchars($user['first_name']) ?>" required></td>
+                        <td><input type="text" name="middle_name" value="<?= htmlspecialchars($user['middle_name']) ?>"></td>
+                        <td><input type="text" name="last_name" value="<?= htmlspecialchars($user['last_name']) ?>" required></td>
+                        <td><input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required></td>
+                        <td><input type="text" name="student_id" value="<?= htmlspecialchars($user['student_id']) ?>" required></td>
+                        <td><input type="text" name="phone" value="<?= htmlspecialchars($user['phone']) ?>"></td>
+                        <td>
+                            <select name="role" required>
+                                <option value="student" <?= $user['role']=='student'?'selected':''; ?>>Student</option>
+                                <option value="teacher" <?= $user['role']=='teacher'?'selected':''; ?>>Teacher</option>
+                                <option value="admin" <?= $user['role']=='admin'?'selected':''; ?>>Admin</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" name="edit_user">Save</button>
+                            <button type="submit" name="delete_user" onclick="return confirm('Delete this user?')">Delete</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <button class="add-btn" id="openAddUserModal">Add User</button>
+        </div>
+
+        <div>
+            <div class="section-title">Reservations</div>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Book</th>
+                    <th>Reserved At</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                <?php foreach ($reservations as $res): ?>
+                <tr>
+                    <form method="post">
+                        <td>
+                            <?= $res['id'] ?>
+                            <input type="hidden" name="reservation_id" value="<?= $res['id'] ?>">
+                        </td>
+                        <td>
+                            <select name="user_id" required>
+                                <?php foreach ($usersList as $user): ?>
+                                    <option value="<?= $user['id'] ?>" <?= $user['id'] == $res['user_id'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="book_id" required>
+                                <?php foreach ($booksList as $book): ?>
+                                    <option value="<?= $book['id'] ?>" <?= $book['id'] == $res['book_id'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($book['title']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td><?= htmlspecialchars($res['reserved_at']) ?></td>
+                        <td>
+                            <input type="date" name="due_date" value="<?= htmlspecialchars($res['due_date']) ?>" required>
+                        </td>
+                        <td>
+                            <select name="status" required>
+                                <option value="reserved" <?= $res['status'] == 'reserved' ? 'selected' : '' ?>>Reserved</option>
+                                <option value="returned" <?= $res['status'] == 'returned' ? 'selected' : '' ?>>Returned</option>
+                                <option value="cancelled" <?= $res['status'] == 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" name="edit_reservation">Save</button>
+                            <button type="submit" name="delete_reservation" onclick="return confirm('Delete this reservation?')">Delete</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal" id="addBookModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('addBookModal')">&times;</span>
+            <div class="section-title">Add Books</div>
+            <?php if (!empty($bookAddError)): ?>
+                <div class="error"><?= $bookAddError ?></div>
+            <?php elseif (!empty($bookAddSuccess)): ?>
+                <div class="success"><?= $bookAddSuccess ?></div>
+            <?php endif; ?>
+            <form class="crud-form" method="post">
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="author" placeholder="Author" required>
+                <input type="text" name="isbn" placeholder="ISBN" required>
+                <input type="text" name="publisher" placeholder="Publisher" required>
+                <input type="number" name="year_published" placeholder="Year" required>
+                <input type="text" name="category" placeholder="Category" required>
+                <input type="text" name="cover_image" placeholder="Cover Image Path">
+                <input type="number" name="copies" placeholder="Copies" required>
+                <input type="text" name="shelf_location" placeholder="Shelf Location" required>
+                <select name="availability_status" required>
+                    <option value="available">Available</option>
+                    <option value="checked_out">Checked Out</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="lost">Lost</option>
+                </select>
+                <button type="submit" name="add_book">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('addUserModal')">&times;</span>
+            <div class="section-title">Add User</div>
+            <?php if (!empty($userAddError)): ?>
+                <div class="error"><?= $userAddError ?></div>
+            <?php elseif (!empty($userAddSuccess)): ?>
+                <div class="success"><?= $userAddSuccess ?></div>
+            <?php endif; ?>
+            <form class="crud-form" method="post">
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="middle_name" placeholder="Middle Name">
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="student_id" placeholder="Student ID" required>
+                <input type="text" name="phone" placeholder="Phone">
+                <select name="role" required>
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button type="submit" name="add_user">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addCategoryModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('addCategoryModal')">&times;</span>
+            <div class="section-title">Add Category</div>
+            <?php if (!empty($catAddError)): ?>
+                <div class="error"><?= $catAddError ?></div>
+            <?php elseif (!empty($catAddSuccess)): ?>
+                <div class="success"><?= $catAddSuccess ?></div>
+            <?php endif; ?>
+            <form class="crud-form" method="post">
+                <input type="text" name="category" placeholder="New Category" required>
+                <button type="submit" name="add_category">Add</button>
+            </form>
+        </div>
+    </div>
+    <?php include '../templates/footer.html'; ?>
+    <script src="../js/adminPanel.js"></script>
+</body>
+</html>

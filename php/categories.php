@@ -26,10 +26,9 @@ $categories = [
     "Mathematics"
 ];
 
-// Helper function to fetch up to 7 books for a category
-function getBooksByCategory($conn, $category, $limit = 7) {
+// Helper function to fetch up to 8 books for a category
+function getBooksByCategory($conn, $category, $limit = 8) {
     $books = [];
-    // Directly inject $limit (safe because it's an integer)
     $sql = "SELECT * FROM books WHERE category = ? ORDER BY title ASC LIMIT $limit";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $category);
@@ -45,7 +44,7 @@ function getBooksByCategory($conn, $category, $limit = 7) {
 // Fetch books for each category
 $categoryBooks = [];
 foreach ($categories as $cat) {
-    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 7);
+    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 8);
 }
 ?>
 
@@ -53,70 +52,12 @@ foreach ($categories as $cat) {
 <html>
 <head>
     <title>Categories - School Library Management System</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .dashboard-section {
-            margin: 2rem;
-        }
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-        .books-row {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-        .book-card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(44,62,80,0.08);
-            width: 170px;
-            text-align: center;
-            padding: 1rem 0.5rem 1rem 0.5rem;
-            transition: box-shadow 0.2s;
-        }
-        .book-card:hover {
-            box-shadow: 0 4px 16px rgba(44,62,80,0.18);
-        }
-        .book-cover {
-            width: 100px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 0.7rem;
-        }
-        .book-title {
-            font-size: 1.05rem;
-            font-weight: bold;
-            margin-bottom: 0.2rem;
-            color: #34495e;
-        }
-        .book-author {
-            font-size: 0.97rem;
-            color: #7f8c8d;
-            margin-bottom: 0.1rem;
-        }
-        .book-year {
-            font-size: 0.93rem;
-            color: #b2bec3;
-        }
-        .book-rating {
-            font-size: 0.9rem;
-            color: #f39c12;
-            margin-top: 0.3rem;
-        }
-        a.book-link {
-            text-decoration: none;
-            color: inherit;
-        }
-    </style>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/categories.css">
 </head>
 <body>
-    <!-- Layered background image and blue overlay -->
 <div class="body-bg">
-    <img src="school.png" alt="Background" class="bg-img">
+    <img src="../img/school.png" alt="Background" class="bg-img">
     <div class="bg-overlay"></div>
 </div>
 <?php include 'navbar.php'; ?>
@@ -143,6 +84,6 @@ foreach ($categories as $cat) {
             </div>
         <?php endforeach; ?>
     </div>
-<?php include 'footer.php'; ?>
+<?php include '../templates/footer.html'; ?>
 </body>
 </html>

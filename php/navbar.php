@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="navbar-style.css">
+<link rel="stylesheet" href="../styles/navbar-style.css">
 <nav class="navbar">
     <div class="navbar-left">
-        <img src="iscp.png" alt="School Logo" class="school-logo">
+        <img src="../img/iscp.png" alt="School Logo" class="school-logo">
         <span class="school-name">ISCP Library Management System</span>
     </div>
     <div class="navbar-links">

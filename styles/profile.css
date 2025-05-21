@@ -1,0 +1,85 @@
+body {
+    color: #181818;
+}
+.profile-section { 
+    max-width: 500px; 
+    margin: 2rem auto; 
+    background: #fff; 
+    padding: 2rem; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    color: #181818;
+}
+.profile-section h2 { 
+    text-align: center; 
+    color: #111111;
+    letter-spacing: 1px;
+}
+.profile-section label { 
+    display: block; 
+    margin-top: 1rem; 
+    color: #222;
+    font-weight: 600;
+}
+.profile-section input { 
+    width: 100%; 
+    padding: 0.5rem; 
+    margin-top: 0.2rem; 
+    border: 1px solid #888;
+    border-radius: 4px;
+    color: #181818;
+    background: #f9f9f9;
+}
+.profile-section input:focus {
+    border-color: #0056b3;
+    outline: none;
+    background: #fff;
+}
+.profile-section .success { 
+    color: #155724; 
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+.profile-section .error { 
+    color: #721c24; 
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+.profile-section button[type="submit"] {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.7rem;
+    background: #181818;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.profile-section button[type="submit"]:hover {
+    background: #0056b3;
+}
+.admin-link { 
+    margin-top: 2rem; 
+    text-align: center; 
+}
+.admin-link a { 
+    color: #0056b3; 
+    font-weight: bold; 
+    text-decoration: none; 
+    font-size: 1.05rem;
+}
+.admin-link a:hover { 
+    text-decoration: underline; 
+    color: #003366;
+}

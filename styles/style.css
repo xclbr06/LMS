@@ -32,7 +32,7 @@ body {
 }
 
 .body-bg .bg-overlay {
-    background: rgba(9, 132, 227, 0.5); /* blue with 50% opacity */
+    background: rgba(9, 133, 227, 0.281); /* blue with 50% opacity */
     z-index: 2;
 }
 
@@ -250,7 +250,7 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background-color: #ffb347;
+    background-color: #ffb247a8; 
     color: #222f3e;
     transition: background 0.2s, color 0.2s;
 }
@@ -456,9 +456,4 @@ p {
     color: #357ABD;
 }
 
-.footer {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 1rem;
-    padding: 1rem 0;
-}
+

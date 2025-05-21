@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservation - School Library Management System</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/reservation.css">
+</head>
+<body>
+    <div class="body-bg">
+        <img src="../img/school.png" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <?php include '../php/navbar.php'; ?>
+    <div class="reservation-section">
+        <?php if ($overdueMsg): ?>
+            <div class="overdue"><?= $overdueMsg ?></div>
+        <?php endif; ?>
+
+        <div class="reservation-buttons">
+            <form method="post" style="display:inline;">
+                <button type="submit" name="show_reserve">Reserve a Book</button>
+            </form>
+            <form method="post" style="display:inline;">
+                <button type="submit" name="show_borrowed">Check Reserved Book Details</button>
+            </form>
+        </div>
+
+        <?php if ($showReserve): ?>
+            <h3>Reserve a Book</h3>
+            <div class="borrow-info">
+                <?php if ($user_role === 'student'): ?>
+                    Borrowing limit: 3 books, Borrowing period: 14 days
+                <?php else: ?>
+                    Borrowing limit: 5 books, Borrowing period: 30 days
+                <?php endif; ?>
+            </div>
+            <?php if ($reserveSuccess): ?>
+                <div class="success" style="margin-top:1rem;"><?= $reserveSuccess ?></div>
+            <?php endif; ?>
+
+            <?php if (!$reserveSuccess): ?>
+                <!-- Book Search Bar -->
+                <form method="post" class="search-bar">
+                    <input type="text" name="search_query" placeholder="Search for a book..." value="<?= htmlspecialchars($searchQuery) ?>" required>
+                    <button type="submit" name="search_book">Search</button>
+                </form>
+                <!-- Book List -->
+                <?php if (!empty($searchResults)): ?>
+                    <div class="book-list">
+                        <?php foreach ($searchResults as $book): ?>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+                                <button type="submit" name="select_book">
+                                    <?= htmlspecialchars($book['title']) ?> by <?= htmlspecialchars($book['author']) ?>
+                                </button>
+                            </form>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Book Reservation Form -->
+                <?php if ($selectedBook): ?>
+                    <?php if ($selectedBook['copies'] > 0 && $selectedBook['availability_status'] == 'available'): ?>
+                        <form method="post">
+                            <input type="hidden" name="book_id" value="<?= $selectedBook['id'] ?>">
+                            <div class="dropdown">
+                                <label>Return Date:
+                                <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>">
+                                </label>
+                                <?php if ($reserveError): ?>
+                                    <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
+                                <?php endif; ?>
+                            </div>
+                            <button type="submit" name="reserve_book">Reserve</button>
+                        </form>
+                    <?php else: ?>
+                        <div class="error">This book is not available for reservation.</div>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+
+        <?php elseif ($showBorrowed): ?>
+            <h3>Your Reserved Books</h3>
+            <?php if (empty($userReservations)): ?>
+                <div>No Borrowed Books at this moment.</div>
+            <?php else: ?>
+                <div class="reserved-books-row">
+                    <?php foreach ($userReservations as $res): ?>
+                        <div class="reserved-book">
+                            <div class="book-card">
+                                <img class="book-cover" src="<?= htmlspecialchars($res['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                                <div class="book-title"><?= htmlspecialchars($res['title']) ?></div>
+                                <div class="book-author"><?= htmlspecialchars($res['author']) ?></div>
+                                <div class="book-year"><?= htmlspecialchars($res['year_published'] ?? '') ?></div>
+                                <div class="book-rating">Rating: <?= htmlspecialchars($res['total_rating'] ?? 'N/A') ?></div>
+                                <div class="book-due" style="margin-top:0.5rem;color:#e74c3c;">
+                                    Due: <?= htmlspecialchars($res['due_date']) ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+    <script src="../js/reservation.js"></script>
+    <?php include '../templates/footer.html'; ?>
+</body>
+</html>

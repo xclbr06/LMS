@@ -87,7 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Phone Number Validation (Optional)
     if (!empty($_POST["phone"])) {
-        // Accepts numbers, spaces, dashes, parentheses, and plus sign
         if (!preg_match("/^[0-9\-\(\)\/\+\s]{7,20}$/", $_POST["phone"])) {
             $phoneErr = "Invalid phone number format.";
             $validForm = false;
@@ -124,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If valid, insert into database
     if ($validForm) {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $role = "student"; // Automatically assign 'student' role
+        $role = "student";
         $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $firstName, $middleName, $lastName, $email, $studentId, $passwordHash, $phone, $role);
         if ($stmt->execute()) {
@@ -135,72 +134,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 }
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Layered background image and blue overlay -->
-<div class="body-bg">
-    <img src="school.png" alt="Background" class="bg-img">
-    <div class="bg-overlay"></div>
-</div>
-<h2>Registration Form</h2>
-<?php if ($success): ?>
-    <p class="success">Registration successful! You can now <a href="login.php">login</a>.</p>
-<?php else: ?>
-    <div class="form-section">
-        <form method="post" action="register.php">
-            <label>First Name:
-                <input type="text" name="first_name" value="<?= htmlspecialchars($firstName) ?>">
-                <span class="error"><?= $firstNameErr ?></span>
-                <br>
-            </label>
-            <label>Middle Name (optional):
-                <input type="text" name="middle_name" value="<?= htmlspecialchars($middleName) ?>">
-                <span class="error"><?= $middleNameErr ?></span>
-                <br>
-            </label>
-            <label>Last Name:
-                <input type="text" name="last_name" value="<?= htmlspecialchars($lastName) ?>">
-                <span class="error"><?= $lastNameErr ?></span>
-                <br>
-            </label>
-            <label>Email:
-                <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
-                <span class="error"><?= $emailErr ?></span>
-                <br>
-            </label>
-            <label>Student ID:
-                <input type="text" name="student_id" value="<?= htmlspecialchars($studentId) ?>">
-                <span class="error"><?= $studentIdErr ?></span>
-                <br>
-            </label>
-            <label>Password:
-                <input type="password" name="password">
-                <span class="error"><?= $passwordErr ?></span>
-                <br>
-            </label>
-            <label>Confirm Password:
-                <input type="password" name="confirm_password">
-                <span class="error"><?= $confirmPasswordErr ?></span>
-                <br>
-            </label>
-            <label>Phone Number (optional):
-                <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
-                <span class="error"><?= $phoneErr ?></span>
-                <br>
-            </label>
-            <button type="submit">Register</button>
-            <div class="login-link">
-                Already have an account? <a href="login.php">Login Here!</a>
-            </div>
-        </form>
-    </div>
-<?php endif; ?>
-</body>
-</html>
+include __DIR__ . '/../templates/register.html';

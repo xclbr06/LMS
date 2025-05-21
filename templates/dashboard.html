@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - School Library Management System</title>
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <div class="body-bg">
+        <img src="../img/school.png" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <?php include '../php/navbar.php'; ?>
+
+    <?php if (!empty($overdueMsg)): ?>
+    <script>
+        window.onload = function() {
+            alert("<?= addslashes($overdueMsg) ?>");
+        };
+    </script>
+    <?php endif; ?>
+
+    <div class="dashboard-section">
+        <div class="section-title">Most Popular</div>
+        <div class="books-row">
+            <?php foreach (array_slice($popularBooks, 0, 8) as $book): ?>
+                <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                        <div class="book-borrow">Total Borrowed: <?= $book['total_borrow'] ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="section-title">Most Rated</div>
+        <div class="books-row">
+            <?php foreach (array_slice($mostRatedBooks, 0, 8) as $book): ?>
+                <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                        <div class="book-rating">Rating: <?= $book['total_rating'] ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="section-title">New Releases</div>
+        <div class="books-row">
+            <?php foreach (array_slice($newReleases, 0, 8) as $book): ?>
+                <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                        <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="section-title">Random</div>
+        <div class="books-row">
+            <?php foreach (array_slice($randomBooks, 0, 8) as $book): ?>
+                <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                        <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php include '../templates/footer.html'; ?>
+</body>
+</html>

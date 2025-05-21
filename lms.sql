@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2025 at 05:33 PM
+-- Generation Time: May 21, 2025 at 01:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `books` (
   `cover_image` varchar(255) DEFAULT NULL,
   `copies` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `shelf_location` varchar(50) NOT NULL,
-  `availability_status` enum('available','checked_out','reserved','lost') NOT NULL DEFAULT 'available',
+  `availability_status` enum('available','not_available') NOT NULL DEFAULT 'available',
   `total_borrow` int(11) DEFAULT 0,
   `total_rating` float DEFAULT 0,
   `synopsis` text DEFAULT NULL

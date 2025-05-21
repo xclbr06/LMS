@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - School Library Management System</title>
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <!-- Layered background image and blue overlay -->
+    <div class="body-bg">
+        <img src="../img/school.png" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <?php include '../php/navbar.php'; ?>
+    <div class="profile-section">
+        <h2>Profile</h2>
+        <?php if ($successMsg): ?><div class="success"><?= $successMsg ?></div><?php endif; ?>
+        <?php if ($errorMsg): ?><div class="error"><?= $errorMsg ?></div><?php endif; ?>
+
+        <form method="post">
+            <label>First Name:
+                <input type="text" name="first_name" value="<?= htmlspecialchars($first_name) ?>" required>
+            </label>
+            <label>Middle Name:
+                <input type="text" name="middle_name" value="<?= htmlspecialchars($middle_name) ?>">
+            </label>
+            <label>Last Name:
+                <input type="text" name="last_name" value="<?= htmlspecialchars($last_name) ?>" required>
+            </label>
+            <label>Email:
+                <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
+            </label>
+            <label>Student ID:
+                <input type="text" name="student_id" value="<?= htmlspecialchars($student_id) ?>" required>
+            </label>
+            <label>Phone Number:
+                <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
+            </label>
+            <button type="submit" name="update_profile">Update Profile</button>
+        </form>
+
+        <?php if ($role === "admin"): ?>
+            <div class="admin-link">
+                <a href="admin.php">Go to Admin Panel</a>
+            </div>
+        <?php endif; ?>
+    </div>
+</body>
+</html>

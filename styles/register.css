@@ -1,0 +1,137 @@
+/* Registration Form Specific Styles - matches login.css color scheme */
+body {
+    font-family: Arial, sans-serif;
+    background: #f7fafd;
+    margin: 0;
+    padding: 0;
+}
+
+.body-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+.bg-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    filter: blur(2px) brightness(0.7);
+    position: absolute;
+    top: 0; left: 0;
+}
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(9,132,227,0.18);
+}
+
+h2 {
+    text-align: center;
+    margin-top: 0.7rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+.form-section {
+    background: rgba(9, 132, 227, 0.85); /* match login.css */
+    border: 1.5px solid #0984e3;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 1rem auto 0 auto;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+    color: #eaf6fb;
+    font-size: 0.93rem;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 0.32rem;
+    margin-top: 0.2rem;
+    border: 1.5px solid #b2bec3;
+    border-radius: 5px;
+    font-size: 0.92rem;
+    box-sizing: border-box;
+    background-color: #eaf6fb;
+    color: #222f3e;
+    transition: border-color 0.2s, background 0.2s;
+    display: block;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #0984e3;
+    background: #fff;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.38rem;
+    background: #0984e3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0.3rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #ffb347;
+    color: #222f3e;
+}
+
+.error {
+    color: #d7263d;
+    background: #ffd6d6; 
+    font-size: 0.95em;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.login-link {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.95em;
+    color: #eaf6fb;
+    letter-spacing: 0.2px;
+}
+.login-link a {
+    color: #ffd600;
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.login-link a:hover {
+    color: #ffb347;
+}
+
+@media (max-width: 500px) {
+    .form-section {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+        margin-top: 0.7rem;
+    }
+}

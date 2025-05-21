@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <div class="body-bg">
+        <img src="../img/school.png" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <div class="form-section">
+        <h2>Login Form</h2>
+        <form method="post" action="login.php" autocomplete="off">
+            <label>Email:
+                <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
+            </label>
+            <?php if ($emailErr): ?>
+                <span class="error"><?= $emailErr ?></span>
+            <?php endif; ?>
+            <label>Password:
+                <input type="password" name="password">
+            </label>
+            <?php if ($passwordErr): ?>
+                <span class="error"><?= $passwordErr ?></span>
+            <?php endif; ?>
+            <?php if ($loginErr): ?>
+                <span class="error"><?= htmlspecialchars($loginErr) ?></span>
+            <?php endif; ?>
+            <button type="submit">Login</button>
+            <div class="register-link">
+                No account? <a href="register.php">Register Here!</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

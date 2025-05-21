@@ -1,0 +1,147 @@
+.admin-section { margin: 2rem; }
+.section-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #fff;
+    background: #2d3e50;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+/* --- Inventory, Categories, Users, Reservation Tables --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0.1rem;
+    background: #f9fbfd;
+    font-size: 0.89rem;
+}
+th, td {
+    border: 1px solid #b2bec3;
+    padding: 0.08rem 0.08rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.1;
+}
+th {
+    background: #0984e3;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.91rem;
+    padding-top: 0.08rem;
+    padding-bottom: 0.08rem;
+}
+td input[type="text"],
+td input[type="email"],
+td input[type="number"],
+td input[type="password"],
+td select {
+    width: 100%;
+    padding: 0.08rem 0.12rem;
+    border: 1px solid #b2bec3;
+    border-radius: 2px;
+    font-size: 0.89rem;
+    box-sizing: border-box;
+}
+td form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.18rem;
+}
+h1 {text-align: center; margin-bottom: 1rem;}
+h2 { margin-top: 2rem; }
+.crud-form input, .crud-form select { margin-right: 0.5rem; margin-bottom: 0.5rem; }
+.crud-form button { margin-left: 0.5rem; }
+
+/* --- Buttons for all tables --- */
+button,
+.add-btn {
+    padding: 0.12rem 0.18rem; /* smaller left and right padding */
+    font-size: 0.89rem;
+    border-radius: 2px;
+    margin-right: 0.08rem;
+}
+
+button[name="edit_book"],
+button[name="delete_book"],
+button[name="edit_category"],
+button[name="delete_category"],
+button[name="edit_user"],
+button[name="delete_user"],
+button[name="edit_reservation"],
+button[name="delete_reservation"] {
+    padding: 0.01rem 0.08rem !important;
+    font-size: 0.72rem !important;
+    border-radius: 2px !important;
+    margin-right: 0.03rem !important;
+    margin-bottom: 0.4rem !important;
+    min-width: 44px !important;
+    max-width: 60px !important;
+    width: 48px !important;
+    height: 1.4rem !important;
+    line-height: 1.1 !important;
+    display: inline-block !important;
+    text-align: center !important;
+}
+.success { color: #27ae60; }
+.error { color: #e74c3c; }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    align-items: center; justify-content: center;
+}
+.modal-content {
+    background: #fff;
+    padding: 2rem 2rem 1rem 2rem;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 95vw;
+    position: relative;
+    box-shadow: 0 4px 32px rgba(44,62,80,0.18);
+}
+.modal-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 1.2rem;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    font-weight: bold;
+}
+.modal .section-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.modal .error, .modal .success { margin-bottom: 1rem; }
+.modal input, .modal select { margin-bottom: 0.7rem; }
+.modal .crud-form button { margin-left: 0; }
+
+/* --- Add Button --- */
+.add-btn {
+    display: inline-block;
+    margin-top: 0.7rem;
+    margin-bottom: 0.7rem;
+    padding: 0.28rem 0.7rem;
+    background: #2d3e50;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.02rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.add-btn:hover { background: #34495e; }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    table, th, td {
+        font-size: 0.85rem;
+        padding: 0.06rem 0.06rem;
+    }
+}
