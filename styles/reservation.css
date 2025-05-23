@@ -51,60 +51,6 @@
     margin-bottom: 0;
 }
 
-.reserved-book .book-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(9,132,227,0.10);
-    padding: 1rem 0.8rem 0.8rem 0.8rem;
-    width: 100%;
-    max-width: 150px;
-    min-width: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: box-shadow 0.18s;
-    color: #181818;
-    text-align: center;
-}
-.reserved-book .book-card:hover {
-    box-shadow: 0 4px 24px rgba(9,132,227,0.18);
-}
-.reserved-book .book-card:hover .book-title,
-.reserved-book .book-card:hover .book-author {
-    color: #0984e3;
-}
-.reserved-book .book-cover {
-    width: 90px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 0.4rem;
-    background: #eaf6fb;
-}
-.reserved-book .book-title {
-    font-weight: bold;
-    font-size: 1.02rem;
-    margin-bottom: 0.3rem;
-    text-align: center;
-    color: #181818;
-}
-.reserved-book .book-author {
-    font-size: 0.97rem;
-    color: #333;
-    margin-bottom: 0.2rem;
-    text-align: center;
-}
-.reserved-book .book-year {
-    font-size: 0.93rem;
-    color: #666;
-}
-.reserved-book .book-rating {
-    font-size: 1rem;
-    color: #f39c12;
-    margin-top: 0.3rem;
-}
-
-/* Responsive: 4 columns on medium, 2 on small, 1 on mobile */
 @media (max-width: 1400px) {
     .reserved-books-row {
         grid-template-columns: repeat(4, 1fr);

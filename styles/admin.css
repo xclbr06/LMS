@@ -9,7 +9,6 @@
     letter-spacing: 1px;
 }
 
-/* --- Inventory, Categories, Users, Reservation Tables --- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -17,6 +16,7 @@ table {
     background: #f9fbfd;
     font-size: 0.89rem;
 }
+
 th, td {
     border: 1px solid #b2bec3;
     padding: 0.08rem 0.08rem;
@@ -32,16 +32,19 @@ th {
     padding-top: 0.08rem;
     padding-bottom: 0.08rem;
 }
+
 td input[type="text"],
 td input[type="email"],
 td input[type="number"],
 td input[type="password"],
 td select {
-    width: 100%;
-    padding: 0.08rem 0.12rem;
+    width: 97%;
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
+    padding: 0.12rem 0.12rem;
     border: 1px solid #b2bec3;
     border-radius: 2px;
-    font-size: 0.89rem;
+    font-size: 0.8rem;
     box-sizing: border-box;
 }
 td form {
@@ -55,10 +58,10 @@ h2 { margin-top: 2rem; }
 .crud-form input, .crud-form select { margin-right: 0.5rem; margin-bottom: 0.5rem; }
 .crud-form button { margin-left: 0.5rem; }
 
-/* --- Buttons for all tables --- */
+
 button,
 .add-btn {
-    padding: 0.12rem 0.18rem; /* smaller left and right padding */
+    padding: 0.12rem 0.18rem; 
     font-size: 0.89rem;
     border-radius: 2px;
     margin-right: 0.08rem;
@@ -121,7 +124,7 @@ button[name="delete_reservation"] {
 .modal input, .modal select { margin-bottom: 0.7rem; }
 .modal .crud-form button { margin-left: 0; }
 
-/* --- Add Button --- */
+
 .add-btn {
     display: inline-block;
     margin-top: 0.7rem;
@@ -138,10 +141,82 @@ button[name="delete_reservation"] {
 }
 .add-btn:hover { background: #34495e; }
 
-/* --- Responsive --- */
+
+@media (max-width: 1200px) {
+    .admin-section {
+        margin: 1rem;
+    }
+    .modal-content {
+        min-width: 200px;
+        padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+    }
+}
+
 @media (max-width: 900px) {
+    .admin-section {
+        margin: 0.5rem;
+        padding: 0.5rem;
+    }
     table, th, td {
         font-size: 0.85rem;
         padding: 0.06rem 0.06rem;
+    }
+    .modal-content {
+        min-width: 120px;
+        padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+    }
+    .crud-form input,
+    .crud-form select {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+    .crud-form button {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-section {
+        margin: 0.2rem;
+        padding: 0.2rem;
+    }
+    .section-title {
+        font-size: 1.05rem;
+        padding: 0.3rem 0.5rem;
+    }
+    table {
+        font-size: 0.78rem;
+        overflow-x: auto;
+        display: block;
+        width: 100%;
+    }
+    th, td {
+        font-size: 0.78rem;
+        padding: 0.03rem 0.03rem;
+    }
+    .modal-content {
+        min-width: 0;
+        max-width: 99vw;
+        padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+    }
+    .crud-form input,
+    .crud-form select,
+    .crud-form button {
+        font-size: 0.9rem;
+        width: 100%;
+        margin: 0 0 0.4rem 0;
+    }
+    .add-btn,
+    button,
+    button[name^="edit_"],
+    button[name^="delete_"] {
+        width: 100%;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        font-size: 0.9rem !important;
+        margin: 0.2rem 0 !important;
     }
 }

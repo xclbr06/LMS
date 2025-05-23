@@ -57,7 +57,7 @@ foreach ($categories as $cat) {
 </head>
 <body>
 <div class="body-bg">
-    <img src="../img/school.png" alt="Background" class="bg-img">
+    <img src="../img/school.jpg" alt="Background" class="bg-img">
     <div class="bg-overlay"></div>
 </div>
 <?php include 'navbar.php'; ?>

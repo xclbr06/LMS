@@ -16,7 +16,7 @@
         <div class="welcome-navbar">
             Welcome, <strong><?= htmlspecialchars($_SESSION["first_name"] . ' ' . $_SESSION["last_name"]) ?></strong>!
         </div>
-        <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" style="display:inline;">
+        <form method="post" action="logout.php" style="display:inline;">
             <button class="logout-btn" type="submit" name="logout">Logout</button>
         </form>
     </div>

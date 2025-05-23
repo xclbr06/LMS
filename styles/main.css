@@ -66,3 +66,45 @@
     top: 0; left: 0; width: 100vw; height: 100vh;
     background: rgba(9,132,227,0.18);
 }
+
+/* Responsive styles */
+@media (max-width: 700px) {
+    .main-container {
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        margin: 2rem 0 0 0;
+    }
+    .logo-img {
+        width: 60px;
+        height: 60px;
+    }
+    .school-name {
+        font-size: 1.05rem;
+    }
+    .system-title {
+        font-size: 0.98rem;
+    }
+    .main-btn {
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0.6rem 0;
+        font-size: 0.98rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .main-container {
+        padding: 0.7rem 0.1rem 0.7rem 0.1rem;
+    }
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+    .school-name {
+        font-size: 0.9rem;
+    }
+    .main-btn {
+        font-size: 0.93rem;
+        padding: 0.5rem 0;
+    }
+}

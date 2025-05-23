@@ -1,37 +1,24 @@
 .search-section { margin: 2rem; }
 .book-list { margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+
 .book-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
     width: 170px;
-    text-align: center;
     padding: 1rem 0.5rem 1rem 0.5rem;
-    transition: box-shadow 0.2s;
-}
-.book-card:hover {
-    box-shadow: 0 4px 16px rgba(44,62,80,0.18);
 }
 .book-cover {
     width: 100px;
     height: 140px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 0.7rem;
 }
 .book-title {
     font-size: 1.05rem;
-    font-weight: bold;
     margin-bottom: 0.2rem;
     color: #34495e;
 }
 .book-author {
-    font-size: 0.97rem;
     color: #7f8c8d;
     margin-bottom: 0.1rem;
 }
 .book-year {
-    font-size: 0.93rem;
     color: #b2bec3;
 }
 .book-borrow {
