@@ -6,10 +6,17 @@
     font-size: 1.2rem;
 }
 .section-title {
+    display: inline-block;
+    padding: 0.5rem;
+    border-radius: 10px;
     font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    background-color: #0984e3;
+    border-color: #f2f2f2;
+    opacity: 90%;
 }
+
 .books-row {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -60,3 +67,4 @@
     color: #0984e3;
     transition: color 0.18s;
 }
+

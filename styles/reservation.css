@@ -40,18 +40,17 @@
     flex: 1;
     color: black;
 }
-.success { color: #27ae60; }
+.success { color: #ffffff; }
 .error { color: #e74c3c; }
 .overdue { font-weight: bold; }
 .due-date { font-weight: bold; color: #2980b9; }
 .dropdown { margin: 1rem 0; }
 .borrow-info { font-size: 0.95em; margin-bottom: 1em; font-weight:bold }
 
-/* Reserved books row: horizontally and centrally aligned, matching dashboard style */
 .reserved-books-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;   /* Center all reserved books horizontally */
+    justify-content: center;  
     align-items: flex-start;
     gap: 2rem 1.2rem;
     margin-bottom: 2.5rem;
