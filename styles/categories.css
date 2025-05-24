@@ -22,7 +22,6 @@
     color: #181818;
 }
 
-/* Responsive: 4 columns on medium, 2 on small, 1 on mobile */
 @media (max-width: 1400px) {
     .books-row {
         grid-template-columns: repeat(4, 1fr);
@@ -50,4 +49,14 @@
         width: 90vw;
         min-width: 120px;
     }
+}
+
+.book-card:hover {
+    box-shadow: 0 4px 24px rgba(9,132,227,0.18);
+}
+.book-card:hover .book-title,
+.book-card:hover .book-author,
+.book-card:hover .book-year {
+    color: #0984e3;
+    transition: color 0.18s;
 }

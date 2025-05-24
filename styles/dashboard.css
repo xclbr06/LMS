@@ -92,3 +92,13 @@
         min-width: 120px;
     }
 }
+
+.book-card:hover {
+    box-shadow: 0 4px 24px rgba(9,132,227,0.18);
+}
+.book-card:hover .book-title,
+.book-card:hover .book-author,
+.book-card:hover .book-year {
+    color: #0984e3;
+    transition: color 0.18s;
+}

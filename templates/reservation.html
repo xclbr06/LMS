@@ -13,7 +13,7 @@
     <?php include '../php/navbar.php'; ?>
     <div class="reservation-section">
         <?php if ($overdueMsg): ?>
-            <div class="overdue"><?= $overdueMsg ?></div>
+            <div class="overdue-msg"><?= htmlspecialchars($overdueMsg) ?></div>
         <?php endif; ?>
 
         <div class="reservation-buttons">
@@ -50,8 +50,17 @@
                         <?php foreach ($searchResults as $book): ?>
                             <form method="post" style="display:inline;">
                                 <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
-                                <button type="submit" name="select_book">
-                                    <?= htmlspecialchars($book['title']) ?> by <?= htmlspecialchars($book['author']) ?>
+                                <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:inline;">
+                                    <div class="book-card">
+                                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                                        <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
+                                        <div class="book-rating">Rating: <?= htmlspecialchars($book['total_rating'] ?? 'N/A') ?></div>
+                                        <div class="book-availability" style="margin-top:0.5rem;color:<?= $book['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
+                                            <?= $book['availability_status']=='available' ? 'Available' : 'Not Available' ?>
+                                        </div>
+                                    </div>
                                 </button>
                             </form>
                         <?php endforeach; ?>

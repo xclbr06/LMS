@@ -44,6 +44,18 @@
 
 .navbar-search {
     margin-left: 2rem;
+    display: flex;
+    flex-direction: column;   /* Stack vertically */
+    align-items: stretch;     /* Make children take full width */
+    gap: 0.5rem;
+    min-width: 180px;
+    width: 220px;             /* Set a consistent width */
+}
+
+.navbar-search input[type="text"],
+.navbar-search button {
+    width: 100%;              /* Both take full width of parent */
+    box-sizing: border-box;
 }
 
 .navbar-search input[type="text"] {
