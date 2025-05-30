@@ -48,19 +48,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email format.";
         $validForm = false;
+    } elseif (!preg_match('/^[a-zA-Z0-9._%+-]+@iscp\.edu\.ph$/', $_POST["email"])) {
+        $emailErr = "Only @iscp.edu.ph email addresses are allowed.";
+        $validForm = false;
     } else {
         $email = htmlspecialchars(trim($_POST["email"]));
     }
 
     // Student ID Validation
-    if (empty($_POST["student_id"])) {
+    if (empty($_POST["student_teacher_id"])) {
         $studentIdErr = "Student ID is required.";
         $validForm = false;
-    } elseif (!preg_match("/^\d{4}-\d{4}$/", $_POST["student_id"])) {
+    } elseif (!preg_match("/^\d{4}-\d{4}$/", $_POST["student_teacher_id"])) {
         $studentIdErr = "Student ID must be in the format 1234-5678.";
         $validForm = false;
     } else {
-        $studentId = htmlspecialchars(trim($_POST["student_id"]));
+        $studentId = htmlspecialchars(trim($_POST["student_teacher_id"]));
     }
 
     // Password Validation
@@ -109,12 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
 
         // Check for duplicate student ID
-        $stmt = $conn->prepare("SELECT id FROM users WHERE student_id = ?");
+        $stmt = $conn->prepare("SELECT id FROM users WHERE student_teacher_id = ?");
         $stmt->bind_param("s", $studentId);
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            $studentIdErr = "This student ID is already registered.";
+            $studentIdErr = "This student/teacher ID is already registered.";
             $validForm = false;
         }
         $stmt->close();
@@ -124,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($validForm) {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         $role = "student";
-        $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_teacher_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $firstName, $middleName, $lastName, $email, $studentId, $passwordHash, $phone, $role);
         if ($stmt->execute()) {
             $success = true;

@@ -109,9 +109,9 @@ if (isset($_POST['reserve_book']) && isset($_POST['book_id']) && isset($_POST['d
                 $stmt->bind_param("iis", $user_id, $book_id, $due_date);
                 if ($stmt->execute()) {
                     $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id");
-                    $reserveSuccess = "Book reserved successfully! Due date: " . $due_date;
-                    $showBorrowed = true;
-                    $showReserve = false;
+                    $_SESSION['reserve_success'] = "Book reserved successfully! Due date: " . $due_date;
+                    header("Location: reservation.php");
+                    exit();
                 } else {
                     $reserveError = "Failed to reserve book. Please try again.";
                 }
@@ -139,10 +139,18 @@ if (isset($_POST['select_book']) && isset($_POST['book_id'])) {
     $showReserve = true;
 }
 
-// Pre-select book if coming from book_details.php
+// Pre-select book if coming from dashboard, categories, or book_details.php
 if (isset($_GET['reserve_book_id'])) {
-    $selectedBook = getBookById($conn, intval($_GET['reserve_book_id']));
+    $_SESSION['preselect_book_id'] = intval($_GET['reserve_book_id']);
+    header("Location: reservation.php");
+    exit();
+}
+
+// Use pre-selected book from session if available
+if (isset($_SESSION['preselect_book_id'])) {
+    $selectedBook = getBookById($conn, $_SESSION['preselect_book_id']);
     $showReserve = true;
+    unset($_SESSION['preselect_book_id']); // Only use once
 }
 
 // Fetch reservations if needed

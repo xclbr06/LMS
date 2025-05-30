@@ -35,7 +35,7 @@ body {
 .bg-overlay {
     position: absolute;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(9,132,227,0.18);
+    background: rgba(9,132,227,0.12);
 }
 
 h2 {
@@ -47,24 +47,23 @@ h2 {
 }
 
 .form-section {
-    background: rgba(9, 132, 227, 0.85);
-    border: 1.5px solid #0984e3;
-    border-radius: 8px;
-    max-width: 400px;
+    background: rgba(9, 132, 227, 0.97); /* More opaque blue */
+    border: 2px solid #0984e3;
+    border-radius: 12px;
+    max-width: 520px;
     width: 95vw;
     margin: 2.5rem auto 2rem auto;
-    padding: 2rem 2rem 1.5rem 2rem;
-    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    padding: 2.2rem 2.2rem 1.7rem 2.2rem;
+    box-shadow: 0 4px 24px rgba(9, 132, 227, 0.18), 0 2px 12px rgba(9, 132, 227, 0.13);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 90vh;           /* Prevent form from exceeding viewport */
-    overflow-y: auto;           /* Scroll form content if too tall */
-    scrollbar-width: thin;
-    scrollbar-color: #0984e3 #eaf6fb; /* For Firefox */
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-bottom: 2.5rem;
 }
 
 /* For Webkit browsers (Chrome, Edge, Safari) */
@@ -102,7 +101,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     color: #222f3e;
     transition: border-color 0.2s, background 0.2s;
     display: block;
-    text-align: center;
+    
 }
 
 input[type="text"]:focus,
@@ -165,6 +164,29 @@ button[type="submit"]:hover {
     color: #ffb347;
 }
 
+/* Two-column registration form layout */
+.form-row-2col {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 1.2rem auto;
+}
+.form-col {
+    flex: 1 1 0;
+    min-width: 220px;
+}
+.form-col label {
+    display: block;
+    margin-bottom: 1.1rem;
+}
+.form-section {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-bottom: 2.5rem;
+}
 @media (max-width: 600px) {
     .form-section {
         max-width: 99vw;
@@ -182,5 +204,15 @@ button[type="submit"]:hover {
         padding: 0.45rem 0.3rem;
         min-width: 0;
         max-width: 100%;
+    }
+}
+@media (max-width: 700px) {
+    .form-row-2col {
+        flex-direction: column;
+        gap: 0.5rem;
+        max-width: 98vw;
+    }
+    .form-col {
+        min-width: 0;
     }
 }

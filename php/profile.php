@@ -12,10 +12,10 @@ $user_id = $_SESSION['id'];
 $role = $_SESSION['role'];
 
 // Fetch user info
-$stmt = $conn->prepare("SELECT first_name, middle_name, last_name, email, student_id, phone, role FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT first_name, middle_name, last_name, email, student_teacher_id, phone, role FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$stmt->bind_result($first_name, $middle_name, $last_name, $email, $student_id, $phone, $user_role);
+$stmt->bind_result($first_name, $middle_name, $last_name, $email, $student_teacher_id, $phone, $user_role);
 $stmt->fetch();
 $stmt->close();
 
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
     $new_middle_name = htmlspecialchars(trim($_POST["middle_name"]));
     $new_last_name = htmlspecialchars(trim($_POST["last_name"]));
     $new_email = htmlspecialchars(trim($_POST["email"]));
-    $new_student_id = htmlspecialchars(trim($_POST["student_id"]));
+    $new_student_id = htmlspecialchars(trim($_POST["student_teacher_id"]));
     $new_phone = htmlspecialchars(trim($_POST["phone"]));
 
     // Validation (add more as needed)
@@ -38,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
     } elseif (!preg_match("/^\d{4}-\d{4}$/", $new_student_id)) {
         $errorMsg = "Student ID must be in the format 1234-5678.";
     } else {
-        // Check for duplicate email/student_id (excluding self)
-        $stmt = $conn->prepare("SELECT id FROM users WHERE (email = ? OR student_id = ?) AND id != ?");
+        // Check for duplicate email/student_teacher_id (excluding self)
+        $stmt = $conn->prepare("SELECT id FROM users WHERE (email = ? OR student_teacher_id = ?) AND id != ?");
         $stmt->bind_param("ssi", $new_email, $new_student_id, $user_id);
         $stmt->execute();
         $stmt->store_result();
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
             $errorMsg = "Email or Student ID already in use.";
         } else {
             // Update user info
-            $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_id=?, phone=? WHERE id=?");
+            $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=? WHERE id=?");
             $stmt->bind_param("ssssssi", $new_first_name, $new_middle_name, $new_last_name, $new_email, $new_student_id, $new_phone, $user_id);
             if ($stmt->execute()) {
                 $successMsg = "Profile updated successfully.";
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
                 $middle_name = $new_middle_name;
                 $last_name = $new_last_name;
                 $email = $new_email;
-                $student_id = $new_student_id;
+                $student_teacher_id = $new_student_id;
                 $phone = $new_phone;
             } else {
                 $errorMsg = "Failed to update profile.";

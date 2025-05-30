@@ -78,31 +78,31 @@ if (isset($_POST['add_user'])) {
     $middle_name = trim($_POST['middle_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
-    $student_id = trim($_POST['student_id']);
+    $student_teacher_id = trim($_POST['student_teacher_id']);
     $phone = trim($_POST['phone']);
     $role = trim($_POST['role']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Basic validation
-    if (empty($first_name) || empty($last_name) || empty($email) || empty($student_id) || empty($role) || empty($password) || empty($confirm_password)) {
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($student_teacher_id) || empty($role) || empty($password) || empty($confirm_password)) {
         $userAddError = "Please fill in all required fields.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $userAddError = "Invalid email format.";
     } elseif ($password !== $confirm_password) {
         $userAddError = "Passwords do not match.";
     } else {
-        // Check for duplicate email or student_id
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? OR student_id = ?");
-        $stmt->bind_param("ss", $email, $student_id);
+        // Check for duplicate email or student_teacher_id
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? OR student_teacher_id = ?");
+        $stmt->bind_param("ss", $email, $student_teacher_id);
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
             $userAddError = "Email or Student ID already exists.";
         } else {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssssss", $first_name, $middle_name, $last_name, $email, $student_id, $passwordHash, $phone, $role);
+            $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_teacher_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssss", $first_name, $middle_name, $last_name, $email, $student_teacher_id, $passwordHash, $phone, $role);
             if ($stmt->execute()) {
                 $userAddSuccess = "User added successfully.";
             } else {
@@ -123,12 +123,12 @@ if (isset($_POST['edit_user'])) {
     $middle_name = trim($_POST['middle_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
-    $student_id = trim($_POST['student_id']);
+    $student_teacher_id = trim($_POST['student_teacher_id']);
     $phone = trim($_POST['phone']);
     $role = trim($_POST['role']);
 
-    $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_id=?, phone=?, role=? WHERE id=?");
-    $stmt->bind_param("sssssssi", $first_name, $middle_name, $last_name, $email, $student_id, $phone, $role, $id);
+    $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=?, role=? WHERE id=?");
+    $stmt->bind_param("sssssssi", $first_name, $middle_name, $last_name, $email, $student_teacher_id, $phone, $role, $id);
     $stmt->execute();
     $stmt->close();
     header("Location: admin.php");
@@ -237,18 +237,115 @@ if (isset($_POST['delete_reservation'])) {
     exit();
 }
 
-// Fetch all books, users, and reservations for dropdowns
+// --- INVENTORY SEARCH & SORT ---
+$inventorySearch = trim($_GET['inventorySearch'] ?? '');
+$inventorySortField = $_GET['inventorySortField'] ?? 'id';
+$inventorySortOrder = $_GET['inventorySortOrder'] ?? 'asc';
+
+$allowedInventoryFields = ['id', 'title', 'author', 'category', 'availability_status'];
+if (!in_array($inventorySortField, $allowedInventoryFields)) $inventorySortField = 'id';
+$inventorySortOrder = ($inventorySortOrder === 'desc') ? 'DESC' : 'ASC';
+
+$inventoryWhere = '';
+$inventoryParams = [];
+if ($inventorySearch !== '') {
+    $inventoryWhere = "WHERE id LIKE ? OR title LIKE ? OR author LIKE ? OR category LIKE ? OR availability_status LIKE ?";
+    $searchParam = "%$inventorySearch%";
+    $inventoryParams = array_fill(0, 5, $searchParam);
+}
+$inventorySql = "SELECT * FROM books $inventoryWhere ORDER BY $inventorySortField $inventorySortOrder";
+$inventoryStmt = $conn->prepare($inventorySql);
+if ($inventoryWhere) {
+    $inventoryStmt->bind_param(str_repeat('s', 5), ...$inventoryParams);
+}
+$inventoryStmt->execute();
+$books = $inventoryStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$inventoryStmt->close();
+
+// --- CATEGORIES SEARCH & SORT ---
+$categorySearch = trim($_GET['categorySearch'] ?? '');
+$categorySortOrder = ($_GET['categorySortOrder'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+
+$categoryWhere = '';
+$categoryParams = [];
+if ($categorySearch !== '') {
+    $categoryWhere = "WHERE category LIKE ?";
+    $categoryParams[] = "%$categorySearch%";
+}
+$categorySql = "SELECT DISTINCT category FROM books $categoryWhere ORDER BY category $categorySortOrder";
+$categoryStmt = $conn->prepare($categorySql);
+if ($categoryWhere) {
+    $categoryStmt->bind_param('s', ...$categoryParams);
+}
+$categoryStmt->execute();
+$categories = $categoryStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$categoryStmt->close();
+
+// --- USERS SEARCH & SORT ---
+$userSearch = trim($_GET['userSearch'] ?? '');
+$userSortField = $_GET['userSortField'] ?? 'first_name';
+$userSortOrder = ($_GET['userSortOrder'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+
+$allowedUserFields = ['first_name', 'last_name', 'email', 'role'];
+if (!in_array($userSortField, $allowedUserFields)) $userSortField = 'first_name';
+
+$userWhere = '';
+$userParams = [];
+if ($userSearch !== '') {
+    $userWhere = "WHERE first_name LIKE ? OR middle_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR student_teacher_id LIKE ? OR phone LIKE ? OR role LIKE ?";
+    $searchParam = "%$userSearch%";
+    $userParams = array_fill(0, 7, $searchParam);
+}
+$userSql = "SELECT * FROM users $userWhere ORDER BY $userSortField $userSortOrder";
+$userStmt = $conn->prepare($userSql);
+if ($userWhere) {
+    $userStmt->bind_param(str_repeat('s', 7), ...$userParams);
+}
+$userStmt->execute();
+$users = $userStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$userStmt->close();
+
+// --- RESERVATIONS SEARCH & SORT ---
+$reservationSearch = trim($_GET['reservationSearch'] ?? '');
+$reservationSortField = $_GET['reservationSortField'] ?? 'user';
+$reservationSortOrder = ($_GET['reservationSortOrder'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+
+$allowedReservationFields = ['user', 'book', 'due_date', 'status'];
+if (!in_array($reservationSortField, $allowedReservationFields)) $reservationSortField = 'user';
+
+// For sorting, use SQL aliases
+$reservationFieldMap = [
+    'user' => 'u.first_name',
+    'book' => 'b.title',
+    'due_date' => 'r.due_date',
+    'status' => 'r.status'
+];
+$reservationOrderBy = $reservationFieldMap[$reservationSortField] . " $reservationSortOrder";
+
+$reservationWhere = '';
+$reservationParams = [];
+if ($reservationSearch !== '') {
+    $reservationWhere = "WHERE r.id LIKE ? OR u.first_name LIKE ? OR u.last_name LIKE ? OR b.title LIKE ? OR r.reserved_at LIKE ? OR r.due_date LIKE ? OR r.status LIKE ?";
+    $searchParam = "%$reservationSearch%";
+    $reservationParams = array_fill(0, 7, $searchParam);
+}
+$reservationSql = "SELECT r.*, u.first_name, u.last_name, b.title 
+    FROM reservations r 
+    JOIN users u ON r.user_id = u.id 
+    JOIN books b ON r.book_id = b.id 
+    $reservationWhere 
+    ORDER BY $reservationOrderBy";
+$reservationStmt = $conn->prepare($reservationSql);
+if ($reservationWhere) {
+    $reservationStmt->bind_param(str_repeat('s', 7), ...$reservationParams);
+}
+$reservationStmt->execute();
+$reservations = $reservationStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$reservationStmt->close();
+
+// Fetch all books, users for dropdowns (unchanged)
 $booksList = $conn->query("SELECT id, title FROM books ORDER BY title ASC")->fetch_all(MYSQLI_ASSOC);
 $usersList = $conn->query("SELECT id, first_name, last_name FROM users ORDER BY first_name ASC")->fetch_all(MYSQLI_ASSOC);
-
-// Fetch all books
-$books = $conn->query("SELECT * FROM books ORDER BY id DESC")->fetch_all(MYSQLI_ASSOC);
-// Fetch all reservations
-$reservations = $conn->query("SELECT r.*, u.first_name, u.last_name, b.title FROM reservations r JOIN users u ON r.user_id = u.id JOIN books b ON r.book_id = b.id ORDER BY r.id DESC")->fetch_all(MYSQLI_ASSOC);
-// Fetch all categories (distinct)
-$categories = $conn->query("SELECT DISTINCT category FROM books")->fetch_all(MYSQLI_ASSOC);
-// Fetch all users
-$users = $conn->query("SELECT * FROM users ORDER BY id DESC")->fetch_all(MYSQLI_ASSOC);
 
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';

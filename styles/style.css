@@ -213,60 +213,6 @@ button[type="submit"]:not(.logout-btn):hover {
     color: #ffb347;
 }
 
-table {
-    width: 90%;
-    margin: 32px auto 40px auto;
-    border-collapse: collapse;
-    background: rgba(9, 132, 227, 0.80);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-}
-
-th, td {
-    padding: 14px 18px;
-    text-align: left;
-}
-
-th {
-    background-color: #0984e3;
-    color: #fff;
-    font-size: 1.08em;
-    font-weight: 700;
-    border-bottom: 2px solid #74b9ff;
-    letter-spacing: 0.5px;
-}
-
-td {
-    background-color: rgba(9, 132, 227, 0.85);
-    color: #eaf6fb;
-    border-bottom: 1px solid #0984e3;
-    font-size: 1em;
-}
-
-tr:last-child td {
-    border-bottom: none;
-}
-
-tr:hover td {
-    background-color: #ffb247a8; 
-    color: #222f3e;
-    transition: background 0.2s, color 0.2s;
-}
-
-table a {
-    color: #0984e3;
-    font-weight: bold;
-    text-decoration: underline;
-    transition: color 0.2s;
-}
-
-table a:hover {
-    color: #74b9ff;
-}
-
 hr {
     border: none;
     border-top: 1.5px solid #8E1616;
