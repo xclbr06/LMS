@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2025 at 01:36 PM
+-- Generation Time: May 30, 2025 at 04:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,7 +72,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (21, 'A Mathematician\'s Apology', 'G.H. Hardy', '9780521427067', 'Cambridge University Press', '1940', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780521427067-L.jpg', 5, 'M-01', 'available', 23, 4.6, 'A mathematician reflects on his life and work. Explores the beauty and creativity of mathematics. A classic essay on the nature of mathematical thought.'),
 (22, 'Flatland: A Romance of Many Dimensions', 'Edwin A. Abbott', '9780486272634', 'Seeley & Co.', '0000', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780486272634-L.jpg', 5, 'M-02', 'available', 10, 2.4, 'A satirical novella exploring dimensions and social hierarchy. Uses geometry to comment on Victorian society. A unique blend of math and literature.'),
 (23, 'The Princeton Companion to Mathematics', 'Timothy Gowers', '9780691118802', 'Princeton University Press', '2008', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780691118802-L.jpg', 5, 'M-03', 'available', 28, 1.2, 'A comprehensive reference on mathematics. Covers topics from algebra to logic and probability. Written by leading mathematicians.'),
-(24, 'Fermat\'s Enigma', 'Simon Singh', '9780385493629', 'Fourth Estate', '1997', 'Mathematics', 'https://covers.openlibrary.org/b/olid/OL7508767M-L.jpg', 5, 'M-04', 'available', 29, 1.8, 'The story of the world’s most famous math problem. Chronicles the search for proof of Fermat’s Last Theorem. A tale of perseverance and discovery.'),
+(24, 'Fermat\'s Enigma', 'Simon Singh', '9780385493629', 'Fourth Estate', '1997', 'Mathematics', 'https://covers.openlibrary.org/b/olid/OL7508767M-L.jpg', 4, 'M-04', 'available', 29, 1.8, 'The story of the world’s most famous math problem. Chronicles the search for proof of Fermat’s Last Theorem. A tale of perseverance and discovery.'),
 (25, 'Journey through Genius: The Great Theorems of Mathematics', 'William Dunham', '9780140147391', 'Penguin Books', '1990', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780140147391-L.jpg', 5, 'M-05', 'available', 30, 4.5, 'Explores the great theorems of mathematics and the minds behind them. Blends history and mathematics in an engaging narrative. Inspires appreciation for mathematical genius.'),
 (26, 'The Mythical Man-Month', 'Frederick P. Brooks Jr.', '9780201835953', 'Addison-Wesley', '1995', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201835953-L.jpg', 4, 'T-06', 'available', 17, 4.4, 'A classic on software engineering and project management. Brooks shares insights from his experience at IBM. The book is famous for the concept \"adding manpower to a late software project makes it later.\"'),
 (27, 'Refactoring: Improving the Design of Existing Code', 'Martin Fowler', '9780201485677', 'Addison-Wesley', '1999', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201485677-L.jpg', 3, 'T-07', 'available', 12, 4.6, 'This book teaches how to improve code structure without changing its behavior. It introduces key refactoring techniques. Essential for maintainable software.'),
@@ -96,7 +96,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (45, 'Astrophysics for People in a Hurry', 'Neil deGrasse Tyson', '9780393609394', 'W. W. Norton & Company', '2017', 'Science', 'https://covers.openlibrary.org/b/isbn/9780393609394-L.jpg', 4, 'S-10', 'available', 9, 4.3, 'Tyson explains the universe in bite-sized chapters. The book is witty, clear, and fascinating. Perfect for readers short on time.'),
 (46, 'The Man Who Knew Infinity', 'Robert Kanigel', '9781476763491', 'Washington Square Press', '1991', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9781476763491-L.jpg', 4, 'M-06', 'available', 13, 4.5, 'The biography of mathematician Ramanujan. It explores his genius and struggles. A story of passion and discovery.'),
 (47, 'In Pursuit of the Unknown: 17 Equations That Changed the World', 'Ian Stewart', '9780465029730', 'Basic Books', '2012', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780465029730-L.jpg', 3, 'M-07', 'available', 8, 4.2, 'Stewart explores the impact of 17 key equations. The book connects math to real-world events. It is engaging and accessible.'),
-(48, 'How Not to Be Wrong: The Power of Mathematical Thinking', 'Jordan Ellenberg', '9780143127536', 'Penguin Books', '2014', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780143127536-L.jpg', 5, 'M-08', 'available', 11, 4.4, 'Ellenberg shows how math shapes our lives. The book is witty and insightful. It encourages logical thinking in everyday situations.'),
+(48, 'How Not to Be Wrong: The Power of Mathematical Thinking', 'Jordan Ellenberg', '9780143127536', 'Penguin Books', '2014', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780143127536-L.jpg', 4, 'M-08', 'available', 11, 4.4, 'Ellenberg shows how math shapes our lives. The book is witty and insightful. It encourages logical thinking in everyday situations.'),
 (49, 'The Joy of x', 'Steven Strogatz', '9780544105850', 'Mariner Books', '2012', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780544105850-L.jpg', 4, 'M-09', 'available', 10, 4.3, 'Strogatz makes math fun and relatable. He explains concepts with real-life examples. The book is perfect for math enthusiasts and novices alike.'),
 (50, 'Love and Math', 'Edward Frenkel', '9780465050741', 'Basic Books', '2013', 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780465050741-L.jpg', 3, 'M-10', 'available', 7, 4.1, 'Frenkel shares his journey into the world of mathematics. The book blends autobiography with mathematical ideas. It inspires a love for learning.');
 
@@ -120,9 +120,10 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `reserved_at`, `due_date`, `status`) VALUES
-(7, 2, 19, '2025-05-16 14:07:02', '2025-05-17', 'returned'),
 (8, 2, 19, '2025-05-16 14:09:30', '2025-05-18', 'reserved'),
-(9, 2, 2, '2025-05-16 14:13:50', '2025-05-30', 'reserved');
+(9, 2, 2, '2025-05-16 14:13:50', '2025-05-30', 'reserved'),
+(10, 2, 24, '2025-05-24 17:57:40', '2025-05-29', 'reserved'),
+(11, 2, 48, '2025-05-24 18:07:36', '2025-06-06', 'reserved');
 
 -- --------------------------------------------------------
 
@@ -136,7 +137,7 @@ CREATE TABLE `users` (
   `middle_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `student_id` varchar(9) NOT NULL,
+  `student_teacher_id` varchar(9) NOT NULL,
   `password` varchar(255) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `role` enum('student','teacher','admin') NOT NULL DEFAULT 'student',
@@ -147,8 +148,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `student_id`, `password`, `phone`, `role`, `created_at`) VALUES
-(2, 'Justin', '', 'Marinas', 'jk@gmail.com', '2324-0696', '$2y$10$JWkC9U3dic24ATLxd3yRQujey7PuSsVAjovk8WyFM4YwBlL2TzZX.', '', 'admin', '2025-05-08 06:31:07');
+INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `student_teacher_id`, `password`, `phone`, `role`, `created_at`) VALUES
+(2, 'Justin', '', 'Marinas', 'jk@iscp.edu.ph', '2324-0696', '$2y$10$JWkC9U3dic24ATLxd3yRQujey7PuSsVAjovk8WyFM4YwBlL2TzZX.', '', 'admin', '2025-05-08 06:31:07');
 
 --
 -- Indexes for dumped tables
@@ -175,7 +176,7 @@ ALTER TABLE `reservations`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_email` (`email`),
-  ADD UNIQUE KEY `unique_student_id` (`student_id`);
+  ADD UNIQUE KEY `unique_student_id` (`student_teacher_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -191,7 +192,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
