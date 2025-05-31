@@ -146,13 +146,16 @@
                     <tbody>
                         <?php foreach ($categories as $cat): ?>
                         <tr>
-                            <td><?= htmlspecialchars($cat['category']) ?></td>
-                            <td>
-                                <form method="post" style="display:inline;" onsubmit="return confirm('Delete this category?');">
-                                    <input type="hidden" name="category" value="<?= htmlspecialchars($cat['category']) ?>">
-                                    <button type="submit" name="delete_category" class="btn btn-danger btn-sm btn-action">Delete</button>
-                                </form>
-                            </td>
+                            <form method="post" class="d-flex">
+                                <td>
+                                    <input type="text" name="category" class="form-control form-control-sm" value="<?= htmlspecialchars($cat['category']) ?>">
+                                    <input type="hidden" name="original_category" value="<?= htmlspecialchars($cat['category']) ?>">
+                                </td>
+                                <td>
+                                    <button type="submit" name="edit_category" class="btn btn-success btn-sm btn-action">Save</button>
+                                    <button type="submit" name="delete_category" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Delete this category?');">Delete</button>
+                                </td>
+                            </form>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -205,23 +208,26 @@
                     <tbody>
                         <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?= htmlspecialchars($user['first_name']) ?></td>
-                            <td><?= htmlspecialchars($user['middle_name']) ?></td>
-                            <td><?= htmlspecialchars($user['last_name']) ?></td>
-                            <td><?= htmlspecialchars($user['email']) ?></td>
-                            <td><?= htmlspecialchars($user['student_teacher_id']) ?></td>
-                            <td><?= htmlspecialchars($user['phone']) ?></td>
-                            <td><?= htmlspecialchars($user['role']) ?></td>
-                            <td>
-                                <form method="post" style="display:inline;">
+                            <form method="post" class="d-flex">
+                                <td><input type="text" name="first_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['first_name']) ?>"></td>
+                                <td><input type="text" name="middle_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['middle_name']) ?>"></td>
+                                <td><input type="text" name="last_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['last_name']) ?>"></td>
+                                <td><input type="email" name="email" class="form-control form-control-sm" value="<?= htmlspecialchars($user['email']) ?>"></td>
+                                <td><input type="text" name="student_teacher_id" class="form-control form-control-sm" value="<?= htmlspecialchars($user['student_teacher_id']) ?>"></td>
+                                <td><input type="text" name="phone" class="form-control form-control-sm" value="<?= htmlspecialchars($user['phone']) ?>"></td>
+                                <td>
+                                    <select name="role" class="form-select form-select-sm">
+                                        <option value="student" <?= $user['role']=='student'?'selected':''; ?>>Student</option>
+                                        <option value="teacher" <?= $user['role']=='teacher'?'selected':''; ?>>Teacher</option>
+                                        <option value="admin" <?= $user['role']=='admin'?'selected':''; ?>>Admin</option>
+                                    </select>
+                                </td>
+                                <td>
                                     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                    <button type="submit" name="edit_user" class="btn btn-sm btn-success">Save</button>
-                                </form>
-                                <form method="post" style="display:inline;" onsubmit="return confirm('Delete this user?');">
-                                    <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                    <button type="submit" name="delete_user" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
+                                    <button type="submit" name="edit_user" class="btn btn-success btn-sm btn-action">Save</button>
+                                    <button type="submit" name="delete_user" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Delete this user?');">Delete</button>
+                                </td>
+                            </form>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -273,22 +279,40 @@
                     <tbody>
                         <?php foreach ($reservations as $res): ?>
                         <tr>
-                            <td><?= $res['id'] ?></td>
-                            <td><?= htmlspecialchars($res['first_name'] . ' ' . $res['last_name']) ?></td>
-                            <td><?= htmlspecialchars($res['title']) ?></td>
-                            <td><?= htmlspecialchars($res['reserved_at']) ?></td>
-                            <td><?= htmlspecialchars($res['due_date']) ?></td>
-                            <td><?= htmlspecialchars($res['status']) ?></td>
-                            <td>
-                                <form method="post" style="display:inline;">
-                                    <input type="hidden" name="reservation_id" value="<?= $res['id'] ?>">
-                                    <button type="submit" name="edit_reservation" class="btn btn-sm btn-success">Save</button>
-                                </form>
-                                <form method="post" style="display:inline;" onsubmit="return confirm('Delete this reservation?');">
-                                    <input type="hidden" name="reservation_id" value="<?= $res['id'] ?>">
-                                    <button type="submit" name="delete_reservation" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
+                            <form method="post" class="d-flex">
+                                <td><?= $res['id'] ?><input type="hidden" name="reservation_id" value="<?= $res['id'] ?>"></td>
+                                <td>
+                                    <select name="user_id" class="form-select form-select-sm">
+                                        <?php foreach ($users as $user): ?>
+                                            <option value="<?= $user['id'] ?>" <?= $user['id']==$res['user_id']?'selected':''; ?>>
+                                                <?= htmlspecialchars($user['first_name'].' '.$user['last_name']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="book_id" class="form-select form-select-sm">
+                                        <?php foreach ($books as $book): ?>
+                                            <option value="<?= $book['id'] ?>" <?= $book['id']==$res['book_id']?'selected':''; ?>>
+                                                <?= htmlspecialchars($book['title']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td><?= htmlspecialchars($res['reserved_at']) ?></td>
+                                <td><input type="date" name="due_date" class="form-control form-control-sm" value="<?= htmlspecialchars($res['due_date']) ?>"></td>
+                                <td>
+                                    <select name="status" class="form-select form-select-sm">
+                                        <option value="reserved" <?= $res['status']=='reserved'?'selected':''; ?>>Reserved</option>
+                                        <option value="completed" <?= $res['status']=='completed'?'selected':''; ?>>Completed</option>
+                                        <option value="canceled" <?= $res['status']=='canceled'?'selected':''; ?>>Canceled</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="submit" name="edit_reservation" class="btn btn-success btn-sm btn-action">Save</button>
+                                    <button type="submit" name="delete_reservation" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Delete this reservation?');">Delete</button>
+                                </td>
+                            </form>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
