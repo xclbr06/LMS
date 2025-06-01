@@ -2,103 +2,160 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #253d55af;
-    padding: 0.5rem 2rem;
-    color: #fff;
+    background: linear-gradient(90deg, #0984e3 0%, #253d55 100%);
+    padding: 0.7rem 2.2rem;
+    color: #eaf6fb;
+    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.10);
     flex-wrap: wrap;
+    position: relative;
+    z-index: 100;
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .school-logo {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(9, 132, 227, 0.10);
+    background: #fff;
+    object-fit: contain;
     margin-right: 1rem;
 }
 
 .school-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-size: 1.45rem;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
+    margin-right: 1.5rem;
 }
 
 .navbar-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.7rem;
+    flex-wrap: wrap;
 }
 
 .navbar-links a {
-    color: #fff;
+    color: #eaf6fb;
     text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.2s;
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding: 0.35rem 1.1rem;
+    border-radius: 6px;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    position: relative;
+}
+.navbar-links a:hover,
+.navbar-links a.active {
+    background: #fff;
+    color: #0984e3;
+    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
+    text-decoration: none;
 }
 
-.navbar-links a:hover {
-    color: #f1c40f;
+.welcome-navbar {
+    color: #fff;
+    font-size: 1.02rem;
+    margin-left: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: rgba(9, 132, 227, 0.13);
+    padding: 0.25rem 0.8rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.welcome-navbar strong {
+    color: #ffb347;
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 
 .navbar-search {
     margin-left: 2rem;
     display: flex;
-    flex-direction: column;   /* Stack vertically */
-    align-items: stretch;     /* Make children take full width */
+    flex-direction: row;
+    align-items: center;
     gap: 0.5rem;
     min-width: 180px;
-    width: 220px;             /* Set a consistent width */
-}
-
-.navbar-search input[type="text"],
-.navbar-search button {
-    width: 100%;              /* Both take full width of parent */
-    box-sizing: border-box;
+    width: 220px;
+    background: rgba(255,255,255,0.13);
+    border-radius: 6px;
+    padding: 0.18rem 0.5rem;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
 }
 
 .navbar-search input[type="text"] {
-    padding: 0.3rem 0.7rem;
+    width: 100%;
+    padding: 0.38rem 0.7rem;
     border-radius: 4px;
     border: none;
     font-size: 1rem;
+    background: #eaf6fb;
+    color: #253d55;
+    outline: none;
+    transition: box-shadow 0.18s, background 0.18s;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+}
+.navbar-search input[type="text"]:focus {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(9, 132, 227, 0.13);
 }
 
 .navbar-search button {
-    padding: 0.3rem 0.8rem;
+    padding: 0.38rem 1.1rem;
     border: none;
     border-radius: 4px;
-    background-color: #f1c40f;
-    color: #2c3e50;
+    background: linear-gradient(90deg, #ffb347 60%, #ff9800 100%);
+    color: #fff;
     font-weight: bold;
-    margin-left: 0.3rem;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
 }
-
 .navbar-search button:hover {
-    background-color: #e1b70e;
+    background: linear-gradient(90deg, #ff9800 60%, #ffb347 100%);
+    color: #253d55;
 }
 
 .logout-btn {
-    background-color: #e74c3c;
+    background: linear-gradient(90deg, #e74c3c 60%, #c0392b 100%);
     color: #fff;
     border: none;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 1.2rem;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
 }
-
 .logout-btn:hover {
-    background-color: #c0392b;
+    background: linear-gradient(90deg, #c0392b 60%, #e74c3c 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.13);
 }
 
-@media (max-width: 900px) {
+/* Responsive Styles */
+@media (max-width: 1200px) {
     .navbar {
         flex-direction: column;
         align-items: stretch;
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1rem;
     }
     .navbar-left {
         justify-content: center;
@@ -108,11 +165,12 @@
         justify-content: center;
         gap: 1rem;
         margin-bottom: 0.5rem;
+        flex-wrap: wrap;
     }
     .navbar-search {
-        margin: 0 auto 0.5rem auto;
+        margin: 0.5rem auto 0.5rem auto;
         width: 100%;
-        display: flex;
+        max-width: 350px;
         justify-content: center;
     }
     .logout-btn {
@@ -120,9 +178,14 @@
         width: 100%;
         max-width: 200px;
     }
+    .welcome-navbar {
+        margin: 0.5rem auto 0.5rem auto;
+        width: 100%;
+        justify-content: center;
+    }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .navbar {
         padding: 0.3rem 0.3rem;
     }
@@ -131,13 +194,49 @@
     }
     .navbar-links a {
         font-size: 0.95rem;
+        padding: 0.3rem 0.7rem;
+    }
+    .navbar-search {
+        flex-direction: column;
+        gap: 0.3rem;
+        padding: 0.12rem 0.2rem;
+        min-width: 0;
+        width: 98vw;
+        max-width: 98vw;
     }
     .navbar-search input[type="text"] {
-        width: 100px;
+        width: 100%;
         font-size: 0.95rem;
     }
     .navbar-search button {
         font-size: 0.95rem;
         padding: 0.3rem 0.5rem;
+        width: 100%;
+    }
+    .logout-btn {
+        font-size: 0.95rem;
+        padding: 0.3rem 0.7rem;
+        width: 100%;
+        max-width: 98vw;
+    }
+    .welcome-navbar {
+        font-size: 0.95rem;
+        padding: 0.18rem 0.5rem;
+        width: 100%;
+        justify-content: center;
+    }
+    .navbar-links {
+        gap: 0.5rem;
+    }
+}
+
+/* Hide search bar and welcome on very small screens for clarity */
+@media (max-width: 430px) {
+    .navbar-search,
+    .welcome-navbar {
+        display: none;
+    }
+    .navbar-links {
+        gap: 0.2rem;
     }
 }

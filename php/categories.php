@@ -52,7 +52,6 @@ foreach ($categories as $cat) {
 <html>
 <head>
     <title>Categories - School Library Management System</title>
-    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/categories.css">
 </head>
 <body>

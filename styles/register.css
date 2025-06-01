@@ -187,6 +187,98 @@ button[type="submit"]:hover {
     overflow-y: visible !important;
     padding-bottom: 2.5rem;
 }
+
+
+/* Add from style.css if not already present and used in register.html */
+
+/* .success message for registration */
+.success {
+    display: block;
+    max-width: 400px;
+    margin: 24px auto 0 auto;
+    padding: 16px 20px;
+    background: #43b581;
+    color: #fff;
+    border: 1.5px solid #0984e3;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(30, 10, 10, 0.10);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+}
+.success a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.success a:hover {
+    color: #ffb347;
+}
+
+/* .form-section h2 (from style.css h2) for register.html */
+.form-section h2 {
+    color: #eaf6fb;
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
+    letter-spacing: 1px;
+}
+
+/* .error (from style.css, only if you want the red-on-white style) */
+.error {
+    color: #d7263d;
+    font-size: 0.95em;
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 2px;
+    margin-left: 0;
+    font-weight: bold;
+    background: rgba(255,255,255,0.85);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.38rem;
+    background: #ffb347;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0.3rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #ffb347;
+    color: #222f3e;
+}
+
+/* .login-link (from style.css, if you want the yellow link style) */
+.login-link {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 1em;
+    color: #EEEEEE;
+    letter-spacing: 0.2px;
+}
+.login-link a {
+    color: #ffb347;
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.login-link a:hover {
+    color: #fff;
+}
+
 @media (max-width: 600px) {
     .form-section {
         max-width: 99vw;

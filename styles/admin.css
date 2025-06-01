@@ -347,13 +347,13 @@ label {
 }
 
 .btn-action {
-/* Theme color: adjust to your primary color */
+    /* Theme color: adjust to your primary color */
     background-color: #2a4d69 !important; /* Example: deep blue */
     color: #fff !important;
     border: none !important;
     border-radius: 4px !important;
     font-size: 1rem !important;      /* Smaller font */
-    padding: 0rem 0.2rem 0rem 0.1rem !important; /* Smaller padding */
+    padding: 0.1rem 0.2rem 0rem 0.1rem !important; /* Smaller padding */
     box-shadow: 0 1px 2px rgba(42,77,105,0.08) !important;
     transition: background 0.15s, color 0.15s !important;
 }

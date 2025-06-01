@@ -24,7 +24,6 @@ if (!$book) {
 <html>
 <head>
     <title><?= htmlspecialchars($book['title']) ?> - Book Details</title>
-    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/book_details.css">
 </head>
 <body>
