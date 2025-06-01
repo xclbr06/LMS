@@ -168,94 +168,94 @@
                 </div>
             </div>
             <!-- Users Tab -->
-            <div class="tab-pane fade <?= $activeTab=='users'?'show active':'' ?>" id="users" role="tabpanel">
-                <div class="section-title d-flex justify-content-between align-items-center">
-                    Users
-                    <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addUserModal" id="openAddUserModal">
-                        Add User
-                    </button>
-                </div>
-                <form method="get" class="row g-2 align-items-center mb-3">
-                    <input type="hidden" name="activeTab" value="users">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control filter-control" name="userSearch" value="<?= htmlspecialchars($_GET['userSearch'] ?? '') ?>" placeholder="Search Users">
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select filter-control" name="userSortField">
-                            <option value="first_name" <?= ($_GET['userSortField'] ?? '')=='first_name'?'selected':''; ?>>First Name</option>
-                            <option value="last_name" <?= ($_GET['userSortField'] ?? '')=='last_name'?'selected':''; ?>>Last Name</option>
-                            <option value="email" <?= ($_GET['userSortField'] ?? '')=='email'?'selected':''; ?>>Email</option>
-                            <option value="role" <?= ($_GET['userSortField'] ?? '')=='role'?'selected':''; ?>>Role</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select filter-control" name="userSortOrder">
-                            <option value="asc" <?= ($_GET['userSortOrder'] ?? '')=='asc'?'selected':''; ?>>A-Z</option>
-                            <option value="desc" <?= ($_GET['userSortOrder'] ?? '')=='desc'?'selected':''; ?>>Z-A</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 text-end">
-                        <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
-                    </div>
-                </form>
-                <table class="table table-striped table-hover table-sm align-middle" id="usersTable">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Middle Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Student ID</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td>
-                                <input type="hidden" name="user_id" value="<?= $user['id'] ?>" form="user-form-<?= $user['id'] ?>">
-                                <input type="text" name="first_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['first_name']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <input type="text" name="middle_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['middle_name']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <input type="text" name="last_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['last_name']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <input type="email" name="email" class="form-control form-control-sm" value="<?= htmlspecialchars($user['email']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <input type="text" name="student_teacher_id" class="form-control form-control-sm" value="<?= htmlspecialchars($user['student_teacher_id']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <input type="text" name="phone" class="form-control form-control-sm" value="<?= htmlspecialchars($user['phone']) ?>" form="user-form-<?= $user['id'] ?>">
-                            </td>
-                            <td>
-                                <select name="role" class="form-select form-select-sm" form="user-form-<?= $user['id'] ?>">
-                                    <option value="student" <?= $user['role']=='student'?'selected':''; ?>>Student</option>
-                                    <option value="teacher" <?= $user['role']=='teacher'?'selected':''; ?>>Teacher</option>
-                                    <option value="admin" <?= $user['role']=='admin'?'selected':''; ?>>Admin</option>
-                                </select>
-                            </td>
-                            <td>
-                                <form method="post" id="user-form-<?= $user['id'] ?>" style="display:inline;">
-                                    <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                    <button type="submit" name="edit_user" class="icon-btn" title="Save">
-                                        <i class="bi bi-check2-circle"></i>
-                                    </button>
-                                    <button type="submit" name="delete_user" class="icon-btn" title="Delete" onclick="return confirm('Delete this user?');">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+<div class="tab-pane fade <?= $activeTab=='users'?'show active':'' ?>" id="users" role="tabpanel">
+    <div class="section-title d-flex justify-content-between align-items-center">
+        Users
+        <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addUserModal" id="openAddUserModal">
+            Add User
+        </button>
+    </div>
+    <form method="get" class="row g-2 align-items-center mb-3">
+        <input type="hidden" name="activeTab" value="users">
+        <div class="col-md-4">
+            <input type="text" class="form-control filter-control" name="userSearch" value="<?= htmlspecialchars($_GET['userSearch'] ?? '') ?>" placeholder="Search Users">
+        </div>
+        <div class="col-md-4">
+            <select class="form-select filter-control" name="userSortField">
+                <option value="first_name" <?= ($_GET['userSortField'] ?? '')=='first_name'?'selected':''; ?>>First Name</option>
+                <option value="last_name" <?= ($_GET['userSortField'] ?? '')=='last_name'?'selected':''; ?>>Last Name</option>
+                <option value="email" <?= ($_GET['userSortField'] ?? '')=='email'?'selected':''; ?>>Email</option>
+                <option value="role" <?= ($_GET['userSortField'] ?? '')=='role'?'selected':''; ?>>Role</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select filter-control" name="userSortOrder">
+                <option value="asc" <?= ($_GET['userSortOrder'] ?? '')=='asc'?'selected':''; ?>>A-Z</option>
+                <option value="desc" <?= ($_GET['userSortOrder'] ?? '')=='desc'?'selected':''; ?>>Z-A</option>
+            </select>
+        </div>
+        <div class="col-md-2 text-end">
+            <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
+        </div>
+    </form>
+    <table class="table table-striped table-hover table-sm align-middle" id="usersTable">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Student ID</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $user): ?>
+            <tr>
+                <td>
+                    <input type="hidden" name="user_id" value="<?= $user['id'] ?>" form="user-form-<?= $user['id'] ?>">
+                    <input type="text" name="first_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['first_name']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <input type="text" name="middle_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['middle_name']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <input type="text" name="last_name" class="form-control form-control-sm" value="<?= htmlspecialchars($user['last_name']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <input type="email" name="email" class="form-control form-control-sm" value="<?= htmlspecialchars($user['email']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <input type="text" name="student_teacher_id" class="form-control form-control-sm" value="<?= htmlspecialchars($user['student_teacher_id']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <input type="text" name="phone" class="form-control form-control-sm" value="<?= htmlspecialchars($user['phone']) ?>" form="user-form-<?= $user['id'] ?>">
+                </td>
+                <td>
+                    <select name="role" class="form-select form-select-sm" form="user-form-<?= $user['id'] ?>">
+                        <option value="student" <?= $user['role']=='student'?'selected':''; ?>>Student</option>
+                        <option value="teacher" <?= $user['role']=='teacher'?'selected':''; ?>>Teacher</option>
+                        <option value="admin" <?= $user['role']=='admin'?'selected':''; ?>>Admin</option>
+                    </select>
+                </td>
+                <td>
+                    <form method="post" id="user-form-<?= $user['id'] ?>" style="display:inline;">
+                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                        <button type="submit" name="edit_user" class="icon-btn" title="Save">
+                            <i class="bi bi-check2-circle"></i>
+                        </button>
+                        <button type="submit" name="delete_user" class="icon-btn" title="Delete" onclick="return confirm('Delete this user?');">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
             <!-- Reservations Tab -->
             <div class="tab-pane fade <?= $activeTab=='reservations'?'show active':'' ?>" id="reservations" role="tabpanel">
                 <div class="section-title d-flex justify-content-between align-items-center">
@@ -394,39 +394,67 @@
     </div>
 
     <!-- Add User Modal -->
-    <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <?php if (!empty($userAddError)): ?>
-                        <div class="error"><?= $userAddError ?></div>
-                    <?php elseif (!empty($userAddSuccess)): ?>
-                        <div class="success"><?= $userAddSuccess ?></div>
-                    <?php endif; ?>
-                    <form class="crud-form" method="post">
-                        <input type="text" name="first_name" placeholder="First Name">
-                        <input type="text" name="middle_name" placeholder="Middle Name">
-                        <input type="text" name="last_name" placeholder="Last Name" required>
-                        <input type="email" name="email" placeholder="Email" required>
-                        <input type="text" name="student_teacher_id" placeholder="Student ID" required>
-                        <input type="text" name="phone" placeholder="Phone">
-                        <select name="role" required>
-                            <option value="student">Student</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="admin">Admin</option>
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php if (isset($success) && $success): ?>
+                    <div class="alert alert-success">User added successfully.</div>
+                <?php endif; ?>
+                <form class="crud-form" method="post" autocomplete="off" novalidate>
+                    <input type="hidden" name="activeTab" value="users">
+                    <div class="mb-2">
+                        <input type="text" name="first_name" placeholder="First Name" class="form-control <?= !empty($firstNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($firstName ?? ($_POST['first_name'] ?? '')) ?>">
+                        <?php if (!empty($firstNameErr)): ?><div class="invalid-feedback"><?= $firstNameErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="middle_name" placeholder="Middle Name" class="form-control <?= !empty($middleNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($middleName ?? ($_POST['middle_name'] ?? '')) ?>">
+                        <?php if (!empty($middleNameErr)): ?><div class="invalid-feedback"><?= $middleNameErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="last_name" placeholder="Last Name" class="form-control <?= !empty($lastNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($lastName ?? ($_POST['last_name'] ?? '')) ?>">
+                        <?php if (!empty($lastNameErr)): ?><div class="invalid-feedback"><?= $lastNameErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="email" name="email" placeholder="Email" class="form-control <?= !empty($emailErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($email ?? ($_POST['email'] ?? '')) ?>">
+                        <?php if (!empty($emailErr)): ?><div class="invalid-feedback"><?= $emailErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="student_teacher_id" placeholder="Student ID (e.g. 1234-5678)" class="form-control <?= !empty($studentIdErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($studentId ?? ($_POST['student_teacher_id'] ?? '')) ?>">
+                        <?php if (!empty($studentIdErr)): ?><div class="invalid-feedback"><?= $studentIdErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="text" name="phone" placeholder="Phone" class="form-control <?= !empty($phoneErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($phone ?? ($_POST['phone'] ?? '')) ?>">
+                        <?php if (!empty($phoneErr)): ?><div class="invalid-feedback"><?= $phoneErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <select name="role" class="form-select">
+                            <option value="student" <?= ((isset($_POST['role']) && $_POST['role']=='student') || (!isset($_POST['role'])))?'selected':''; ?>>Student</option>
+                            <option value="teacher" <?= (isset($_POST['role']) && $_POST['role']=='teacher')?'selected':''; ?>>Teacher</option>
+                            <option value="admin" <?= (isset($_POST['role']) && $_POST['role']=='admin')?'selected':''; ?>>Admin</option>
                         </select>
-                        <input type="password" name="password" placeholder="Password" required>
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-                        <button type="submit" name="add_user" class="btn btn-primary w-100 mt-2">Add</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="mb-2">
+                        <input type="password" name="password" placeholder="Password" class="form-control <?= !empty($passwordErr)?'is-invalid':''; ?>">
+                        <?php if (!empty($passwordErr)): ?><div class="invalid-feedback"><?= $passwordErr ?></div><?php endif; ?>
+                    </div>
+                    <div class="mb-2">
+                        <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control <?= !empty($confirmPasswordErr)?'is-invalid':''; ?>">
+                        <?php if (!empty($confirmPasswordErr)): ?><div class="invalid-feedback"><?= $confirmPasswordErr ?></div><?php endif; ?>
+                    </div>
+                    <button type="submit" name="add_user" class="btn btn-primary w-100 mt-2">Add</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+<?php if ($hasUserError): ?>
+    <span id="showAddUserModalFlag" style="display:none"></span>
+<?php endif; ?>
 
     <!-- Add Reservation Modal -->
     <div class="modal fade" id="addReservationModal" tabindex="-1" aria-hidden="true">
