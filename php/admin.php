@@ -163,11 +163,12 @@ $reservationAddError = $reservationAddSuccess = "";
 if (isset($_POST['add_reservation'])) {
     $user_id = intval($_POST['user_id'] ?? 0);
     $book_id = intval($_POST['book_id'] ?? 0);
+    $borrow_start_date = trim($_POST['borrow_start_date'] ?? '');
     $due_date = trim($_POST['due_date'] ?? '');
     $status = trim($_POST['status'] ?? '');
 
     // Basic validation
-    if (!$user_id || !$book_id || !$due_date || !$status) {
+    if (!$user_id || !$book_id || !$borrow_start_date || !$due_date || !$status) {
         $reservationAddError = "Please fill in all required fields.";
     } else {
         // Check if book exists and is available
@@ -180,9 +181,9 @@ if (isset($_POST['add_reservation'])) {
                 $reservationAddError = "Book is not available for reservation.";
             } else {
                 $stmt->close();
-                // Insert reservation
-                $stmt = $conn->prepare("INSERT INTO reservations (user_id, book_id, reserved_at, due_date, status) VALUES (?, ?, NOW(), ?, ?)");
-                $stmt->bind_param("iiss", $user_id, $book_id, $due_date, $status);
+                // Insert reservation with borrow_start_date
+                $stmt = $conn->prepare("INSERT INTO reservations (user_id, book_id, borrow_start_date, reserved_at, due_date, status) VALUES (?, ?, ?, NOW(), ?, ?)");
+                $stmt->bind_param("iisss", $user_id, $book_id, $borrow_start_date, $due_date, $status);
                 if ($stmt->execute()) {
                     // Decrement book copies and set status if reserved
                     if ($status == 'reserved') {
@@ -207,11 +208,12 @@ if (isset($_POST['add_reservation'])) {
 // Edit Reservation
 if (
     isset($_POST['edit_reservation']) &&
-    isset($_POST['reservation_id'], $_POST['user_id'], $_POST['book_id'], $_POST['due_date'], $_POST['status'])
+    isset($_POST['reservation_id'], $_POST['user_id'], $_POST['book_id'], $_POST['borrow_start_date'], $_POST['due_date'], $_POST['status'])
 ) {
     $id = $_POST['reservation_id'];
     $user_id = $_POST['user_id'];
     $book_id = $_POST['book_id'];
+    $borrow_start_date = $_POST['borrow_start_date'];
     $due_date = $_POST['due_date'];
     $status = $_POST['status'];
 
@@ -231,8 +233,8 @@ if (
     $bookExists->close();
 
     if ($userOk && $bookOk) {
-        $stmt = $conn->prepare("UPDATE reservations SET user_id=?, book_id=?, due_date=?, status=? WHERE id=?");
-        $stmt->bind_param("iissi", $user_id, $book_id, $due_date, $status, $id);
+        $stmt = $conn->prepare("UPDATE reservations SET user_id=?, book_id=?, borrow_start_date=?, due_date=?, status=? WHERE id=?");
+        $stmt->bind_param("iisssi", $user_id, $book_id, $borrow_start_date, $due_date, $status, $id);
         if($stmt->execute()) {
             // Update book availability based on reservation status
             if(in_array($status, ['returned', 'canceled'])) {

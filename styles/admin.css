@@ -302,3 +302,76 @@ label {
     font-weight: 600;
     color: #2d3436;
 }
+
+/* Reduce Category Input Field length */
+.inventory-category-input {
+    max-width: 90px !important; /* Adjust as needed */
+    min-width: 70px !important;
+}
+
+/* Reduce Copies Input Field length */
+.inventory-copies-input {
+    max-width: 55px !important;
+    min-width: 40px !important;
+}
+
+/* Reduce Status Input Field length */
+.inventory-status-select {
+    max-width: 110px !important;
+    min-width: 80px !important;
+}
+
+/* ================================
+   Users Tab Field Adjustments
+   ================================ */
+
+/* Increase First Name, Last Name, and Email Input Field length */
+.users-firstname-input,
+.users-lastname-input,
+.users-email-input {
+    max-width: 170px !important;
+    min-width: 120px !important;
+}
+
+/* Reduce Middle Name Input Field length */
+.users-middlename-input {
+    max-width: 70px !important;
+    min-width: 40px !important;
+}
+
+/* Reduce Student/Teacher ID and Phone Input Field length */
+.users-studentid-input,
+.users-phone-input {
+    max-width: 90px !important;
+    min-width: 60px !important;
+}
+
+.btn-action {
+/* Theme color: adjust to your primary color */
+    background-color: #2a4d69 !important; /* Example: deep blue */
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 1rem !important;      /* Smaller font */
+    padding: 0rem 0.2rem 0rem 0.1rem !important; /* Smaller padding */
+    box-shadow: 0 1px 2px rgba(42,77,105,0.08) !important;
+    transition: background 0.15s, color 0.15s !important;
+}
+
+.btn-action:hover, .btn-action:focus {
+    background-color: #1b3147 !important; /* Slightly darker on hover */
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.btn-action:active {
+    background-color: #16304a !important;
+    color: #fff !important;
+}
+
+.btn-action:disabled, .btn-action.disabled {
+    background-color: #b0b8c1 !important;
+    color: #f8f9fa !important;
+    opacity: 0.65 !important;
+    pointer-events: none !important;
+}

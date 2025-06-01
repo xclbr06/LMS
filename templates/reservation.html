@@ -89,14 +89,28 @@
                                 <input type="hidden" name="book_id" value="<?= $selectedBook['id'] ?>">
                                 <div class="dropdown">
                                     <label>Return Date:
-                                    <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>">
+                                        <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>"
+                                        value="<?= htmlspecialchars($form_due_date ?? '') ?>">
                                     </label>
-                                    <?php if ($reserveError): ?>
-                                        <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
-                                    <?php endif; ?>
-                                </div>
-                                <button type="submit" name="reserve_book">Confirm Reservation</button>
-                            </form>
+                    </div>
+                    <div class="dropdown" style="margin-top:0.5rem;">
+                        <label>Borrowing Start Date:
+                            <input
+                                type="date"
+                                name="borrow_start_date"
+                                id="borrow_start_date_picker"
+                                required
+                                min="<?= $borrowStartMin ?>"
+                                max="<?= $borrowStartMax ?>"
+                                value="<?= htmlspecialchars($form_borrow_start_date ?? $borrowStartMin) ?>"
+            >
+                        </label>
+                </div>
+                <?php if ($reserveError): ?>
+                    <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
+                <?php endif; ?>
+                <button type="submit" name="reserve_book">Confirm Reservation</button>
+            </form>
                         <?php else: ?>
                             <div class="error">This book is not available for reservation.</div>
                         <?php endif; ?>
@@ -142,6 +156,10 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
+
+    <script>
+    window.borrowPeriod = <?= json_encode($borrow_period) ?>;
+    </script>
     <script src="../js/reservation.js"></script>
     <?php include '../templates/footer.html'; ?>
 </body>
