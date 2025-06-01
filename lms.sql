@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2025 at 04:57 PM
+-- Generation Time: Jun 01, 2025 at 03:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_published`, `category`, `cover_image`, `copies`, `shelf_location`, `availability_status`, `total_borrow`, `total_rating`, `synopsis`) VALUES
-(1, 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '9780132350884', 'Prentice Hall', '2008', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg', 5, 'T-01', 'available', 9, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
+(1, 'Good Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '', '', '0000', 'Technology', '', 3, '', 'available', 9, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
 (2, 'The Pragmatic Programmer', 'Andrew Hunt, David Thomas', '9780201616224', 'Addison-Wesley', '1999', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201616224-L.jpg', 4, 'T-02', 'available', 28, 4.2, 'This book offers practical advice for programmers. It covers a wide range of topics from career development to architectural techniques. A must-read for software professionals.'),
 (3, 'Introduction to Algorithms', 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', '9780262033848', 'MIT Press', '2009', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780262033848-L.jpg', 4, 'T-03', 'available', 5, 2.9, 'A widely used textbook for algorithms. Covers a broad range of algorithms in depth. Suitable for students and professionals alike.'),
 (4, 'Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', '9780201633610', 'Addison-Wesley', '1994', 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201633610-L.jpg', 5, 'T-04', 'available', 12, 1, 'A classic on reusable object-oriented software design. Introduces 23 foundational design patterns. Essential for every software engineer.'),
@@ -112,7 +112,7 @@ CREATE TABLE `reservations` (
   `book_id` int(10) UNSIGNED NOT NULL,
   `reserved_at` datetime NOT NULL,
   `due_date` date NOT NULL,
-  `status` enum('reserved','returned','cancelled') NOT NULL DEFAULT 'reserved'
+  `status` enum('reserved','returned','cancelled','canceled') NOT NULL DEFAULT 'reserved'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -120,10 +120,10 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `reserved_at`, `due_date`, `status`) VALUES
-(8, 2, 19, '2025-05-16 14:09:30', '2025-05-18', 'reserved'),
-(9, 2, 2, '2025-05-16 14:13:50', '2025-05-30', 'reserved'),
-(10, 2, 24, '2025-05-24 17:57:40', '2025-05-29', 'reserved'),
-(11, 2, 48, '2025-05-24 18:07:36', '2025-06-06', 'reserved');
+(8, 2, 19, '2025-05-16 14:09:30', '2025-05-18', 'canceled'),
+(9, 2, 2, '2025-05-16 14:13:50', '2025-05-30', ''),
+(10, 2, 24, '2025-05-24 17:57:40', '2025-05-29', ''),
+(11, 2, 48, '2025-05-24 18:07:36', '2025-06-02', 'returned');
 
 -- --------------------------------------------------------
 

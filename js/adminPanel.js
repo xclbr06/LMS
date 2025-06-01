@@ -55,10 +55,18 @@ document.addEventListener('DOMContentLoaded', function () {
             searchFields: ['id', 'title', 'author', 'category', 'status']
         });
     }
-    document.getElementById('inventorySearch').addEventListener('input', inventorySearchSort);
-    document.getElementById('inventorySortField').addEventListener('change', inventorySearchSort);
-    document.getElementById('inventorySortOrder').addEventListener('change', inventorySearchSort);
-    inventorySearchSort();
+    if (document.getElementById('inventorySearch')) {
+        document.getElementById('inventorySearch').addEventListener('input', inventorySearchSort);
+    }
+    if (document.getElementById('inventorySortField')) {
+        document.getElementById('inventorySortField').addEventListener('change', inventorySearchSort);
+    }
+    if (document.getElementById('inventorySortOrder')) {
+        document.getElementById('inventorySortOrder').addEventListener('change', inventorySearchSort);
+    }
+    if (document.getElementById('inventoryTable')) {
+        inventorySearchSort();
+    }
 
     // --- Categories ---
     function categorySearchSort() {
@@ -71,9 +79,15 @@ document.addEventListener('DOMContentLoaded', function () {
             searchFields: ['category']
         });
     }
-    document.getElementById('categorySearch').addEventListener('input', categorySearchSort);
-    document.getElementById('categorySortOrder').addEventListener('change', categorySearchSort);
-    categorySearchSort();
+    if (document.getElementById('categorySearch')) {
+        document.getElementById('categorySearch').addEventListener('input', categorySearchSort);
+    }
+    if (document.getElementById('categorySortOrder')) {
+        document.getElementById('categorySortOrder').addEventListener('change', categorySearchSort);
+    }
+    if (document.getElementById('categoriesTable')) {
+        categorySearchSort();
+    }
 
     // --- Users ---
     function userSearchSort() {
@@ -86,10 +100,18 @@ document.addEventListener('DOMContentLoaded', function () {
             searchFields: ['first_name', 'middle_name', 'last_name', 'email', 'student_id', 'phone', 'role']
         });
     }
-    document.getElementById('userSearch').addEventListener('input', userSearchSort);
-    document.getElementById('userSortField').addEventListener('change', userSearchSort);
-    document.getElementById('userSortOrder').addEventListener('change', userSearchSort);
-    userSearchSort();
+    if (document.getElementById('userSearch')) {
+        document.getElementById('userSearch').addEventListener('input', userSearchSort);
+    }
+    if (document.getElementById('userSortField')) {
+        document.getElementById('userSortField').addEventListener('change', userSearchSort);
+    }
+    if (document.getElementById('userSortOrder')) {
+        document.getElementById('userSortOrder').addEventListener('change', userSearchSort);
+    }
+    if (document.getElementById('usersTable')) {
+        userSearchSort();
+    }
 
     // --- Reservations ---
     function reservationSearchSort() {
@@ -102,13 +124,32 @@ document.addEventListener('DOMContentLoaded', function () {
             searchFields: ['id', 'user', 'book', 'reserved_at', 'due_date', 'status']
         });
     }
-    document.getElementById('reservationSearch').addEventListener('input', reservationSearchSort);
-    document.getElementById('reservationSortField').addEventListener('change', reservationSearchSort);
-    document.getElementById('reservationSortOrder').addEventListener('change', reservationSearchSort);
-    reservationSearchSort();
+    if (document.getElementById('reservationSearch')) {
+        document.getElementById('reservationSearch').addEventListener('input', reservationSearchSort);
+    }
+    if (document.getElementById('reservationSortField')) {
+        document.getElementById('reservationSortField').addEventListener('change', reservationSearchSort);
+    }
+    if (document.getElementById('reservationSortOrder')) {
+        document.getElementById('reservationSortOrder').addEventListener('change', reservationSearchSort);
+    }
+    if (document.getElementById('reservationsTable')) {
+        reservationSearchSort();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var showFlag = document.getElementById('showAddUserModalFlag');
+    if (showFlag) {
+        var addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+        addUserModal.show();
+    }
 });
 
 // Modal close function
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    var modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }

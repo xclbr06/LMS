@@ -40,23 +40,19 @@ if (isset($_POST['add_book'])) {
 
 // Edit Book
 if (isset($_POST['edit_book'])) {
-    $id = intval($_POST['book_id']);
+    $id = $_POST['book_id'];
     $title = trim($_POST['title']);
     $author = trim($_POST['author']);
-    $isbn = trim($_POST['isbn']);
-    $publisher = trim($_POST['publisher']);
-    $year_published = intval($_POST['year_published']);
     $category = trim($_POST['category']);
-    $cover_image = trim($_POST['cover_image']);
-    $copies = intval($_POST['copies']);
-    $shelf_location = trim($_POST['shelf_location']);
-    $availability_status = trim($_POST['availability_status']);
+    $copies = $_POST['copies'];
+    $availability_status = $_POST['availability_status'];
 
-    $stmt = $conn->prepare("UPDATE books SET title=?, author=?, isbn=?, publisher=?, year_published=?, category=?, cover_image=?, copies=?, shelf_location=?, availability_status=? WHERE id=?");
-    $stmt->bind_param("ssssississi", $title, $author, $isbn, $publisher, $year_published, $category, $cover_image, $copies, $shelf_location, $availability_status, $id);
+    $stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?");
+    $stmt->bind_param("sssisi", $title, $author, $category, $copies, $availability_status, $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php");
+    // Redirect after edit to ensure UI updates and prevent resubmission
+    header("Location: admin.php?activeTab=inventory");
     exit();
 }
 
@@ -67,7 +63,7 @@ if (isset($_POST['delete_book'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php");
+    header("Location: admin.php?activeTab=inventory");
     exit();
 }
 
@@ -109,7 +105,7 @@ if (isset($_POST['add_user'])) {
                 $userAddError = "Failed to add user.";
             }
             $stmt->close();
-            header("Location: admin.php");
+            header("Location: admin.php?activeTab=users");
             exit();
         }
         $stmt->close();
@@ -118,20 +114,21 @@ if (isset($_POST['add_user'])) {
 
 // Edit User
 if (isset($_POST['edit_user'])) {
-    $id = intval($_POST['user_id']);
+    $id = $_POST['user_id'];
     $first_name = trim($_POST['first_name']);
     $middle_name = trim($_POST['middle_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
     $student_teacher_id = trim($_POST['student_teacher_id']);
     $phone = trim($_POST['phone']);
-    $role = trim($_POST['role']);
+    $role = $_POST['role'];
 
     $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=?, role=? WHERE id=?");
     $stmt->bind_param("sssssssi", $first_name, $middle_name, $last_name, $email, $student_teacher_id, $phone, $role, $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php");
+    // Redirect after edit to ensure UI updates and prevent resubmission
+    header("Location: admin.php?activeTab=users");
     exit();
 }
 
@@ -141,82 +138,111 @@ if (isset($_POST['delete_user'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php");
-    exit();
-}
-
-// --- CATEGORIES CRUD (add/delete) ---
-$catAddError = $catAddSuccess = "";
-if (isset($_POST['add_category'])) {
-    $category = trim($_POST['category']);
-    if (empty($category)) {
-        $catAddError = "Category name required.";
-    } else {
-        $exists = $conn->prepare("SELECT 1 FROM books WHERE category=? LIMIT 1");
-        $exists->bind_param("s", $category);
-        $exists->execute();
-        $exists->store_result();
-        if ($exists->num_rows == 0) {
-            $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, publisher, year_published, category, copies, shelf_location, availability_status) VALUES ('Category Placeholder', '', '', '', 2000, ?, 0, '', 'available')");
-            $stmt->bind_param("s", $category);
-            $stmt->execute();
-            $stmt->close();
-            $catAddSuccess = "Category added.";
-        } else {
-            $catAddError = "Category already exists.";
-        }
-        $exists->close();
-        header("Location: admin.php");
-        exit();
-    }
-}
-if (isset($_POST['delete_category'])) {
-    $category = trim($_POST['category']);
-    $stmt = $conn->prepare("DELETE FROM books WHERE category=?");
-    $stmt->bind_param("s", $category);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: admin.php");
+    header("Location: admin.php?activeTab=users");
     exit();
 }
 
 // --- RESERVATIONS CRUD ---
+
+// --- ADD RESERVATION HANDLER ---
+$reservationAddError = $reservationAddSuccess = "";
+if (isset($_POST['add_reservation'])) {
+    $user_id = intval($_POST['user_id'] ?? 0);
+    $book_id = intval($_POST['book_id'] ?? 0);
+    $due_date = trim($_POST['due_date'] ?? '');
+    $status = trim($_POST['status'] ?? '');
+
+    // Basic validation
+    if (!$user_id || !$book_id || !$due_date || !$status) {
+        $reservationAddError = "Please fill in all required fields.";
+    } else {
+        // Check if book exists and is available
+        $stmt = $conn->prepare("SELECT copies, availability_status FROM books WHERE id=?");
+        $stmt->bind_param("i", $book_id);
+        $stmt->execute();
+        $stmt->bind_result($copies, $availability_status);
+        if ($stmt->fetch()) {
+            if ($copies < 1 || $availability_status == 'not_available') {
+                $reservationAddError = "Book is not available for reservation.";
+            } else {
+                $stmt->close();
+                // Insert reservation
+                $stmt = $conn->prepare("INSERT INTO reservations (user_id, book_id, reserved_at, due_date, status) VALUES (?, ?, NOW(), ?, ?)");
+                $stmt->bind_param("iiss", $user_id, $book_id, $due_date, $status);
+                if ($stmt->execute()) {
+                    // Decrement book copies and set status if reserved
+                    if ($status == 'reserved') {
+                        $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id");
+                        $conn->query("UPDATE books SET availability_status = 'not_available' WHERE id = $book_id AND copies = 0");
+                    }
+                    $reservationAddSuccess = "Reservation added successfully.";
+                    // Redirect to avoid resubmission and show in table
+                    header("Location: admin.php?activeTab=reservations");
+                    exit();
+                } else {
+                    $reservationAddError = "Failed to add reservation.";
+                }
+            }
+        } else {
+            $reservationAddError = "Book not found.";
+        }
+        $stmt->close();
+    }
+}
+
 // Edit Reservation
-if (isset($_POST['edit_reservation'])) {
-    $id = intval($_POST['reservation_id']);
-    $user_id = intval($_POST['user_id']);
-    $book_id = intval($_POST['book_id']);
+if (
+    isset($_POST['edit_reservation']) &&
+    isset($_POST['reservation_id'], $_POST['user_id'], $_POST['book_id'], $_POST['due_date'], $_POST['status'])
+) {
+    $id = $_POST['reservation_id'];
+    $user_id = $_POST['user_id'];
+    $book_id = $_POST['book_id'];
     $due_date = $_POST['due_date'];
     $status = $_POST['status'];
 
-    $stmt = $conn->prepare("SELECT status, book_id FROM reservations WHERE id=?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->bind_result($old_status, $old_book_id);
-    $stmt->fetch();
-    $stmt->close();
+    // Validate user_id and book_id exist to avoid foreign key constraint errors
+    $userExists = $conn->prepare("SELECT id FROM users WHERE id = ?");
+    $userExists->bind_param("i", $user_id);
+    $userExists->execute();
+    $userExists->store_result();
+    $userOk = $userExists->num_rows > 0;
+    $userExists->close();
 
-    if ($old_book_id != $book_id) {
-        $conn->query("UPDATE books SET copies = copies + 1 WHERE id = $old_book_id");
-        $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id AND copies > 0");
-    }
-    if ($old_status == 'reserved' && $status == 'returned') {
-        $conn->query("UPDATE books SET copies = copies + 1 WHERE id = $book_id");
-    }
-    if ($old_status == 'returned' && $status == 'reserved') {
-        $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id AND copies > 0");
-    }
+    $bookExists = $conn->prepare("SELECT id FROM books WHERE id = ?");
+    $bookExists->bind_param("i", $book_id);
+    $bookExists->execute();
+    $bookExists->store_result();
+    $bookOk = $bookExists->num_rows > 0;
+    $bookExists->close();
 
-    $stmt = $conn->prepare("UPDATE reservations SET user_id=?, book_id=?, due_date=?, status=? WHERE id=?");
-    $stmt->bind_param("iissi", $user_id, $book_id, $due_date, $status, $id);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: admin.php");
-    exit();
+    if ($userOk && $bookOk) {
+        $stmt = $conn->prepare("UPDATE reservations SET user_id=?, book_id=?, due_date=?, status=? WHERE id=?");
+        $stmt->bind_param("iissi", $user_id, $book_id, $due_date, $status, $id);
+        if($stmt->execute()) {
+            // Update book availability based on reservation status
+            if(in_array($status, ['returned', 'canceled'])) {
+                $book_stmt = $conn->prepare("UPDATE books SET availability_status='available' WHERE id=?");
+                $book_stmt->bind_param("i", $book_id);
+                $book_stmt->execute();
+                $book_stmt->close();
+            } else if($status == 'reserved') {
+                $book_stmt = $conn->prepare("UPDATE books SET availability_status='not_available' WHERE id=?");
+                $book_stmt->bind_param("i", $book_id);
+                $book_stmt->execute();
+                $book_stmt->close();
+            }
+        }
+        $stmt->close();
+        // Redirect after edit to ensure UI updates and prevent resubmission
+        header("Location: admin.php?activeTab=reservations");
+        exit();
+    }
+    // else: Optionally set an error message if user or book does not exist
 }
 
 // Delete Reservation
-if (isset($_POST['delete_reservation'])) {
+if (isset($_POST['delete_reservation']) && isset($_POST['reservation_id'])) {
     $id = intval($_POST['reservation_id']);
     $stmt = $conn->prepare("SELECT book_id, status FROM reservations WHERE id=?");
     $stmt->bind_param("i", $id);
@@ -233,7 +259,7 @@ if (isset($_POST['delete_reservation'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php");
+    header("Location: admin.php?activeTab=reservations");
     exit();
 }
 
@@ -262,7 +288,7 @@ $inventoryStmt->execute();
 $books = $inventoryStmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $inventoryStmt->close();
 
-// --- CATEGORIES SEARCH & SORT ---
+// --- CATEGORIES SEARCH & SORT (USING BOOKS TABLE) ---
 $categorySearch = trim($_GET['categorySearch'] ?? '');
 $categorySortOrder = ($_GET['categorySortOrder'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
@@ -349,3 +375,4 @@ $usersList = $conn->query("SELECT id, first_name, last_name FROM users ORDER BY 
 
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';
+?>
