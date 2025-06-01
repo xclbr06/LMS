@@ -1,3 +1,12 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7fafd;
+    color: #253d55;
+}
+
 body > *:not(.body-bg) {
     position: relative;
     z-index: 10;
@@ -22,20 +31,22 @@ body > *:not(.body-bg) {
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
+    filter: blur(2px) brightness(0.7);
 }
 .body-bg .bg-overlay {
-    background: rgba(9, 133, 227, 0.281);
+    background: rgba(9, 133, 227, 0.18);
     z-index: 2;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 h2 {
-    color: #eaf6fb;
+    color: #0984e3;
     text-align: center;
     margin-top: 40px;
-    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
     letter-spacing: 1px;
+    font-size: 2rem;
 }
 
 a {
@@ -48,86 +59,74 @@ a:hover {
 }
 
 .dashboard-section {
-    margin: 2rem;
+    margin: 2.5rem auto 2rem auto;
+    max-width: 1400px;
+    border-radius: 18px;
+    box-shadow: 0 2px 24px rgba(9, 132, 227, 0.10);
+    padding: 2.5rem 2.5vw 2.5rem 2.5vw;
+    position: relative;
 }
-.welcome {
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-}
+
 .section-title {
     display: inline-block;
-    padding: 0.5rem;
-    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 12px;
     font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 1rem;
-    background-color: #0984e3;
-    border-color: #f2f2f2;
-    opacity: 90%;
+    margin: 2.5rem 0 1.2rem 0;
+    background: linear-gradient(90deg, #0984e3 60%, #253d55 100%);
+    color: #fff;
+    letter-spacing: 1px;
+    box-shadow: 0 1px 8px rgba(9, 132, 227, 0.08);
+    opacity: 0.97;
 }
 
 .books-row {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2rem 1.2rem;
     justify-content: center;
     align-items: stretch;
     margin-bottom: 2.5rem;
-    width: auto;
-    max-width: 100vw;
+    width: 100%;
     color: #181818;
 }
 
-@media (max-width: 1400px) {
-    .books-row {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-@media (max-width: 900px) {
-    .books-row {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.2rem 0.7rem;
-    }
-    .book-card {
-        width: 45vw;
-        min-width: 140px;
-    }
-}
-@media (max-width: 600px) {
-    .dashboard-section {
-        margin: 0.5rem;
-    }
-    .books-row {
-        grid-template-columns: 1fr;
-        gap: 1rem 0;
-    }
-    .book-card {
-        width: 90vw;
-        min-width: 120px;
-    }
-}
-
+/* --- Book Card --- */
 .book-card {
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(9,132,227,0.10);
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(9,132,227,0.13);
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: box-shadow 0.18s;
+    transition: box-shadow 0.18s, transform 0.18s;
     color: #181818;
     text-align: center;
-    padding: 1rem;
+    padding: 1.2rem 1rem 1.1rem 1rem;
+    min-height: 320px;
+    position: relative;
 }
 .book-card:hover {
-    box-shadow: 0 4px 24px rgba(9,132,227,0.18);
+    box-shadow: 0 6px 32px rgba(9,132,227,0.18);
+    transform: translateY(-6px) scale(1.03);
+}
+.book-cover {
+    width: 90px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.7rem;
+    background: #eaf6fb;
+    box-shadow: 0 1px 8px rgba(9,132,227,0.10);
 }
 .book-title {
     font-weight: bold;
-    font-size: 1.02rem;
+    font-size: 1.08rem;
     margin-bottom: 0.3rem;
     text-align: center;
     color: #181818;
+    letter-spacing: 0.5px;
 }
 .book-author {
     font-size: 0.97rem;
@@ -144,16 +143,100 @@ a:hover {
     color: #f39c12;
     margin-top: 0.3rem;
 }
-.book-cover {
-    width: 90px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 0.7rem;
-    background: #eaf6fb;
-}
 a.book-link {
     text-decoration: none;
     color: inherit;
+    transition: filter 0.18s;
+}
+a.book-link:hover .book-card {
+    filter: brightness(0.98) drop-shadow(0 2px 8px #0984e3);
+}
+
+/* --- Welcome Banner (optional) --- */
+.welcome {
+    margin: 32px auto 24px auto;
+    max-width: 500px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #EEEEEE;
+    background: rgba(29, 22, 22, 0.65);
+    border: 1.5px solid #8E1616;
+    border-radius: 8px;
+    padding: 24px 0 20px 0;
+    box-shadow: 0 2px 12px rgba(30, 10, 10, 0.10);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(30, 10, 10, 0.18), 0 1px 0 #8E1616;
+}
+.welcome strong {
+    color: #D84040;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 1200px) {
+    .dashboard-section {
+        padding: 1.5rem 1vw 1.5rem 1vw;
+    }
+    .section-title {
+        font-size: 1.1rem;
+        padding: 0.4rem 1rem;
+    }
+}
+@media (max-width: 900px) {
+    .dashboard-section {
+        margin: 1rem auto;
+        padding: 1rem 0.5rem;
+    }
+    .books-row {
+        gap: 1.2rem 0.7rem;
+    }
+    .book-card {
+        min-height: 220px;
+        padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+    }
+}
+@media (max-width: 700px) {
+    .dashboard-section {
+        margin: 0.5rem auto;
+        padding: 0.5rem 0.1rem;
+    }
+    .section-title {
+        font-size: 1rem;
+        padding: 0.3rem 0.7rem;
+    }
+    .books-row {
+        gap: 0.7rem 0.3rem;
+    }
+    .book-card {
+        min-height: 160px;
+        padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+    }
+    .book-cover {
+        width: 70px;
+        height: 100px;
+    }
+}
+@media (max-width: 500px) {
+    .dashboard-section {
+        margin: 0.2rem auto;
+        padding: 0.2rem 0.05rem;
+    }
+    .section-title {
+        font-size: 0.95rem;
+        padding: 0.2rem 0.4rem;
+    }
+    .books-row {
+        gap: 0.4rem 0.1rem;
+    }
+    .book-card {
+        min-height: 120px;
+        padding: 0.2rem 0.1rem 0.2rem 0.1rem;
+    }
+    .book-cover {
+        width: 50px;
+        height: 70px;
+    }
 }
 

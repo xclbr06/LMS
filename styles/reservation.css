@@ -1,24 +1,185 @@
-.reservation-section { margin: 2rem; }
-.reservation-buttons { margin-bottom: 2rem; }
-.reservation-buttons button { margin-right: 1rem; }
-.search-bar { margin: 1.5rem 0; }
-.book-list { margin: 1rem 0; }
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7fafd;
+    color: #253d55;
+}
+
+body > *:not(.body-bg) {
+    position: relative;
+    z-index: 10;
+}
+
+.body-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+.body-bg .bg-img,
+.body-bg .bg-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+.body-bg .bg-img {
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    filter: blur(2px) brightness(0.7);
+}
+.body-bg .bg-overlay {
+    background: rgba(9, 133, 227, 0.18);
+    z-index: 2;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+h2 {
+    color: #0984e3;
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
+    letter-spacing: 1px;
+    font-size: 2rem;
+}
+
+h3 {
+    color: #0984e3;
+    margin-top: 0;
+    margin-bottom: 18px;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
+}
+
+a {
+    color: #0984e3;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #ffb347;
+}
+
+.success a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.success a:hover {
+    color: #ffb347;
+}
+
+.reservation-section {
+    margin: 2.5rem auto 2rem auto;
+    max-width: 1100px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 2px 24px rgba(9, 132, 227, 0.10);
+    padding: 2.5rem 2.5vw 2.5rem 2.5vw;
+    position: relative;
+}
+
+.reservation-buttons {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.reservation-buttons button {
+    margin-right: 1rem;
+    background: linear-gradient(90deg, #0984e3 60%, #253d55 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1.08rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(9,132,227,0.10);
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+.reservation-buttons button:hover {
+    background: linear-gradient(90deg, #ffb347 60%, #ff9800 100%);
+    color: #253d55;
+}
+
+.search-bar {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+.search-bar input[type="text"] {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1.5px solid #0984e3;
+    font-size: 1.08rem;
+    margin-right: 0.5rem;
+    background: #f7fafc;
+    color: #253d55;
+    transition: border-color 0.18s, background 0.18s;
+}
+.search-bar input[type="text"]:focus {
+    border-color: #ffb347;
+    background: #fff;
+    outline: none;
+}
+.search-bar button {
+    background: linear-gradient(90deg, #0984e3 60%, #253d55 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1.08rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(9,132,227,0.10);
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+.search-bar button:hover {
+    background: linear-gradient(90deg, #ffb347 60%, #ff9800 100%);
+    color: #253d55;
+}
+
+.book-list, .books-row, .reserved-books-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem 1.2rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    color: #181818;
+}
+
 .book-card {
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(9,132,227,0.10);
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(9,132,227,0.13);
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: box-shadow 0.18s;
+    transition: box-shadow 0.18s, transform 0.18s;
     color: #181818;
     text-align: center;
-    width: 170px;
-    padding: 1rem 0.5rem 1rem 0.5rem;
+    min-width: 170px;
+    max-width: 220px;
+    width: 100%;
+    padding: 1.2rem 1rem 1.1rem 1rem;
+    min-height: 320px;
+    position: relative;
     margin-bottom: 1rem;
 }
 .book-card:hover {
-    box-shadow: 0 4px 24px rgba(9,132,227,0.18);
+    box-shadow: 0 6px 32px rgba(9,132,227,0.18);
+    transform: translateY(-6px) scale(1.03);
 }
 .book-card:hover .book-title,
 .book-card:hover .book-author,
@@ -32,25 +193,104 @@
     width: 100px;
     height: 140px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     margin-bottom: 0.7rem;
     background: #eaf6fb;
+    box-shadow: 0 1px 8px rgba(9,132,227,0.10);
+}
+.book-title {
+    font-weight: bold;
+    font-size: 1.08rem;
+    margin-bottom: 0.3rem;
+    text-align: center;
+    color: #181818;
+    letter-spacing: 0.5px;
+}
+.book-author {
+    font-size: 0.97rem;
+    color: #333;
+    margin-bottom: 0.2rem;
+    text-align: center;
+}
+.book-year {
+    font-size: 0.93rem;
+    color: #666;
+}
+.book-rating, .book-borrow {
+    font-size: 1rem;
+    color: #f39c12;
+    margin-top: 0.3rem;
+}
+.book-availability {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
 }
 .book-details {
     flex: 1;
     color: black;
 }
-.success { color: #ffffff; }
-.error { color: #e74c3c; }
-.overdue { font-weight: bold; }
-.due-date { font-weight: bold; color: #2980b9; }
-.dropdown { margin: 1rem 0; }
-.borrow-info { font-size: 0.95em; margin-bottom: 1em; font-weight:bold }
+
+.success {
+    color: #27ae60;
+    background: #eafaf1;
+    border-left: 4px solid #27ae60;
+    padding: 0.7em 1em;
+    margin: 1em 0;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.08em;
+    text-align: center;
+}
+.error {
+    color: #e74c3c;
+    background: #fff3f3;
+    border-left: 4px solid #e74c3c;
+    padding: 0.7em 1em;
+    margin: 1em 0;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.08em;
+    text-align: center;
+}
+.overdue {
+    font-weight: bold;
+}
+.due-date {
+    font-weight: bold;
+    color: #2980b9;
+}
+.dropdown {
+    margin: 1rem 0;
+}
+.borrow-info {
+    color: #0984e3;
+    background: #eaf6fb;
+    border-left: 4px solid #0984e3;
+    padding: 0.7em 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.08em;
+    text-align: center;
+}
+
+.overdue-msg {
+    color: #e17055;
+    background: #fff3f3;
+    border-left: 4px solid #e17055;
+    padding: 0.7em 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1.08em;
+    text-align: center;
+}
 
 .reserved-books-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;  
+    justify-content: center;
     align-items: flex-start;
     gap: 2rem 1.2rem;
     margin-bottom: 2.5rem;
@@ -65,73 +305,71 @@
     margin-bottom: 0;
 }
 
-@media (max-width: 1400px) {
-    .reserved-books-row {
-        grid-template-columns: repeat(4, 1fr);
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .reservation-section {
+        padding: 1.5rem 1vw 1.5rem 1vw;
+    }
+    h2 {
+        font-size: 1.3rem;
     }
 }
 @media (max-width: 900px) {
-    .reserved-books-row {
-        grid-template-columns: repeat(2, 1fr);
+    .reservation-section {
+        margin: 1rem auto;
+        padding: 1rem 0.5rem;
+    }
+    .book-list, .books-row, .reserved-books-row {
         gap: 1.2rem 0.7rem;
     }
-}
-@media (max-width: 600px) {
-    .reserved-books-row {
-        grid-template-columns: 1fr;
-        gap: 1rem 0;
-    }
-}
-
-
-.overdue-msg {
-    color: #e17055;           
-    background: #fff3f3;
-    border-left: 4px solid #e17055;
-    padding: 0.7em 1em;
-    margin-bottom: 1em;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 1.08em;
-}
-
-
-.borrow-info {
-    color: #0984e3;           
-    background: #eaf6fb;
-    border-left: 4px solid #0984e3;
-    padding: 0.7em 1em;
-    margin-bottom: 1em;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 1.08em;
-}
-
-/* Container for book cards */
-.books-row, .reserved-books-row, .book-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem 1.2rem;
-    margin-bottom: 2.5rem;
-    width: 100%;
-    color: #181818;
-}
-
-/* Responsive adjustments */
-@media (max-width: 900px) {
     .book-card {
-        width: 45vw;
         min-width: 140px;
+        max-width: 45vw;
+        min-height: 220px;
+        padding: 0.8rem 0.5rem 0.7rem 0.5rem;
     }
 }
-@media (max-width: 600px) {
-    .book-card {
-        width: 90vw;
-        min-width: 120px;
+@media (max-width: 700px) {
+    .reservation-section {
+        margin: 0.5rem auto;
+        padding: 0.5rem 0.1rem;
     }
-    .books-row, .reserved-books-row, .book-list {
-        gap: 1rem 0;
+    h2 {
+        font-size: 1rem;
+    }
+    .book-list, .books-row, .reserved-books-row {
+        gap: 0.7rem 0.3rem;
+    }
+    .book-card {
+        min-width: 120px;
+        max-width: 90vw;
+        min-height: 160px;
+        padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+    }
+    .book-cover {
+        width: 70px;
+        height: 100px;
+    }
+}
+@media (max-width: 500px) {
+    .reservation-section {
+        margin: 0.2rem auto;
+        padding: 0.2rem 0.05rem;
+    }
+    h2 {
+        font-size: 0.95rem;
+    }
+    .book-list, .books-row, .reserved-books-row {
+        gap: 0.4rem 0.1rem;
+    }
+    .book-card {
+        min-width: 100px;
+        max-width: 98vw;
+        min-height: 120px;
+        padding: 0.2rem 0.1rem 0.2rem 0.1rem;
+    }
+    .book-cover {
+        width: 50px;
+        height: 70px;
     }
 }

@@ -26,8 +26,8 @@ $categories = [
     "Mathematics"
 ];
 
-// Helper function to fetch up to 8 books for a category
-function getBooksByCategory($conn, $category, $limit = 8) {
+// Helper function to fetch up to 7 books for a category
+function getBooksByCategory($conn, $category, $limit = 7) {
     $books = [];
     $sql = "SELECT * FROM books WHERE category = ? ORDER BY title ASC LIMIT $limit";
     $stmt = $conn->prepare($sql);
@@ -44,7 +44,7 @@ function getBooksByCategory($conn, $category, $limit = 8) {
 // Fetch books for each category
 $categoryBooks = [];
 foreach ($categories as $cat) {
-    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 8);
+    $categoryBooks[$cat] = getBooksByCategory($conn, $cat, 7);
 }
 ?>
 

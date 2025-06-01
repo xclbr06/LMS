@@ -394,9 +394,7 @@ $firstName = $middleName = $lastName = $email = $studentId = $phone = "";
 $success = false;
 
 // Handle user addition and validation
-
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
-
 // If Add User was submitted or there was a validation error, force Users tab active
 if (
     ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user']))
@@ -541,7 +539,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
     }
 }
 
-
+$hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';
 ?>

@@ -8,12 +8,26 @@
     pointer-events: auto !important;
 }
 
-/* --- Background Styles --- */
+/* --- Admin Panel: Neat, Modern, Responsive --- */
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7fafd;
+    color: #253d55;
+}
+
+body > *:not(.body-bg) {
+    position: relative;
+    z-index: 10;
+}
+
 .body-bg {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 0;
     pointer-events: none;
 }
@@ -21,41 +35,55 @@
 .body-bg .bg-overlay {
     position: absolute;
     top: 0; left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 .body-bg .bg-img {
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
+    filter: blur(2px) brightness(0.7);
 }
 .body-bg .bg-overlay {
-    background: rgba(9, 133, 227, 0.281);
+    background: rgba(9, 133, 227, 0.18);
     z-index: 2;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-/* --- Rest of your styles remain unchanged --- */
-
+/* --- Headings --- */
 h1 {
     text-align: center;
-    color: #fff !important; /* Force white */
-    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
+    color: #0984e3;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
     letter-spacing: 1px;
+}
+h2 {
+    color: #0984e3;
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
+    letter-spacing: 1px;
+    font-size: 2rem;
 }
 
 /* --- Section Titles --- */
 .section-title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #ffffff;
-    background: rgba(9, 132, 227, 0.08);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    color: #0984e3;
+    background: #eaf6fb;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
     letter-spacing: 1px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     box-shadow: 0 2px 8px rgba(9, 132, 227, 0.06);
+    border-left: 4px solid #0984e3;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 /* --- Feedback Messages --- */
@@ -67,6 +95,7 @@ h1 {
     padding: 4px 8px;
     border-radius: 4px;
     margin-bottom: 0.5rem;
+    border-left: 4px solid #d7263d;
 }
 .success {
     background: #43b581;
@@ -77,12 +106,14 @@ h1 {
     font-weight: 600;
     margin-bottom: 0.5rem;
     display: inline-block;
+    border-left: 4px solid #0984e3;
 }
 
 /* --- Nav Tabs Customization for Admin Panel --- */
 .nav-tabs {
     border-bottom: 2px solid #0984e3;
     margin-bottom: 1.2rem;
+    background: #f7fafd;
 }
 .nav-tabs .nav-link {
     background-color: #f0f4fa;
@@ -104,168 +135,85 @@ h1 {
     color: #0984e3;
 }
 
-.btn-add-main {
-    font-size: 0.75rem !important;
-    padding: 0.15rem 0.6rem !important;
-    border-radius: 5px !important;
-    box-shadow: 0 2px 8px rgba(9,132,227,0.10);
+/* --- Main Container --- */
+.container {
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 2px 24px rgba(9, 132, 227, 0.10);
+    padding: 2.5rem 2vw 2.5rem 2vw;
+    margin-bottom: 2rem;
 }
 
+/* --- Table Styles --- */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 8px rgba(9,132,227,0.07);
+    margin-bottom: 1.5rem;
+}
+.table th {
+    background: #0984e3;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #0984e3;
+    vertical-align: middle;
+}
+.table td {
+    background: #f7fafc;
+    color: #253d55;
+    vertical-align: middle;
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: #eaf6fb !important;
+}
+.table-hover > tbody > tr:hover > * {
+    background-color: #d6eaff !important;
+    transition: background 0.18s;
+}
+.table th, .table td {
+    padding: 0.55rem 0.7rem;
+    font-size: 0.97rem;
+    text-align: center;
+}
 .table-sm th, .table-sm td {
-    padding: 0.10rem 0.2rem !important;
-    font-size: 0.5rem !important;
-}
-
-.filter-bar {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
-}
-
-.tab-pane {
-    padding-top: 1.5rem;
-}
-.table,
-.table th,
-.table td {
-    font-size: 0.85rem !important;
-    padding: 0.15rem 0.3rem !important;
-    text-align: center;
-    vertical-align: middle;
-}
-
-/* Table Styles */
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.table th,
-.table td {
-    padding: 0.5rem;
-    vertical-align: middle;
+    padding: 0.35rem 0.5rem;
     font-size: 0.92rem;
 }
-
-/* Make specific columns more compact */
-.table td:first-child {
-    width: 60px;
-    text-align: center;
+@media (max-width: 900px) {
+    .table th, .table td, .table-sm th, .table-sm td {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.3rem;
+    }
+}
+@media (max-width: 700px) {
+    .table th, .table td, .table-sm th, .table-sm td {
+        font-size: 0.78rem;
+        padding: 0.18rem 0.15rem;
+    }
 }
 
-.table td:last-child {
-    width: 65px;
-    padding: 4px 2px !important;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-}
-
-/* Icon Button Styles */
-.icon-btn {
-    background: #ffb347;
-    color: #222f3e;
-    border: none;
-    border-radius: 3px;
-    padding: 2px !important;
-    margin: 0;
-    font-size: 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.18s;
-    line-height: 1;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
-
-.icon-btn .bi {
-    font-size: 0.85em;
-    line-height: 1;
-    display: block;
-}
-
-/* Remove any margins between buttons */
-.icon-btn + .icon-btn {
-    margin-left: 2px;
-}
-
-/* Form controls within table */
+/* --- Bootstrap Form Controls in Table --- */
 .table .form-control,
 .table .form-select {
     padding: 0.25rem 0.5rem;
     font-size: 0.92rem;
+    border-radius: 5px;
+    border: 1.5px solid #e3e3e3;
+    background: #fff;
+    color: #253d55;
+    box-shadow: none;
+    transition: border-color 0.18s;
+}
+.table .form-control:focus,
+.table .form-select:focus {
+    border-color: #0984e3;
+    background: #f7fafd;
+    outline: none;
 }
 
-/* Table Styles */
-.table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.table th,
-.table td {
-    padding: 0.5rem;
-    vertical-align: middle;
-    font-size: 0.92rem;
-}
-
-/* Make specific columns more compact */
-.table td:first-child {
-    width: 60px;
-    text-align: center;
-}
-
-.table td:last-child {
-    width: 65px;
-    padding: 4px 2px !important;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-}
-
-/* Icon Button Styles */
-.icon-btn {
-    background: #ffb347;
-    color: #222f3e;
-    border: none;
-    border-radius: 3px;
-    padding: 2px !important;
-    margin: 0;
-    font-size: 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.18s;
-    line-height: 1;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
-
-.icon-btn .bi {
-    font-size: 0.85em;
-    line-height: 1;
-    display: block;
-}
-
-/* Remove any margins between buttons */
-.icon-btn + .icon-btn {
-    margin-left: 2px;
-}
-
-/* Form controls within table */
-.table .form-control,
-.table .form-select {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.92rem;
-}
-
+/* --- Compact Inputs --- */
 .input-short {
     max-width: 55px;
     min-width: 40px;
@@ -273,105 +221,175 @@ h1 {
     padding: 0.08rem 0.2rem !important;
 }
 
+/* --- Icon Button Styles --- */
+.icon-btn {
+    background: #ffb347;
+    color: #222f3e;
+    border: none;
+    border-radius: 3px;
+    padding: 2px !important;
+    margin: 0;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+    line-height: 1;
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+}
+.icon-btn .bi {
+    font-size: 1.1em;
+    line-height: 1;
+    display: block;
+}
+.icon-btn + .icon-btn {
+    margin-left: 2px;
+}
+.icon-btn:hover, .icon-btn:focus {
+    background: #0984e3;
+    color: #fff;
+}
+
+/* --- Add Main Button --- */
+.btn-add-main {
+    font-size: 0.95rem !important;
+    padding: 0.25rem 1.1rem !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(9,132,227,0.10);
+    background: #0984e3 !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    border: none !important;
+    transition: background 0.18s, color 0.18s;
+}
+.btn-add-main:hover, .btn-add-main:focus {
+    background: #ffb347 !important;
+    color: #253d55 !important;
+}
+
+/* --- Filter/Search Bar --- */
+.filter-bar, .row.g-2.align-items-center.mb-3 {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
 .filter-control {
     height: 36px !important;
     font-size: 0.92rem;
     padding-left: 0.5rem !important;
-    padding-left: 0.5rem !important;
+    border-radius: 5px !important;
 }
 
-input.form-control,
-select.form-select {
-    font-size: 0.85rem !important;
-    padding: 0.15rem 0.3rem !important;
-    height: 28px !important;
+/* --- Modal Styles --- */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(9,132,227,0.13);
 }
-
-.btn.btn-primary.btn-add-main {
-    background-color: #0984e3;
+.modal-header {
+    background: #eaf6fb;
+    border-bottom: 1.5px solid #0984e3;
+}
+.modal-title {
+    color: #0984e3;
+    font-weight: 700;
+}
+.btn-close {
+    filter: grayscale(1);
+}
+.crud-form input,
+.crud-form select {
+    margin-bottom: 0.7rem;
+    border-radius: 6px;
+    border: 1.5px solid #e3e3e3;
+    font-size: 1rem;
+    padding: 0.45rem 0.7rem;
+    background: #f7fafc;
+    color: #253d55;
+    transition: border-color 0.18s;
+}
+.crud-form input:focus,
+.crud-form select:focus {
+    border-color: #0984e3;
+    background: #fff;
+    outline: none;
+}
+.crud-form button[type="submit"] {
+    background: #0984e3;
     color: #fff;
     border: none;
-    padding: 0.4rem 1.2rem !important;
-    font-weight: 600;
     border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(9,132,227,0.10);
-}
-
-label {
-    font-size: 0.92rem; 
     font-weight: 600;
-    color: #2d3436;
+    font-size: 1.05rem;
+    padding: 0.5rem 1.2rem;
+    margin-top: 0.5rem;
+    transition: background 0.18s, color 0.18s;
+}
+.crud-form button[type="submit"]:hover {
+    background: #ffb347;
+    color: #253d55;
 }
 
-/* Reduce Category Input Field length */
-.inventory-category-input {
-    max-width: 90px !important; /* Adjust as needed */
-    min-width: 70px !important;
+/* --- Responsive --- */
+@media (max-width: 1200px) {
+    .container {
+        padding: 1.5rem 1vw 1.5rem 1vw;
+    }
+    .section-title {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+    }
+}
+@media (max-width: 900px) {
+    .container {
+        margin: 1rem auto;
+        padding: 1rem 0.5rem;
+    }
+    .section-title {
+        font-size: 0.95rem;
+        padding: 0.3rem 0.7rem;
+    }
+}
+@media (max-width: 700px) {
+    .container {
+        margin: 0.5rem auto;
+        padding: 0.5rem 0.1rem;
+    }
+    .section-title {
+        font-size: 0.92rem;
+        padding: 0.2rem 0.4rem;
+    }
+    .table-responsive {
+        font-size: 0.85rem;
+    }
+    .modal-content {
+        padding: 0.5rem;
+    }
+}
+@media (max-width: 500px) {
+    .container {
+        margin: 0.2rem auto;
+        padding: 0.2rem 0.05rem;
+    }
+    .section-title {
+        font-size: 0.9rem;
+        padding: 0.15rem 0.2rem;
+    }
+    .table th, .table td, .table-sm th, .table-sm td {
+        font-size: 0.72rem;
+        padding: 0.12rem 0.08rem;
+    }
 }
 
-/* Reduce Copies Input Field length */
-.inventory-copies-input {
-    max-width: 55px !important;
-    min-width: 40px !important;
+/* --- General Links --- */
+a {
+    color: #0984e3;
+    text-decoration: underline;
+    transition: color 0.2s;
 }
-
-/* Reduce Status Input Field length */
-.inventory-status-select {
-    max-width: 110px !important;
-    min-width: 80px !important;
-}
-
-/* ================================
-   Users Tab Field Adjustments
-   ================================ */
-
-/* Increase First Name, Last Name, and Email Input Field length */
-.users-firstname-input,
-.users-lastname-input,
-.users-email-input {
-    max-width: 170px !important;
-    min-width: 120px !important;
-}
-
-/* Reduce Middle Name Input Field length */
-.users-middlename-input {
-    max-width: 70px !important;
-    min-width: 40px !important;
-}
-
-/* Reduce Student/Teacher ID and Phone Input Field length */
-.users-studentid-input,
-.users-phone-input {
-    max-width: 90px !important;
-    min-width: 60px !important;
-}
-
-.btn-action {
-    /* Theme color: adjust to your primary color */
-    background-color: #2a4d69 !important; /* Example: deep blue */
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 1rem !important;      /* Smaller font */
-    padding: 0.1rem 0.2rem 0rem 0.1rem !important; /* Smaller padding */
-    box-shadow: 0 1px 2px rgba(42,77,105,0.08) !important;
-    transition: background 0.15s, color 0.15s !important;
-}
-
-.btn-action:hover, .btn-action:focus {
-    background-color: #1b3147 !important; /* Slightly darker on hover */
-    color: #fff !important;
-    text-decoration: none !important;
-}
-
-.btn-action:active {
-    background-color: #16304a !important;
-    color: #fff !important;
-}
-
-.btn-action:disabled, .btn-action.disabled {
-    background-color: #b0b8c1 !important;
-    color: #f8f9fa !important;
-    opacity: 0.65 !important;
-    pointer-events: none !important;
+a:hover {
+    color: #ffb347;
 }

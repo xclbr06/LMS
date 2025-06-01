@@ -19,7 +19,7 @@ require_once "config.php";
 
 // Most Popular (by total_borrow)
 $popularBooks = [];
-$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_borrow FROM books ORDER BY total_borrow DESC LIMIT 8");
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_borrow FROM books ORDER BY total_borrow DESC LIMIT 7");
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) $popularBooks[] = $row;
@@ -27,7 +27,7 @@ $stmt->close();
 
 // Most Rated (by total_rating)
 $mostRatedBooks = [];
-$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_rating FROM books ORDER BY total_rating DESC LIMIT 8");
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, total_rating FROM books ORDER BY total_rating DESC LIMIT 7");
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) $mostRatedBooks[] = $row;
@@ -35,14 +35,14 @@ $stmt->close();
 
 // New Releases (by year_published)
 $newReleases = [];
-$stmt = $conn->prepare("SELECT id, title, author, cover_image, year_published FROM books ORDER BY year_published DESC LIMIT 8");
+$stmt = $conn->prepare("SELECT id, title, author, cover_image, year_published FROM books ORDER BY year_published DESC LIMIT 7");
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) $newReleases[] = $row;
 $stmt->close();
 
-// Helper function to fetch 8 random books for a section
-function getRandomBooks($conn, $limit = 8) {
+// Helper function to fetch 7 random books for a section
+function getRandomBooks($conn, $limit = 7) {
     $books = [];
     $sql = "SELECT id, title, author, year_published, category, cover_image FROM books ORDER BY RAND() LIMIT ?";
     $stmt = $conn->prepare($sql);
@@ -72,7 +72,7 @@ function getOverdueMsg($conn, $user_id) {
 }
 
 // Fetch books for each section
-$randomBooks = getRandomBooks($conn, 8);
+$randomBooks = getRandomBooks($conn, 7);
 
 // Fetch overdue message for the logged-in user
 $user_id = $_SESSION['id'];
