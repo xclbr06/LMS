@@ -142,6 +142,20 @@ if (isset($_POST['delete_user'])) {
     exit();
 }
 
+// --- Edit Category ---
+if (isset($_POST['edit_category'])) {
+    $original_category = trim($_POST['original_category']);
+    $new_category = trim($_POST['category']);
+    if ($original_category !== $new_category && !empty($new_category)) {
+        $stmt = $conn->prepare("UPDATE books SET category=? WHERE category=?");
+        $stmt->bind_param("ss", $new_category, $original_category);
+        $stmt->execute();
+        $stmt->close();
+    }
+    header("Location: admin.php?activeTab=categories");
+    exit();
+}
+
 // --- RESERVATIONS CRUD ---
 
 // --- ADD RESERVATION HANDLER ---
