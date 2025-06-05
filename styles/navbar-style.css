@@ -59,8 +59,7 @@
 }
 .navbar-links a:hover,
 .navbar-links a.active {
-    background: #fff;
-    color: #0984e3;
+    color: #ffb347;
     box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
     text-decoration: none;
 }
@@ -88,7 +87,6 @@
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    background: rgba(255,255,255,0.13);
     border-radius: 6px;
     padding: 0.08rem 0.3rem;
     margin-left: 1.5rem;
@@ -102,7 +100,6 @@
     border-radius: 4px;
     border: none;
     font-size: 1rem;
-    background: #eaf6fb;
     color: #253d55;
     outline: none;
     transition: box-shadow 0.18s, background 0.18s;
@@ -135,8 +132,13 @@
 }
 
 .logout-btn {
-    background: linear-gradient(90deg, #e74c3c 60%, #c0392b 100%);
+        padding: 0.35rem 1.1rem;
+        display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, red 60%, #c0392b 100%);
     color: #fff;
+        line-height: 1.2;
+        text-align: right;
     border: none;
     padding: 0.4rem 1.2rem;
     border-radius: 4px;
@@ -146,10 +148,11 @@
     letter-spacing: 0.5px;
     box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
     transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-    margin-left: 0.7rem;
+    margin-left: 4.7rem;
+    margin-top: 0.2rem;
 }
 .logout-btn:hover {
-    background: linear-gradient(90deg, #c0392b 60%, #e74c3c 100%);
+    background: orangered;
     color: #fff;
     box-shadow: 0 2px 8px rgba(231, 76, 60, 0.13);
 }
