@@ -60,7 +60,7 @@
                             <option value="desc" <?= ($_GET['inventorySortOrder'] ?? '')=='desc'?'selected':''; ?>>Descending</option>
                         </select>
                     </div>
-                    <div class="col-md-3 text-end">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
                     </div>
                 </form>
@@ -105,10 +105,8 @@
                                 <form method="post" id="book-form-<?= $book['id'] ?>" style="display:inline;">
                                     <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
                                     <button type="submit" name="edit_book" class="icon-btn" title="Save">
-                                        <i class="bi bi-check2-circle"></i>
                                     </button>
                                     <button type="submit" name="delete_book" class="icon-btn" title="Delete" onclick="return confirm('Delete this book?');">
-                                        <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
                             </td>
@@ -145,7 +143,7 @@
                             <option value="desc" <?= ($_GET['userSortOrder'] ?? '')=='desc'?'selected':''; ?>>Z-A</option>
                         </select>
                     </div>
-                    <div class="col-md-2 text-end">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
                     </div>
                 </form>
@@ -195,14 +193,10 @@
                                 <form method="post" id="user-form-<?= $user['id'] ?>" style="display:inline;">
                                     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
                                     <button type="submit" name="edit_user" class="icon-btn" title="Save">
-                                        <i class="bi bi-check2-circle"></i>
                                     </button>
                                 </form>
                                 <form method="post" id="delete-user-form-<?= $user['id'] ?>" style="display:inline;">
                                     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                    <button type="submit" name="delete_user" class="icon-btn" title="Delete" onclick="return confirm('Delete this user?');">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -227,7 +221,7 @@
                             <option value="desc" <?= ($_GET['categorySortOrder'] ?? '')=='desc'?'selected':''; ?>>Z-A</option>
                         </select>
                     </div>
-                    <div class="col-md-3 text-end">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
                     </div>
                 </form>
@@ -288,7 +282,7 @@
                             <option value="desc" <?= ($_GET['reservationSortOrder'] ?? '')=='desc'?'selected':''; ?>>Z-A</option>
                         </select>
                     </div>
-                    <div class="col-md-2 text-end">
+                    <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary btn-sm btn-action filter-control">Search/Sort</button>
                     </div>
                 </form>
@@ -314,20 +308,10 @@
                             </td>
                             <td>
                                 <select name="user_id" class="form-select form-select-sm" form="reservation-form-<?= $res['id'] ?>">
-                                    <?php foreach ($usersList as $user): ?>
-                                        <option value="<?= $user['id'] ?>" <?= $user['id'] == $res['user_id'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </td>
                             <td>
                                 <select name="book_id" class="form-select form-select-sm" form="reservation-form-<?= $res['id'] ?>">
-                                    <?php foreach ($booksList as $book): ?>
-                                        <option value="<?= $book['id'] ?>" <?= $book['id'] == $res['book_id'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($book['title']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </td>
                             <td>
@@ -343,20 +327,10 @@
                             </td>
                             <td>
                                 <select name="status" class="form-select form-select-sm" form="reservation-form-<?= $res['id'] ?>">
-                                    <option value="reserved" <?= $res['status']=='reserved'?'selected':''; ?>>Reserved</option>
-                                    <option value="returned" <?= $res['status']=='returned'?'selected':''; ?>>Returned</option>
-                                    <option value="canceled" <?= $res['status']=='canceled'?'selected':''; ?>>Canceled</option>
                                 </select>
                             </td>
                             <td>
                                 <form method="post" id="reservation-form-<?= $res['id'] ?>" style="display:inline;">
-                                    <input type="hidden" name="reservation_id" value="<?= $res['id'] ?>">
-                                    <button type="submit" name="edit_reservation" class="icon-btn" title="Save">
-                                        <i class="bi bi-check2-circle"></i>
-                                    </button>
-                                    <button type="submit" name="delete_reservation" class="icon-btn" title="Delete" onclick="return confirm('Delete this reservation?');">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
                                 </form>
                             </td>
                         </tr>

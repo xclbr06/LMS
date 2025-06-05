@@ -1,7 +1,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     background: linear-gradient(90deg, #0984e3 0%, #253d55 100%);
     padding: 0.7rem 2.2rem;
     color: #eaf6fb;
@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-right: 2.5rem;
 }
 
 .school-logo {
@@ -41,6 +42,8 @@
     align-items: center;
     gap: 1.7rem;
     flex-wrap: wrap;
+    flex: 1 1 auto;      /* <-- This makes links/search take all available space */
+    min-width: 0;
 }
 
 .navbar-links a {
@@ -65,7 +68,6 @@
 .welcome-navbar {
     color: #fff;
     font-size: 1.02rem;
-    margin-left: 1.2rem;
     font-weight: 500;
     letter-spacing: 0.5px;
     background: rgba(9, 132, 227, 0.13);
@@ -83,22 +85,20 @@
 }
 
 .navbar-search {
-    margin-left: 2rem;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
-    min-width: 180px;
-    width: 220px;
+    gap: 0.3rem;
     background: rgba(255,255,255,0.13);
     border-radius: 6px;
-    padding: 0.18rem 0.5rem;
-    box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    padding: 0.08rem 0.3rem;
+    margin-left: 1.5rem;
+    width: auto;
+    min-width: 0;
 }
 
 .navbar-search input[type="text"] {
-    width: 100%;
-    padding: 0.38rem 0.7rem;
+    width: 140px;
+    padding: 0.35rem 0.7rem;
     border-radius: 4px;
     border: none;
     font-size: 1rem;
@@ -107,6 +107,7 @@
     outline: none;
     transition: box-shadow 0.18s, background 0.18s;
     box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    margin: 0;
 }
 .navbar-search input[type="text"]:focus {
     background: #fff;
@@ -114,7 +115,7 @@
 }
 
 .navbar-search button {
-    padding: 0.38rem 1.1rem;
+    padding: 0.35rem 1.1rem;
     border: none;
     border-radius: 4px;
     background: linear-gradient(90deg, #ffb347 60%, #ff9800 100%);
@@ -124,6 +125,9 @@
     cursor: pointer;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s;
     box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
+    margin: 0;
+    height: auto;
+    line-height: 1.2;
 }
 .navbar-search button:hover {
     background: linear-gradient(90deg, #ff9800 60%, #ffb347 100%);
@@ -137,12 +141,12 @@
     padding: 0.4rem 1.2rem;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 1.5rem;
     font-size: 1rem;
     font-weight: bold;
     letter-spacing: 0.5px;
     box-shadow: 0 1px 4px rgba(9, 132, 227, 0.06);
     transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    margin-left: 0.7rem;
 }
 .logout-btn:hover {
     background: linear-gradient(90deg, #c0392b 60%, #e74c3c 100%);
@@ -150,7 +154,7 @@
     box-shadow: 0 2px 8px rgba(231, 76, 60, 0.13);
 }
 
-/* Responsive Styles */
+/* --- TABLET --- */
 @media (max-width: 1200px) {
     .navbar {
         flex-direction: column;
@@ -168,10 +172,24 @@
         flex-wrap: wrap;
     }
     .navbar-search {
-        margin: 0.5rem auto 0.5rem auto;
+        margin-left: 0;
+        margin-right: 0;
         width: 100%;
-        max-width: 350px;
+        max-width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+    }
+    .navbar-search input[type="text"] {
+        width: 200px;
+    }
+    .navbar-right {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 0.5rem;
     }
     .logout-btn {
         margin: 0.5rem auto 0 auto;
@@ -185,58 +203,43 @@
     }
 }
 
+/* --- MOBILE --- */
 @media (max-width: 700px) {
     .navbar {
+        flex-direction: column;
+        align-items: stretch;
         padding: 0.3rem 0.3rem;
-    }
-    .school-name {
-        font-size: 1.1rem;
-    }
-    .navbar-links a {
-        font-size: 0.95rem;
-        padding: 0.3rem 0.7rem;
     }
     .navbar-search {
         flex-direction: column;
+        align-items: stretch;
         gap: 0.3rem;
-        padding: 0.12rem 0.2rem;
-        min-width: 0;
-        width: 98vw;
-        max-width: 98vw;
-    }
-    .navbar-search input[type="text"] {
         width: 100%;
-        font-size: 0.95rem;
+        max-width: 100%;
+        padding: 0.3rem 0.4rem;
+        box-sizing: border-box;
+        margin: 0 0 0.5rem 0;
     }
+    .navbar-search input[type="text"],
     .navbar-search button {
-        font-size: 0.95rem;
-        padding: 0.3rem 0.5rem;
         width: 100%;
+        box-sizing: border-box;
     }
-    .logout-btn {
-        font-size: 0.95rem;
-        padding: 0.3rem 0.7rem;
+    .navbar-right {
+        flex-direction: column;
+        align-items: stretch;
         width: 100%;
-        max-width: 98vw;
-    }
-    .welcome-navbar {
-        font-size: 0.95rem;
-        padding: 0.18rem 0.5rem;
-        width: 100%;
-        justify-content: center;
-    }
-    .navbar-links {
+        margin-left: 0;
         gap: 0.5rem;
     }
-}
-
-/* Hide search bar and welcome on very small screens for clarity */
-@media (max-width: 430px) {
-    .navbar-search,
     .welcome-navbar {
-        display: none;
+        width: 100%;
+        justify-content: center;
+        margin: 0.5rem 0;
     }
-    .navbar-links {
-        gap: 0.2rem;
+    .logout-btn {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 200px;
     }
 }

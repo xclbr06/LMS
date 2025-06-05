@@ -7,12 +7,15 @@
     <div class="navbar-links">
         <a href="dashboard.php">Home</a>
         <a href="categories.php">Categories</a>
+        <a href="all_books.php">All Books</a>
         <a href="reservation.php">Reservation</a>
         <a href="profile.php">Profile</a>
         <form class="navbar-search" method="get" action="search_books.php" style="display:inline;">
             <input type="text" name="q" placeholder="Search books..." required>
             <button type="submit">Search</button>
         </form>
+    </div>
+    <div class="navbar-right">
         <div class="welcome-navbar">
             Welcome, <strong><?= htmlspecialchars($_SESSION["first_name"] . ' ' . $_SESSION["last_name"]) ?></strong>!
         </div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Books - School Library Management System</title>
+    <link rel="stylesheet" href="../styles/all_books.css">
+</head>
+<body>
+    <div class="body-bg">
+        <img src="../img/school.jpg" alt="Background" class="bg-img">
+        <div class="bg-overlay"></div>
+    </div>
+    <?php include '../php/navbar.php'; ?>
+    <div class="dashboard-section">
+        <div class="books-row">
+            <?php foreach ($books as $book): ?>
+                <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                        <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
+                        <div class="book-rating">Rating: <?= (isset($book['total_rating']) && $book['total_rating'] !== '' ? htmlspecialchars($book['total_rating']) : 'N/A') ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php include '../templates/footer.html'; ?>
+</body>
+</html>

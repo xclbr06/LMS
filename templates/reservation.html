@@ -55,7 +55,9 @@
                                         <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                                         <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                                         <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
-                                        <div class="book-rating">Rating: <?= htmlspecialchars($book['total_rating'] ?? 'N/A') ?></div>
+                                        <div class="book-rating">
+                                            Rating: <?= (isset($book['total_rating']) && $book['total_rating'] !== '' ? htmlspecialchars($book['total_rating']) : 'N/A') ?>
+                                        </div>
                                         <div class="book-availability" style="margin-top:0.5rem;color:<?= $book['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
                                             <?= $book['availability_status']=='available' ? 'Available' : 'Not Available' ?>
                                         </div>
@@ -108,7 +110,7 @@
                 <?php if ($reserveError): ?>
                     <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
                 <?php endif; ?>
-                <button type="submit" name="reserve_book">Confirm Reservation</button>
+                <button type="submit" name="reserve_book" class="confirm-reserve-btn">Confirm Reservation</button>
             </form>
                         <?php else: ?>
                             <div class="error">This book is not available for reservation.</div>
@@ -125,7 +127,7 @@
                                     <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
                                 <?php endif; ?>
                             </div>
-                            <button type="submit" name="reserve_book">Confirm Reservation</button>
+                            <button type="submit" name="reserve_book" class="confirm-reserve-btn">Confirm Reservation</button>
                         </form>
                     <?php endif; ?>
                 <?php endif; ?>

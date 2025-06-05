@@ -24,7 +24,7 @@ function getUserReservations($conn, $user_id) {
 function searchBooks($conn, $query) {
     $books = [];
     $like = '%' . $query . '%';
-    $sql = "SELECT id, title, author, year_published, category, copies, availability_status, cover_image FROM books
+    $sql = "SELECT id, title, author, year_published, category, copies, availability_status, cover_image, total_rating FROM books
             WHERE title LIKE ? OR author LIKE ? OR category LIKE ? ORDER BY title ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $like, $like, $like);
@@ -76,10 +76,8 @@ $selectedBook = null;
 
 // --- Borrow Start Date Range Calculation ---
 $today = date('Y-m-d');
-$dayOfWeek = date('w'); // 0 (Sunday) to 6 (Saturday)
-$daysUntilSaturday = 6 - $dayOfWeek;
 $borrowStartMin = $today;
-$borrowStartMax = date('Y-m-d', strtotime("+$daysUntilSaturday days"));
+$borrowStartMax = date('Y-m-d', strtotime('+7 days'));
 
 // Handle state switching
 if (isset($_POST['show_reserve']) || isset($_POST['search_book']) || isset($_POST['select_book']) || isset($_GET['show_reserve']) || isset($_GET['reserve_book_id'])) {
