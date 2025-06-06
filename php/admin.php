@@ -2,6 +2,10 @@
 session_start();
 require_once "config.php";
 
+function is_ajax() {
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+}
+
 // Only allow admin
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
     header("Location: login.php");
@@ -38,21 +42,21 @@ if (isset($_POST['add_book'])) {
     }
 }
 
-// Edit Book
+// --- BOOKS CRUD: Edit Book ---
+$editBookSuccess = $editBookError = "";
 if (isset($_POST['edit_book'])) {
-    $id = $_POST['book_id'];
-    $title = trim($_POST['title']);
-    $author = trim($_POST['author']);
-    $category = trim($_POST['category']);
-    $copies = $_POST['copies'];
-    $availability_status = $_POST['availability_status'];
-
-    $stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?");
-    $stmt->bind_param("sssisi", $title, $author, $category, $copies, $availability_status, $id);
-    $stmt->execute();
-    $stmt->close();
-    // Redirect after edit to ensure UI updates and prevent resubmission
-    header("Location: admin.php?activeTab=inventory");
+    if ($stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?")) {
+        $stmt->bind_param("sssssi", $_POST['title'], $_POST['author'], $_POST['category'], $_POST['copies'], $_POST['availability_status'], $_POST['book_id']);
+        if ($stmt->execute()) {
+            $editBookSuccess = "Book updated successfully.";
+        } else {
+            $editBookError = "Failed to update book.";
+        }
+        $stmt->close();
+    } else {
+        $editBookError = "Failed to update book.";
+    }
+    header("Location: admin.php?activeTab=inventory&editBookSuccess=" . urlencode($editBookSuccess) . "&editBookError=" . urlencode($editBookError));
     exit();
 }
 
@@ -112,23 +116,21 @@ if (isset($_POST['add_user'])) {
     }
 }
 
-// Edit User
+// --- USERS CRUD: Edit User ---
+$editUserSuccess = $editUserError = "";
 if (isset($_POST['edit_user'])) {
-    $id = $_POST['user_id'];
-    $first_name = trim($_POST['first_name']);
-    $middle_name = trim($_POST['middle_name']);
-    $last_name = trim($_POST['last_name']);
-    $email = trim($_POST['email']);
-    $student_teacher_id = trim($_POST['student_teacher_id']);
-    $phone = trim($_POST['phone']);
-    $role = $_POST['role'];
-
-    $stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=?, role=? WHERE id=?");
-    $stmt->bind_param("sssssssi", $first_name, $middle_name, $last_name, $email, $student_teacher_id, $phone, $role, $id);
-    $stmt->execute();
-    $stmt->close();
-    // Redirect after edit to ensure UI updates and prevent resubmission
-    header("Location: admin.php?activeTab=users");
+    if ($stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=?, role=? WHERE id=?")) {
+        $stmt->bind_param("sssssssi", $_POST['first_name'], $_POST['middle_name'], $_POST['last_name'], $_POST['email'], $_POST['student_teacher_id'], $_POST['phone'], $_POST['role'], $_POST['user_id']);
+        if ($stmt->execute()) {
+            $editUserSuccess = "User updated successfully.";
+        } else {
+            $editUserError = "Failed to update user.";
+        }
+        $stmt->close();
+    } else {
+        $editUserError = "Failed to update user.";
+    }
+    header("Location: admin.php?activeTab=users&editUserSuccess=" . urlencode($editUserSuccess) . "&editUserError=" . urlencode($editUserError));
     exit();
 }
 
@@ -248,13 +250,16 @@ if (
                 $book_stmt->execute();
                 $book_stmt->close();
             }
+            $editReservationSuccess = "Reservation updated successfully.";
+        } else {
+            $editReservationError = "Failed to update reservation.";
         }
         $stmt->close();
-        // Redirect after edit to ensure UI updates and prevent resubmission
-        header("Location: admin.php?activeTab=reservations");
-        exit();
+    } else {
+        $editReservationError = "Invalid user or book.";
     }
-    // else: Optionally set an error message if user or book does not exist
+    header("Location: admin.php?activeTab=reservations&editReservationSuccess=" . urlencode($editReservationSuccess) . "&editReservationError=" . urlencode($editReservationError));
+    exit();
 }
 
 // Delete Reservation
@@ -542,4 +547,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';
+
+
 ?>
