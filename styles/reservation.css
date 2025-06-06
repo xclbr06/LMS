@@ -330,6 +330,19 @@ a:hover {
     color: #253d55;
 }
 
+.success {
+    display: block;
+    max-width: 400px;
+    margin: 24px auto 0 auto;
+    padding: 16px 20px;
+    color: #006638;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
     .reservation-section {

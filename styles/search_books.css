@@ -1,4 +1,4 @@
-/* --- Search Books Page: Clean, Modern, Responsive (matches dashboard.css) --- */
+/* --- Search Books Page: Clean, Modern, Responsive --- */
 body {
     min-height: 100vh;
     margin: 0;
@@ -55,9 +55,9 @@ h2 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 2.5rem;
-    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.10), 0 1px 0 #0984e3;
     letter-spacing: 1px;
     font-size: 2rem;
+    color:#eaf6fb;
 }
 
 .book-list {

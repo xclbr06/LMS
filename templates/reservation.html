@@ -15,6 +15,13 @@
             <div class="overdue-msg"><?= htmlspecialchars($overdueMsg) ?></div>
         <?php endif; ?>
 
+        <?php if (isset($_SESSION['reserve_success'])): ?>
+        <div class="success" style="margin-top:1rem;">
+        <?= htmlspecialchars($_SESSION['reserve_success']) ?>
+        </div>
+        <?php unset($_SESSION['reserve_success']); ?>
+        <?php endif; ?>
+
         <div class="reservation-buttons">
             <form method="post" style="display:inline;">
                 <button type="submit" name="show_reserve">Reserve a Book</button>
@@ -24,7 +31,7 @@
             </form>
         </div>
 
-        <?php if ($showReserve): ?>
+        <?php if ($showReserve && !$reserveSuccess): ?>
             <h3>Reserve a Book</h3>
             <div class="borrow-info">
                 <?php if ($user_role === 'student'): ?>
@@ -33,107 +40,116 @@
                     Borrowing limit: 5 books, Borrowing period: 30 days
                 <?php endif; ?>
             </div>
-            <?php if ($reserveSuccess): ?>
-                <div class="success" style="margin-top:1rem;"><?= $reserveSuccess ?></div>
+
+            <!-- Book Search Bar -->
+            <form method="post" class="search-bar">
+                <input type="text" name="search_query" placeholder="Search for a book..." value="<?= htmlspecialchars($searchQuery) ?>" required>
+                <button type="submit" name="search_book">Search</button>
+            </form>
+            <!-- Book List -->
+            <?php if (!empty($searchResults)): ?>
+                <div class="book-list">
+                    <?php foreach ($searchResults as $book): ?>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+                            <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:inline;">
+                                <div class="book-card">
+                                    <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                                    <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
+                                    <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
+                                    <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
+                                    <div class="book-rating">
+                                        Rating: <?= (isset($book['total_rating']) && $book['total_rating'] !== '' ? htmlspecialchars($book['total_rating']) : 'N/A') ?>
+                                    </div>
+                                    <div class="book-availability" style="margin-top:0.5rem;color:<?= $book['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
+                                        <?= $book['availability_status']=='available' ? 'Available' : 'Not Available' ?>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
 
-            <?php if (!$reserveSuccess): ?>
-                <!-- Book Search Bar -->
-                <form method="post" class="search-bar">
-                    <input type="text" name="search_query" placeholder="Search for a book..." value="<?= htmlspecialchars($searchQuery) ?>" required>
-                    <button type="submit" name="search_book">Search</button>
-                </form>
-                <!-- Book List -->
-                <?php if (!empty($searchResults)): ?>
-                    <div class="book-list">
-                        <?php foreach ($searchResults as $book): ?>
-                            <form method="post" style="display:inline;">
-                                <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
-                                <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:inline;">
-                                    <div class="book-card">
-                                        <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
-                                        <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
-                                        <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
-                                        <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
-                                        <div class="book-rating">
-                                            Rating: <?= (isset($book['total_rating']) && $book['total_rating'] !== '' ? htmlspecialchars($book['total_rating']) : 'N/A') ?>
-                                        </div>
-                                        <div class="book-availability" style="margin-top:0.5rem;color:<?= $book['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
-                                            <?= $book['availability_status']=='available' ? 'Available' : 'Not Available' ?>
-                                        </div>
-                                    </div>
-                                </button>
-                            </form>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Book Reservation Form -->
-                <?php if ($selectedBook): ?>
-                    <!-- Always show the selected book card -->
-                    <div class="book-list">
-                        <div class="book-card">
-                            <img class="book-cover" src="<?= htmlspecialchars($selectedBook['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
-                            <div class="book-title"><?= htmlspecialchars($selectedBook['title']) ?></div>
-                            <div class="book-author"><?= htmlspecialchars($selectedBook['author']) ?></div>
-                            <div class="book-year"><?= htmlspecialchars($selectedBook['year_published'] ?? '') ?></div>
-                            <div class="book-rating">Rating: <?= htmlspecialchars($selectedBook['total_rating'] ?? 'N/A') ?></div>
-                            <div class="book-availability" style="margin-top:0.5rem;color:<?= $selectedBook['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
-                                <?= $selectedBook['availability_status']=='available' ? 'Available' : 'Not Available' ?>
-                            </div>
+            <!-- Book Reservation Form -->
+            <?php if ($selectedBook): ?>
+                <!-- Always show the selected book card -->
+                <div class="book-list">
+                    <div class="book-card">
+                        <img class="book-cover" src="<?= htmlspecialchars($selectedBook['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <div class="book-title"><?= htmlspecialchars($selectedBook['title']) ?></div>
+                        <div class="book-author"><?= htmlspecialchars($selectedBook['author']) ?></div>
+                        <div class="book-year"><?= htmlspecialchars($selectedBook['year_published'] ?? '') ?></div>
+                        <div class="book-rating">Rating: <?= htmlspecialchars($selectedBook['total_rating'] ?? 'N/A') ?></div>
+                        <div class="book-availability" style="margin-top:0.5rem;color:<?= $selectedBook['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
+                            <?= $selectedBook['availability_status']=='available' ? 'Available' : 'Not Available' ?>
                         </div>
                     </div>
-                    <?php if (!isset($_POST['show_reserve_step2'])): ?>
-                        <!-- Show Reserve button first -->
-                        <?php if ($selectedBook['copies'] > 0 && $selectedBook['availability_status'] == 'available'): ?>
-                            <form method="post">
-                                <input type="hidden" name="book_id" value="<?= $selectedBook['id'] ?>">
-                                <div class="dropdown">
-                                    <label>Return Date:
-                                        <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>"
-                                        value="<?= htmlspecialchars($form_due_date ?? '') ?>">
-                                    </label>
-                    </div>
-                    <div class="dropdown" style="margin-top:0.5rem;">
-                        <label>Borrowing Start Date:
-                            <input
-                                type="date"
-                                name="borrow_start_date"
-                                id="borrow_start_date_picker"
-                                required
-                                min="<?= $borrowStartMin ?>"
-                                max="<?= $borrowStartMax ?>"
-                                value="<?= htmlspecialchars($form_borrow_start_date ?? $borrowStartMin) ?>"
-            >
-                        </label>
                 </div>
-                <?php if ($reserveError): ?>
-                    <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
-                <?php endif; ?>
-                <button type="submit" name="reserve_book" class="confirm-reserve-btn">Confirm Reservation</button>
-            </form>
-                        <?php else: ?>
-                            <div class="error">This book is not available for reservation.</div>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <!-- Show the return date form only after clicking Reserve -->
+                <?php if (!isset($_POST['show_reserve_step2'])): ?>
+                    <!-- Show Reserve button first -->
+                    <?php if ($selectedBook['copies'] > 0 && $selectedBook['availability_status'] == 'available'): ?>
                         <form method="post">
                             <input type="hidden" name="book_id" value="<?= $selectedBook['id'] ?>">
                             <div class="dropdown">
-                                <label>Return Date:
-                                <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>">
+                                <label>Borrowing Start Date:
+                                    <input
+                                        type="date"
+                                        name="borrow_start_date"
+                                        id="borrow_start_date_picker"
+                                        required
+                                        min="<?= $borrowStartMin ?>"
+                                        max="<?= $borrowStartMax ?>"
+                                        value="<?= htmlspecialchars($form_borrow_start_date ?? $borrowStartMin) ?>"
+                                    >
                                 </label>
-                                <?php if ($reserveError): ?>
-                                    <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
-                                <?php endif; ?>
                             </div>
+                            <div class="dropdown" style="margin-top:0.5rem;">
+                                <label>Return Date:
+                                    <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>"
+                                    value="<?= htmlspecialchars($form_due_date ?? '') ?>">
+                                </label>
+                            </div>
+                            <?php if ($reserveError): ?>
+                                <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
+                            <?php endif; ?>
                             <button type="submit" name="reserve_book" class="confirm-reserve-btn">Confirm Reservation</button>
                         </form>
+                    <?php else: ?>
+                        <div class="error">This book is not available for reservation.</div>
                     <?php endif; ?>
+                <?php else: ?>
+                    <!-- Show the reservation form only after clicking Reserve -->
+                    <form method="post">
+                        <input type="hidden" name="book_id" value="<?= $selectedBook['id'] ?>">
+                        <div class="dropdown">
+                            <label>Borrowing Start Date:
+                                <input
+                                    type="date"
+                                    name="borrow_start_date"
+                                    id="borrow_start_date_picker"
+                                    required
+                                    min="<?= $borrowStartMin ?>"
+                                    max="<?= $borrowStartMax ?>"
+                                    value="<?= htmlspecialchars($form_borrow_start_date ?? $borrowStartMin) ?>"
+                                >
+                            </label>
+                        </div>
+                        <div class="dropdown" style="margin-top:0.5rem;">
+                            <label>Return Date:
+                                <input type="date" name="due_date" id="due_date_picker" required data-period="<?= $borrow_period ?>">
+                            </label>
+                            <?php if ($reserveError): ?>
+                                <div class="error" style="margin-top:0.5rem;"><?= $reserveError ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="submit" name="reserve_book" class="confirm-reserve-btn">Confirm Reservation</button>
+                    </form>
                 <?php endif; ?>
             <?php endif; ?>
+        <?php endif; ?>
 
-        <?php elseif ($showBorrowed): ?>
+        <?php if ($showBorrowed): ?>
             <h3>Your Reserved Books</h3>
             <?php if (empty($userReservations)): ?>
                 <div>No Borrowed Books at this moment.</div>
