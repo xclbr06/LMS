@@ -37,7 +37,7 @@ if (isset($_POST['add_book'])) {
             $bookAddError = "Failed to add book.";
         }
         $stmt->close();
-        header("Location: admin.php");
+        header("Location: admin.php?activeTab=inventory&bookAddSuccess=Book+added+successfully");
         exit();
     }
 }
@@ -67,7 +67,7 @@ if (isset($_POST['delete_book'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php?activeTab=inventory");
+    header("Location: admin.php?activeTab=inventory&bookDeleteSuccess=Book+deleted+successfully");
     exit();
 }
 
@@ -109,7 +109,7 @@ if (isset($_POST['add_user'])) {
                 $userAddError = "Failed to add user.";
             }
             $stmt->close();
-            header("Location: admin.php?activeTab=users");
+            header("Location: admin.php?activeTab=users&userAddSuccess=" . urlencode($userAddSuccess));
             exit();
         }
         $stmt->close();
@@ -140,7 +140,7 @@ if (isset($_POST['delete_user'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php?activeTab=users");
+    header("Location: admin.php?activeTab=users&userDeleteSuccess=User+deleted+successfully");
     exit();
 }
 
@@ -194,7 +194,7 @@ if (isset($_POST['add_reservation'])) {
                     }
                     $reservationAddSuccess = "Reservation added successfully.";
                     // Redirect to avoid resubmission and show in table
-                    header("Location: admin.php?activeTab=reservations");
+                    header("Location: admin.php?activeTab=reservations&reservationAddSuccess=" . urlencode($reservationAddSuccess));
                     exit();
                 } else {
                     $reservationAddError = "Failed to add reservation.";
@@ -280,7 +280,7 @@ if (isset($_POST['delete_reservation']) && isset($_POST['reservation_id'])) {
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
-    header("Location: admin.php?activeTab=reservations");
+    header("Location: admin.php?activeTab=reservations&reservationDeleteSuccess=Reservation+deleted+successfully");
     exit();
 }
 

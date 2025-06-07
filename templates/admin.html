@@ -40,6 +40,14 @@
                         <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editBookSuccess']) ?></span>
                     <?php elseif (!empty($_GET['editBookError'])): ?>
                         <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editBookError']) ?></span>
+                    <?php elseif (!empty($_GET['bookAddSuccess']) || !empty($bookAddSuccess)): ?>
+                        <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['bookAddSuccess'] ?? $bookAddSuccess) ?></span>
+                    <?php elseif (!empty($_GET['bookAddError']) || !empty($bookAddError)): ?>
+                        <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['bookAddError'] ?? $bookAddError) ?></span>
+                    <?php elseif (!empty($_GET['bookDeleteSuccess'])): ?>
+                        <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['bookDeleteSuccess']) ?></span>
+                    <?php elseif (!empty($_GET['bookDeleteError'])): ?>
+                        <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['bookDeleteError']) ?></span>
                     <?php endif; ?>
                     <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addBookModal">
                         Add Book
@@ -131,6 +139,14 @@
                         <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editUserSuccess']) ?></span>
                     <?php elseif (!empty($_GET['editUserError'])): ?>
                         <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editUserError']) ?></span>
+                    <?php elseif (!empty($_GET['userAddSuccess']) || !empty($userAddSuccess)): ?>
+                        <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['userAddSuccess'] ?? $userAddSuccess) ?></span>
+                    <?php elseif (!empty($_GET['userAddError']) || !empty($userAddError)): ?>
+                        <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['userAddError'] ?? $userAddError) ?></span>
+                    <?php elseif (!empty($_GET['userDeleteSuccess'])): ?>
+                        <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['userDeleteSuccess']) ?></span>
+                    <?php elseif (!empty($_GET['userDeleteError'])): ?>
+                        <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['userDeleteError']) ?></span>
                     <?php endif; ?>
                     <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addUserModal" id="openAddUserModal">
                         Add User
@@ -280,6 +296,14 @@
             <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editReservationSuccess']) ?></span>
         <?php elseif (!empty($_GET['editReservationError'])): ?>
             <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editReservationError']) ?></span>
+        <?php elseif (!empty($_GET['reservationAddSuccess']) || !empty($reservationAddSuccess)): ?>
+            <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationAddSuccess'] ?? $reservationAddSuccess) ?></span>
+        <?php elseif (!empty($_GET['reservationAddError']) || !empty($reservationAddError)): ?>
+            <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationAddError'] ?? $reservationAddError) ?></span>
+        <?php elseif (!empty($_GET['reservationDeleteSuccess'])): ?>
+            <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationDeleteSuccess']) ?></span>
+        <?php elseif (!empty($_GET['reservationDeleteError'])): ?>
+            <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationDeleteError']) ?></span>
         <?php endif; ?>
         <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addReservationModal">
             Add Reservation
