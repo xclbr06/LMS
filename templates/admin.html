@@ -269,14 +269,7 @@
                         <tr>
                             <td><?= htmlspecialchars($cat['category']) ?></td>
                             <td>
-                                <?php
-                                $catName = $cat['category'];
-                                $count = 0;
-                                foreach ($books as $book) {
-                                    if ($book['category'] === $catName) $count++;
-                                }
-                                echo $count;
-                                ?>
+                                <?= isset($categoryCounts[$cat['category']]) ? $categoryCounts[$cat['category']] : 0 ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -428,13 +421,21 @@
                     <form class="crud-form" method="post">
                         <input type="text" name="title" placeholder="Title" required>
                         <input type="text" name="author" placeholder="Author" required>
-                        <input type="text" name="isbn" placeholder="ISBN" required>
+                        <input type="text" name="isbn" placeholder="ISBN (13 digits)" required>
                         <input type="text" name="publisher" placeholder="Publisher" required>
-                        <input type="number" name="year_published" placeholder="Year" required>
-                        <input type="text" name="category" placeholder="Category" required>
-                        <input type="text" name="cover_image" placeholder="Cover Image Path">
+                        <input type="number" name="year_published" placeholder="Year (YYYY)" required>
+                        <!-- Category dropdown -->
+                        <select name="category" required>
+                            <option value="">Select Category</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= htmlspecialchars($cat['category']) ?>"><?= htmlspecialchars($cat['category']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <input type="text" name="cover_image" placeholder="Cover Image Path (URL)" required>
                         <input type="number" name="copies" placeholder="Copies" required>
-                        <input type="text" name="shelf_location" placeholder="Shelf Location" required>
+                        <input type="text" name="shelf_location" placeholder="Shelf Location (e.g. A-01)" required>
+                        <input type="number" name="total_rating" placeholder="Rating" min="0" max="5" step="0.01" required>
+                        <input type="number" name="total_borrowed" placeholder="Total Borrowed" min="0" required>
                         <select name="availability_status" required>
                             <option value="available">Available</option>
                             <option value="not_available">Not Available</option>

@@ -136,6 +136,13 @@ a.book-link:hover .book-card {
     filter: brightness(0.98) drop-shadow(0 2px 8px #0984e3);
 }
 
+.book-cover[src="../img/no-book.png"] {
+    width: 80px;  
+    height: auto;  
+    object-fit: contain;
+    opacity: 0.7;
+}
+
 /* --- Welcome Banner (optional) --- */
 .welcome {
     margin: 32px auto 24px auto;

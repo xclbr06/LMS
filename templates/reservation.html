@@ -54,7 +54,9 @@
                             <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
                             <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:inline;">
                                 <div class="book-card">
-                                    <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                                    <img class="book-cover"
+                                        src="<?= !empty($book['cover_image']) ? htmlspecialchars($book['cover_image']) : '../img/no-book.png' ?>"
+                                        alt="Book Cover">
                                     <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                                     <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                                     <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
@@ -76,7 +78,9 @@
                 <!-- Always show the selected book card -->
                 <div class="book-list">
                     <div class="book-card">
-                        <img class="book-cover" src="<?= htmlspecialchars($selectedBook['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                        <img class="book-cover"
+                            src="<?= !empty($book['cover_image']) ? htmlspecialchars($book['cover_image']) : '../img/no-book.png' ?>"
+                            alt="Book Cover">
                         <div class="book-title"><?= htmlspecialchars($selectedBook['title']) ?></div>
                         <div class="book-author"><?= htmlspecialchars($selectedBook['author']) ?></div>
                         <div class="book-year"><?= htmlspecialchars($selectedBook['year_published'] ?? '') ?></div>
@@ -158,7 +162,9 @@
                     <?php foreach ($userReservations as $res): ?>
                         <div class="reserved-book">
                             <div class="book-card">
-                                <img class="book-cover" src="<?= htmlspecialchars($res['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                               <img class="book-cover"
+                                    src="<?= !empty($res['cover_image']) ? htmlspecialchars($res['cover_image']) : '../img/no-book.png' ?>"
+                                    alt="Book Cover">
                                 <div class="book-title"><?= htmlspecialchars($res['title']) ?></div>
                                 <div class="book-author"><?= htmlspecialchars($res['author']) ?></div>
                                 <div class="book-year"><?= htmlspecialchars($res['year_published'] ?? '') ?></div>

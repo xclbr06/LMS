@@ -5,7 +5,7 @@ require_once "config.php";
 // Helper functions
 function getUserReservations($conn, $user_id) {
     $reservations = [];
-    $sql = "SELECT r.id, b.title, b.author, b.year_published, b.category, b.cover_image, r.due_date, r.status, r.borrow_start_date
+    $sql = "SELECT r.id, b.title, b.author, b.year_published, b.category, b.cover_image, b.total_rating, r.due_date, r.status, r.borrow_start_date
             FROM reservations r
             JOIN books b ON r.book_id = b.id
             WHERE r.user_id = ? AND r.status = 'reserved'

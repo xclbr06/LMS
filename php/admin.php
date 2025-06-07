@@ -13,32 +13,65 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
 }
 
 // --- BOOKS CRUD ---
+
+// IMPORTANT: Always get book counts per category from the FULL books table (unfiltered)
+$categoryCounts = [];
+$categoryCountResult = $conn->query("SELECT category, COUNT(*) as total_titles FROM books GROUP BY category");
+while ($row = $categoryCountResult->fetch_assoc()) {
+    $categoryCounts[$row['category']] = $row['total_titles'];
+}
+
 $bookAddError = $bookAddSuccess = "";
 if (isset($_POST['add_book'])) {
-    $title = trim($_POST['title']);
-    $author = trim($_POST['author']);
-    $isbn = trim($_POST['isbn']);
-    $publisher = trim($_POST['publisher']);
-    $year_published = intval($_POST['year_published']);
-    $category = trim($_POST['category']);
-    $cover_image = trim($_POST['cover_image']);
-    $copies = intval($_POST['copies']);
-    $shelf_location = trim($_POST['shelf_location']);
-    $availability_status = trim($_POST['availability_status']);
+    // Trim all fields to remove whitespace
+    $title = trim($_POST['title'] ?? '');
+    $author = trim($_POST['author'] ?? '');
+    $isbn = trim($_POST['isbn'] ?? '');
+    $publisher = trim($_POST['publisher'] ?? '');
+    $year_published = trim($_POST['year_published'] ?? '');
+    $category = trim($_POST['category'] ?? '');
+    $cover_image = trim($_POST['cover_image'] ?? '');
+    $copies = trim($_POST['copies'] ?? '');
+    $shelf_location = trim($_POST['shelf_location'] ?? '');
+    $total_rating = trim($_POST['total_rating'] ?? '');
+    $total_borrowed = trim($_POST['total_borrowed'] ?? '');
+    $availability_status = trim($_POST['availability_status'] ?? '');
 
-    if (empty($title) || empty($author) || empty($isbn) || empty($publisher) || empty($year_published) || empty($category) || empty($copies) || empty($shelf_location) || empty($availability_status)) {
-        $bookAddError = "Please fill in all required fields.";
+    // Validation
+    if (
+        $title === '' || $author === '' || $isbn === '' || $publisher === '' ||
+        $year_published === '' || $category === '' || $cover_image === '' ||
+        $copies === '' || $shelf_location === '' || $total_rating === '' || $total_borrowed === '' || $availability_status === ''
+    ) {
+        $bookAddError = "Please fill in all required fields (no whitespace only).";
+    } elseif (!preg_match('/^\d{13}$/', $isbn)) {
+        $bookAddError = "ISBN must be exactly 13 digits.";
+    } elseif (!preg_match('/^\d{4}$/', $year_published) || intval($year_published) < 1000 || intval($year_published) > intval(date('Y')) + 1) {
+        $bookAddError = "Year must be a valid 4-digit year.";
+    } elseif (!filter_var($cover_image, FILTER_VALIDATE_URL)) {
+        $bookAddError = "Cover Image Path must be a valid URL.";
+    } elseif (!preg_match('/^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i', $cover_image)) {
+        $bookAddError = "Cover Image Path must be a valid image URL (jpg, jpeg, png, gif, webp).";
+    } elseif (!preg_match('/^[A-Z]-\d{2}$/', $shelf_location)) {
+        $bookAddError = "Shelf Location must be in the format A-01, Z-21, etc.";
+    } elseif (!is_numeric($total_rating) || $total_rating < 0 || $total_rating > 5) {
+        $bookAddError = "Rating must be a number between 0 and 5.";
+    } elseif (!is_numeric($total_borrowed) || $total_borrowed < 0) {
+        $bookAddError = "Total Borrowed must be a non-negative number.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, publisher, year_published, category, cover_image, copies, shelf_location, availability_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssississ", $title, $author, $isbn, $publisher, $year_published, $category, $cover_image, $copies, $shelf_location, $availability_status);
+        $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, publisher, year_published, category, cover_image, copies, shelf_location, total_rating, total_borrowed, availability_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param(
+            "ssssissisdss",
+            $title, $author, $isbn, $publisher, $year_published, $category, $cover_image, $copies, $shelf_location, $total_rating, $total_borrowed, $availability_status
+        );
         if ($stmt->execute()) {
             $bookAddSuccess = "Book added successfully.";
+            header("Location: admin.php?activeTab=inventory&bookAddSuccess=" . urlencode($bookAddSuccess));
+            exit();
         } else {
             $bookAddError = "Failed to add book.";
         }
         $stmt->close();
-        header("Location: admin.php?activeTab=inventory&bookAddSuccess=Book+added+successfully");
-        exit();
     }
 }
 
@@ -214,10 +247,20 @@ if (
 ) {
     $id = $_POST['reservation_id'];
     $user_id = $_POST['user_id'];
-    $book_id = $_POST['book_id'];
+    $new_book_id = $_POST['book_id'];
     $borrow_start_date = $_POST['borrow_start_date'];
     $due_date = $_POST['due_date'];
-    $status = $_POST['status'];
+    $new_status = $_POST['status'];
+
+    // Get previous status and book_id
+    $prevStatus = '';
+    $prevBookId = 0;
+    $stmtPrev = $conn->prepare("SELECT status, book_id FROM reservations WHERE id=?");
+    $stmtPrev->bind_param("i", $id);
+    $stmtPrev->execute();
+    $stmtPrev->bind_result($prevStatus, $prevBookId);
+    $stmtPrev->fetch();
+    $stmtPrev->close();
 
     // Validate user_id and book_id exist to avoid foreign key constraint errors
     $userExists = $conn->prepare("SELECT id FROM users WHERE id = ?");
@@ -228,7 +271,7 @@ if (
     $userExists->close();
 
     $bookExists = $conn->prepare("SELECT id FROM books WHERE id = ?");
-    $bookExists->bind_param("i", $book_id);
+    $bookExists->bind_param("i", $new_book_id);
     $bookExists->execute();
     $bookExists->store_result();
     $bookOk = $bookExists->num_rows > 0;
@@ -236,17 +279,25 @@ if (
 
     if ($userOk && $bookOk) {
         $stmt = $conn->prepare("UPDATE reservations SET user_id=?, book_id=?, borrow_start_date=?, due_date=?, status=? WHERE id=?");
-        $stmt->bind_param("iisssi", $user_id, $book_id, $borrow_start_date, $due_date, $status, $id);
+        $stmt->bind_param("iisssi", $user_id, $new_book_id, $borrow_start_date, $due_date, $new_status, $id);
         if($stmt->execute()) {
-            // Update book availability based on reservation status
-            if(in_array($status, ['returned', 'canceled'])) {
+            // If the book was changed, increment the old book's copies if it was reserved
+            if ($prevBookId != $new_book_id && $prevStatus === 'reserved') {
+                $conn->query("UPDATE books SET copies = copies + 1 WHERE id = $prevBookId");
+            }
+            // If status changed from 'reserved' to 'returned' or 'canceled', increment copies for the current book
+            if ($prevStatus === 'reserved' && in_array($new_status, ['returned', 'canceled'])) {
+                $conn->query("UPDATE books SET copies = copies + 1 WHERE id = $new_book_id");
                 $book_stmt = $conn->prepare("UPDATE books SET availability_status='available' WHERE id=?");
-                $book_stmt->bind_param("i", $book_id);
+                $book_stmt->bind_param("i", $new_book_id);
                 $book_stmt->execute();
                 $book_stmt->close();
-            } else if($status == 'reserved') {
-                $book_stmt = $conn->prepare("UPDATE books SET availability_status='not_available' WHERE id=?");
-                $book_stmt->bind_param("i", $book_id);
+            }
+            // If status changed from not reserved to reserved, decrement copies for the current book
+            else if ($prevStatus !== 'reserved' && $new_status === 'reserved') {
+                $conn->query("UPDATE books SET copies = GREATEST(copies - 1, 0) WHERE id = $new_book_id");
+                $book_stmt = $conn->prepare("UPDATE books SET availability_status='not_available' WHERE id=? AND copies = 0");
+                $book_stmt->bind_param("i", $new_book_id);
                 $book_stmt->execute();
                 $book_stmt->close();
             }
@@ -547,6 +598,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';
-
-
-?>
