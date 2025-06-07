@@ -14,7 +14,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION
 
 // --- BOOKS CRUD ---
 
-// IMPORTANT: Always get book counts per category from the FULL books table (unfiltered)
 $categoryCounts = [];
 $categoryCountResult = $conn->query("SELECT category, COUNT(*) as total_titles FROM books GROUP BY category");
 while ($row = $categoryCountResult->fetch_assoc()) {
@@ -59,17 +58,51 @@ if (isset($_POST['add_book'])) {
     } elseif (!is_numeric($total_borrowed) || $total_borrowed < 0) {
         $bookAddError = "Total Borrowed must be a non-negative number.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO books (title, author, isbn, publisher, year_published, category, cover_image, copies, shelf_location, total_rating, total_borrowed, availability_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param(
-            "ssssissisdss",
-            $title, $author, $isbn, $publisher, $year_published, $category, $cover_image, $copies, $shelf_location, $total_rating, $total_borrowed, $availability_status
-        );
-        if ($stmt->execute()) {
-            $bookAddSuccess = "Book added successfully.";
-            header("Location: admin.php?activeTab=inventory&bookAddSuccess=" . urlencode($bookAddSuccess));
-            exit();
+        // Validate category exists
+        $stmt = $conn->prepare("SELECT category FROM categories WHERE category = ?");
+        $stmt->bind_param("s", $category);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows === 0) {
+            $bookAddError = "Selected category does not exist.";
         } else {
-            $bookAddError = "Failed to add book.";
+            $stmt->close();
+            $stmt = $conn->prepare("INSERT INTO books (
+                title, 
+                author, 
+                isbn, 
+                publisher, 
+                year_published, 
+                category, 
+                cover_image, 
+                copies, 
+                shelf_location, 
+                total_rating,
+                total_borrow,
+                availability_status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param(
+                "ssssissisdss",
+                $title, 
+                $author, 
+                $isbn, 
+                $publisher, 
+                $year_published, 
+                $category, 
+                $cover_image, 
+                $copies, 
+                $shelf_location, 
+                $total_rating,
+                $total_borrow,  // Changed from total_borrowed to total_borrow
+                $availability_status
+            );
+            if ($stmt->execute()) {
+                $bookAddSuccess = "Book added successfully.";
+                header("Location: admin.php?activeTab=inventory&bookAddSuccess=" . urlencode($bookAddSuccess));
+                exit();
+            } else {
+                $bookAddError = "Failed to add book.";
+            }
         }
         $stmt->close();
     }
@@ -78,16 +111,26 @@ if (isset($_POST['add_book'])) {
 // --- BOOKS CRUD: Edit Book ---
 $editBookSuccess = $editBookError = "";
 if (isset($_POST['edit_book'])) {
-    if ($stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?")) {
-        $stmt->bind_param("sssssi", $_POST['title'], $_POST['author'], $_POST['category'], $_POST['copies'], $_POST['availability_status'], $_POST['book_id']);
+    // Validate that category exists
+    $category = trim($_POST['category']);
+    $stmt = $conn->prepare("SELECT category FROM categories WHERE category = ?");
+    $stmt->bind_param("s", $category);
+    $stmt->execute();
+    $stmt->store_result();
+    
+    if ($stmt->num_rows === 0) {
+        $editBookError = "Selected category does not exist.";
+    } else {
+        $stmt->close();
+        $stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?");
+        $stmt->bind_param("sssssi", $_POST['title'], $_POST['author'], $_POST['category'], 
+                         $_POST['copies'], $_POST['availability_status'], $_POST['book_id']);
         if ($stmt->execute()) {
             $editBookSuccess = "Book updated successfully.";
         } else {
             $editBookError = "Failed to update book.";
         }
         $stmt->close();
-    } else {
-        $editBookError = "Failed to update book.";
     }
     header("Location: admin.php?activeTab=inventory&editBookSuccess=" . urlencode($editBookSuccess) . "&editBookError=" . urlencode($editBookError));
     exit();
@@ -181,15 +224,116 @@ if (isset($_POST['delete_user'])) {
 if (isset($_POST['edit_category'])) {
     $original_category = trim($_POST['original_category']);
     $new_category = trim($_POST['category']);
+    
     if ($original_category !== $new_category && !empty($new_category)) {
-        $stmt = $conn->prepare("UPDATE books SET category=? WHERE category=?");
-        $stmt->bind_param("ss", $new_category, $original_category);
-        $stmt->execute();
-        $stmt->close();
+        // Start transaction
+        $conn->begin_transaction();
+        try {
+            // Update category in categories table
+            $stmt = $conn->prepare("UPDATE categories SET category = ? WHERE category = ?");
+            $stmt->bind_param("ss", $new_category, $original_category);
+            $stmt->execute();
+            $stmt->close();
+            
+            // Update category in books table
+            $stmt = $conn->prepare("UPDATE books SET category = ? WHERE category = ?");
+            $stmt->bind_param("ss", $new_category, $original_category);
+            $stmt->execute();
+            $stmt->close();
+            
+            $conn->commit();
+            $categoryEditSuccess = "Category updated successfully.";
+        } catch (Exception $e) {
+            $conn->rollback();
+            $categoryEditError = "Failed to update category.";
+        }
     }
-    header("Location: admin.php?activeTab=categories");
+    header("Location: admin.php?activeTab=categories&categoryEditSuccess=" . urlencode($categoryEditSuccess ?? '') . "&categoryEditError=" . urlencode($categoryEditError ?? ''));
     exit();
 }
+
+// --- ADD CATEGORY HANDLER ---
+$categoryAddError = $categoryAddSuccess = "";
+if (isset($_POST['add_category'])) {
+    $new_category = trim($_POST['new_category'] ?? '');
+    if ($new_category === '') {
+        $categoryAddError = "Category name cannot be empty or whitespace.";
+    } elseif (strlen($new_category) > 100) {
+        $categoryAddError = "Category name is too long.";
+    } else {
+        // Check if category already exists (case-insensitive)
+        $stmt = $conn->prepare("SELECT id FROM categories WHERE LOWER(category) = LOWER(?) LIMIT 1");
+        $stmt->bind_param("s", $new_category);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $categoryAddError = "Category already exists.";
+        } else {
+            $stmt->close();
+            $stmt = $conn->prepare("INSERT INTO categories (category) VALUES (?)");
+            $stmt->bind_param("s", $new_category);
+            if ($stmt->execute()) {
+                $categoryAddSuccess = "Category added successfully!";
+                header("Location: admin.php?activeTab=categories&categoryAddSuccess=" . urlencode($categoryAddSuccess));
+                exit();
+            } else {
+                $categoryAddError = "Failed to add category.";
+            }
+        }
+        $stmt->close();
+    }
+    $activeTab = 'categories';
+}
+
+// --- FETCH CATEGORIES FOR DROPDOWN & TAB ---
+$categories = [];
+$categoryCounts = [];
+
+// First, get categories from the categories table
+$stmt = $conn->prepare("SELECT category FROM categories ORDER BY category ASC");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $categories[] = ['category' => $row['category']];
+}
+$stmt->close();
+
+// Then, get any additional categories from books table that aren't in categories table
+$stmt = $conn->prepare("
+    SELECT DISTINCT b.category 
+    FROM books b 
+    WHERE b.category NOT IN (SELECT category FROM categories)
+    ORDER BY b.category ASC
+");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $categories[] = ['category' => $row['category']];
+    // Also insert these categories into the categories table
+    $insertStmt = $conn->prepare("INSERT IGNORE INTO categories (category) VALUES (?)");
+    $insertStmt->bind_param("s", $row['category']);
+    $insertStmt->execute();
+    $insertStmt->close();
+}
+$stmt->close();
+
+// Get book counts for all categories
+$stmt = $conn->prepare("
+    SELECT category, COUNT(*) as total_titles 
+    FROM books 
+    GROUP BY category
+");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $categoryCounts[$row['category']] = $row['total_titles'];
+}
+$stmt->close();
+
+// Sort categories alphabetically
+usort($categories, function($a, $b) {
+    return strcasecmp($a['category'], $b['category']);
+});
 
 // --- RESERVATIONS CRUD ---
 
@@ -360,24 +504,30 @@ $inventoryStmt->execute();
 $books = $inventoryStmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $inventoryStmt->close();
 
-// --- CATEGORIES SEARCH & SORT (USING BOOKS TABLE) ---
+// --- CATEGORIES SEARCH & SORT ---
 $categorySearch = trim($_GET['categorySearch'] ?? '');
 $categorySortOrder = ($_GET['categorySortOrder'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
-$categoryWhere = '';
-$categoryParams = [];
 if ($categorySearch !== '') {
-    $categoryWhere = "WHERE category LIKE ?";
-    $categoryParams[] = "%$categorySearch%";
+    $filteredCategories = [];
+    foreach ($categories as $cat) {
+        if (stripos($cat['category'], $categorySearch) !== false) {
+            $filteredCategories[] = $cat;
+        }
+    }
+    $categories = $filteredCategories;
 }
-$categorySql = "SELECT DISTINCT category FROM books $categoryWhere ORDER BY category $categorySortOrder";
-$categoryStmt = $conn->prepare($categorySql);
-if ($categoryWhere) {
-    $categoryStmt->bind_param('s', ...$categoryParams);
+
+// Sort categories
+if ($categorySortOrder === 'DESC') {
+    usort($categories, function($a, $b) {
+        return strcasecmp($b['category'], $a['category']);
+    });
+} else {
+    usort($categories, function($a, $b) {
+        return strcasecmp($a['category'], $b['category']);
+    });
 }
-$categoryStmt->execute();
-$categories = $categoryStmt->get_result()->fetch_all(MYSQLI_ASSOC);
-$categoryStmt->close();
 
 // --- USERS SEARCH & SORT ---
 $userSearch = trim($_GET['userSearch'] ?? '');
@@ -598,3 +748,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/admin.html';
+
+// --- CATEGORY DELETE HANDLER ---
+if (isset($_POST['delete_category'])) {
+    $category = $_POST['category'];
+    
+    // Check if category is in use
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM books WHERE category = ?");
+    $stmt->bind_param("s", $category);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $count = $result->fetch_assoc()['count'];
+    
+    if ($count > 0) {
+        $categoryDeleteError = "Cannot delete category that has books assigned to it.";
+    } else {
+        $stmt = $conn->prepare("DELETE FROM categories WHERE category = ?");
+        $stmt->bind_param("s", $category);
+        if ($stmt->execute()) {
+            $categoryDeleteSuccess = "Category deleted successfully.";
+        } else {
+            $categoryDeleteError = "Failed to delete category.";
+        }
+    }
+    $stmt->close();
+    header("Location: admin.php?activeTab=categories&categoryDeleteSuccess=" . urlencode($categoryDeleteSuccess) . "&categoryDeleteError=" . urlencode($categoryDeleteError));
+    exit();
+}
