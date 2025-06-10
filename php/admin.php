@@ -173,7 +173,7 @@ if (isset($_POST['add_user'])) {
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            $userAddError = "Email or Student ID already exists.";
+            $userAddError = "Email or School ID already exists.";
         } else {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_teacher_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -660,12 +660,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
         $email = htmlspecialchars(trim($_POST["email"]));
     }
 
-    // Student ID Validation
+    // School ID Validation
     if (empty($_POST["student_teacher_id"])) {
-        $studentIdErr = "Student ID is required.";
+        $studentIdErr = "School ID is required.";
         $validForm = false;
     } elseif (!preg_match("/^\d{4}-\d{4}$/", $_POST["student_teacher_id"])) {
-        $studentIdErr = "Student ID must be in the format 1234-5678.";
+        $studentIdErr = "School ID must be in the format 1234-5678.";
         $validForm = false;
     } else {
         $studentId = htmlspecialchars(trim($_POST["student_teacher_id"]));
@@ -703,7 +703,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
         }
     }
 
-    // Check for duplicate email and student ID if form is valid
+    // Check for duplicate email and school ID if form is valid
     if ($validForm) {
         // Check for duplicate email
         $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
@@ -716,13 +716,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
         }
         $stmt->close();
 
-        // Check for duplicate student ID
+        // Check for duplicate school ID
         $stmt = $conn->prepare("SELECT id FROM users WHERE student_teacher_id = ?");
         $stmt->bind_param("s", $studentId);
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            $studentIdErr = "This student/teacher ID is already registered.";
+            $studentIdErr = "This school ID is already registered.";
             $validForm = false;
         }
         $stmt->close();
