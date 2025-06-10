@@ -89,44 +89,46 @@ if (isset($_POST['show_reserve']) || isset($_POST['search_book']) || isset($_POS
 }
 
 // Handle reservation
-if (isset($_POST['reserve_book']) && isset($_POST['book_id']) && isset($_POST['due_date']) && isset($_POST['borrow_start_date'])) {
+if (isset($_POST['reserve_book']) && isset($_POST['book_id'])) {
     $book_id = intval($_POST['book_id']);
-    $due_date = $_POST['due_date'];
-    $borrow_start_date = $_POST['borrow_start_date'];
 
     // Check active reservations
     $userReservations = getUserReservations($conn, $user_id);
     if (count($userReservations) >= $borrow_limit) {
         $reserveError = "You have reached your borrowing limit of $borrow_limit books.";
     } else {
-        // Validate borrow_start_date
-        if ($borrow_start_date < $borrowStartMin || $borrow_start_date > $borrowStartMax) {
-            $reserveError = "Borrowing start date must be from today until this week's Saturday.";
+        // Validate borrowing period based on start date
+        $borrow_start_date = $_POST['borrow_start_date'];
+        $due_date = $_POST['due_date'];
+        
+        // Calculate the allowed date range
+        $min_due_date = date('Y-m-d', strtotime($borrow_start_date . ' +1 day'));
+        $max_due_date = date('Y-m-d', strtotime($borrow_start_date . " +$borrow_period days"));
+        
+        if ($due_date < $min_due_date || $due_date > $max_due_date) {
+            $reserveError = "Return date must be between " . 
+                           date('M j, Y', strtotime($min_due_date)) . 
+                           " and " . 
+                           date('M j, Y', strtotime($max_due_date)) . 
+                           " based on your selected start date.";
         } else {
-            // Validate due_date (must be after borrow_start_date and within borrow period)
-            $minDueDate = date('Y-m-d', strtotime($borrow_start_date . ' +1 day'));
-            $maxDueDate = date('Y-m-d', strtotime($borrow_start_date . " +$borrow_period days"));
-            if ($due_date < $minDueDate || $due_date > $maxDueDate) {
-                $reserveError = "Return date must be at least one day after the borrowing start date and within your allowed borrowing period.";
+            $book = getBookById($conn, $book_id);
+            if (!$book) {
+                $reserveError = "Book not found.";
+            } elseif ($book['copies'] < 1 || $book['availability_status'] != 'available') {
+                $reserveError = "Book is not available for reservation.";
             } else {
-                $book = getBookById($conn, $book_id);
-                if (!$book) {
-                    $reserveError = "Book not found.";
-                } elseif ($book['copies'] < 1 || $book['availability_status'] != 'available') {
-                    $reserveError = "Book is not available for reservation.";
+                $stmt = $conn->prepare("INSERT INTO reservations (user_id, book_id, borrow_start_date, reserved_at, due_date, status) VALUES (?, ?, ?, NOW(), ?, 'reserved')");
+                $stmt->bind_param("iiss", $user_id, $book_id, $borrow_start_date, $due_date);
+                if ($stmt->execute()) {
+                    $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id");
+                    $_SESSION['reserve_success'] = "Book reserved successfully! Borrow start: $borrow_start_date, Due date: $due_date";
+                    header("Location: reservation.php");
+                    exit();
                 } else {
-                    $stmt = $conn->prepare("INSERT INTO reservations (user_id, book_id, borrow_start_date, reserved_at, due_date, status) VALUES (?, ?, ?, NOW(), ?, 'reserved')");
-                    $stmt->bind_param("iiss", $user_id, $book_id, $borrow_start_date, $due_date);
-                    if ($stmt->execute()) {
-                        $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id");
-                        $_SESSION['reserve_success'] = "Book reserved successfully! Borrow start: $borrow_start_date, Due date: $due_date";
-                        header("Location: reservation.php");
-                        exit();
-                    } else {
-                        $reserveError = "Failed to reserve book. Please try again.";
-                    }
-                    $stmt->close();
+                    $reserveError = "Failed to reserve book. Please try again.";
                 }
+                $stmt->close();
             }
         }
     }

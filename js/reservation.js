@@ -65,3 +65,39 @@ document.addEventListener('DOMContentLoaded', function() {
         updateDueDateLimits();
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const borrowStartPicker = document.getElementById('borrow_start_date_picker');
+    const dueDatePicker = document.getElementById('due_date_picker');
+    
+    if (borrowStartPicker && dueDatePicker) {
+        // Update return date constraints when borrow start date changes
+        borrowStartPicker.addEventListener('change', function() {
+            const selectedStartDate = new Date(this.value);
+            const borrowPeriod = parseInt(dueDatePicker.dataset.period) || 14; // Default to 14 if not set
+            
+            // Set minimum return date (day after selected start date)
+            const minReturn = new Date(selectedStartDate);
+            minReturn.setDate(selectedStartDate.getDate() + 1);
+            
+            // Set maximum return date (borrowPeriod days from start date)
+            const maxReturn = new Date(selectedStartDate);
+            maxReturn.setDate(selectedStartDate.getDate() + borrowPeriod);
+            
+            // Update return date picker constraints
+            dueDatePicker.min = minReturn.toISOString().split('T')[0];
+            dueDatePicker.max = maxReturn.toISOString().split('T')[0];
+            
+            // If current return date is outside new range, set to min
+            const currentDueDate = new Date(dueDatePicker.value);
+            if (currentDueDate < minReturn || currentDueDate > maxReturn || !dueDatePicker.value) {
+                dueDatePicker.value = minReturn.toISOString().split('T')[0];
+            }
+        });
+
+        // Set initial constraints on page load if start date is selected
+        if (borrowStartPicker.value) {
+            borrowStartPicker.dispatchEvent(new Event('change'));
+        }
+    }
+});
