@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // --- SEARCH & SORT LOGIC ---
     function compare(a, b, type, order) {
+        // Handles different data type comparisons
         if (type === 'number') {
             a = parseFloat(a) || 0; b = parseFloat(b) || 0;
         } else if (type === 'date') {
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function searchAndSortTable({tableId, searchId, sortFieldId, sortOrderId, fieldTypes, searchFields}) {
+        // Implements dynamic table filtering and sorting
         const search = document.getElementById(searchId)?.value.toLowerCase() || '';
         const sortField = document.getElementById(sortFieldId)?.value || '';
         const sortOrder = document.getElementById(sortOrderId)?.value || 'asc';
@@ -70,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Categories ---
     function categorySearchSort() {
+        // Implements category filtering and sorting
         searchAndSortTable({
             tableId: 'categoriesTable',
             searchId: 'categorySearch',
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Users ---
     function userSearchSort() {
+        // Implements user filtering and sorting
         searchAndSortTable({
             tableId: 'usersTable',
             searchId: 'userSearch',
@@ -115,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Reservations ---
     function reservationSearchSort() {
+        // Implements reservation filtering and sorting
         searchAndSortTable({
             tableId: 'reservationsTable',
             searchId: 'reservationSearch',
@@ -138,16 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var showFlag = document.getElementById('showAddUserModalFlag');
-    if (showFlag) {
-        var addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
-        addUserModal.show();
-    }
-});
-
-// Modal close function
+// Modal Management Block
+// Handles modal dialogs for forms
 function closeModal(modalId) {
+    // Manages modal window closing
     var modal = document.getElementById(modalId);
     if (modal) {
         modal.style.display = 'none';

@@ -1,17 +1,21 @@
 <?php
+// Initialize core requirements and session
 require_once "config.php";
+session_start();
 
+// Initialize variables for form handling
 $email = $password = "";
 $emailErr = $passwordErr = $loginErr = "";
 
-session_start();
-
+// Check if user is already logged in
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header("Location: dashboard.php");
     exit();
 }
 
+// Form submission validation
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Email validation
     if (empty($_POST["email"])) {
         $emailErr = "Please enter your email address.";
     } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
@@ -20,18 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = htmlspecialchars(trim($_POST["email"]));
     }
 
+    // Password validation
     if (empty($_POST["password"])) {
         $passwordErr = "Please enter your password.";
     } else {
         $password = $_POST["password"];
     }
 
+    // Verify credentials against database
     if (empty($emailErr) && empty($passwordErr)) {
         $stmt = $conn->prepare("SELECT id, first_name, last_name, password, role FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
+        // Verify user exists and password matches
         if ($stmt->num_rows == 1) {
             $stmt->bind_result($id, $first_name, $last_name, $hashed_password, $role);
             $stmt->fetch();
