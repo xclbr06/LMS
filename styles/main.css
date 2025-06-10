@@ -63,12 +63,13 @@ body {
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
+    position: relative; /* Changed from fixed */
+    transition: all 0.3s ease;
 }
 
 .content-box {
     max-width: 450px;
     width: 100%;
-    padding: 2rem;
     text-align: center;
     position: relative;
     z-index: 1;
@@ -77,6 +78,8 @@ body {
     border-radius: 12px;
     padding: 2.5rem;
     box-shadow: 0 4px 24px rgba(9, 132, 227, 0.18);
+    margin-left: -4rem; /* Adjusted margin */
+    transition: all 0.3s ease;
 }
 
 .school-name {
@@ -84,7 +87,7 @@ body {
     font-weight: bold;
     color: #eaf6fb;
     margin-bottom: 0.5rem;
-    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18);
+    text-shadow: 10px 10px 15px 5px rgba(9, 132, 227, 0.18);
 }
 
 .system-title {
@@ -126,6 +129,13 @@ body {
     transform: translateY(-2px);
 }
 
+@media (max-width: 1200px) {
+    .content-box {
+        margin-left: -3rem;
+        max-width: 400px;
+    }
+}
+
 @media (max-width: 900px) {
     .split-container {
         flex-direction: column;
@@ -145,31 +155,15 @@ body {
         padding: 2rem 1rem;
     }
     
-    .school-name {
-        font-size: 1.5rem;
-    }
-    
-    .system-title {
-        font-size: 1.1rem;
-    }
-    
-    .welcome-msg {
-        font-size: 1rem;
-    }
-    
-    .main-btn {
-        padding: 0.7rem 2rem;
-        font-size: 1rem;
+    .content-box {
+        margin-left: 0; /* Remove negative margin on mobile */
+        max-width: 450px;
     }
 }
 
 @media (max-width: 500px) {
-    .buttons-container {
-        flex-direction: column;
-    }
-    
-    .main-btn {
-        width: 100%;
-        margin: 0.5rem 0;
+    .content-box {
+        padding: 1.5rem;
+        max-width: 95%;
     }
 }
