@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2025 at 04:55 AM
+-- Generation Time: Jun 10, 2025 at 09:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,8 +67,8 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (16, 'A Brief History of Time', 'Stephen Hawking', '9780553380163', 'Bantam Books', 1988, 'Science', 'https://covers.openlibrary.org/b/isbn/9780553380163-L.jpg', 3, 'S-01', 'available', 15, 4.6, 'A landmark book on cosmology and black holes. Explains complex scientific concepts for a general audience. Written by one of the greatest physicists of our time.'),
 (17, 'The Selfish Gene', 'Richard Dawkins', '9780199291151', 'Oxford University Press', 1976, 'Science', 'https://covers.openlibrary.org/b/isbn/9780199291151-L.jpg', 5, 'S-02', 'available', 6, 2, 'Introduces the concept of the selfish gene as a driver of evolution. Explores natural selection and animal behavior. A groundbreaking work in biology.'),
 (18, 'The Origin of Species', 'Charles Darwin', '9781509827695', 'John Murray', 1859, 'Science', 'https://covers.openlibrary.org/b/olid/OL23278117M-L.jpg', 5, 'S-03', 'available', 7, 3.2, 'Darwin’s revolutionary theory of evolution by natural selection. Changed the way we understand life on Earth. One of the most important scientific works ever written.'),
-(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 3, 'S-04', 'not_available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
-(20, 'The Double Helix', 'James D. Watson', '9780743216302', 'Atheneum', 1968, 'Science', 'https://covers.openlibrary.org/b/isbn/9780743216302-L.jpg', 5, 'S-05', 'not_available', 7, 2.6, 'The discovery of the structure of DNA, told by one of its co-discoverers. Reveals the drama and personalities behind a major scientific breakthrough. A fascinating memoir.'),
+(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 4, 'S-04', 'available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
+(20, 'The Double Helix', 'James D. Watson', '9780743216302', 'Atheneum', 1968, 'Science', 'https://covers.openlibrary.org/b/isbn/9780743216302-L.jpg', 5, 'S-05', 'available', 7, 2.6, 'The discovery of the structure of DNA, told by one of its co-discoverers. Reveals the drama and personalities behind a major scientific breakthrough. A fascinating memoir.'),
 (21, 'A Mathematician\'s Apology', 'G.H. Hardy', '9780521427067', 'Cambridge University Press', 1940, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780521427067-L.jpg', 5, 'M-01', 'available', 23, 4.6, 'A mathematician reflects on his life and work. Explores the beauty and creativity of mathematics. A classic essay on the nature of mathematical thought.'),
 (22, 'Flatland: A Romance of Many Dimensions', 'Edwin A. Abbott', '9780486272634', 'Seeley & Co.', 1884, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780486272634-L.jpg', 5, 'M-02', 'available', 10, 2.4, 'A satirical novella exploring dimensions and social hierarchy. Uses geometry to comment on Victorian society. A unique blend of math and literature.'),
 (23, 'The Princeton Companion to Mathematics', 'Timothy Gowers', '9780691118802', 'Princeton University Press', 2008, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780691118802-L.jpg', 5, 'M-03', 'available', 28, 1.2, 'A comprehensive reference on mathematics. Covers topics from algebra to logic and probability. Written by leading mathematicians.'),
@@ -99,7 +99,32 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (48, 'How Not to Be Wrong: The Power of Mathematical Thinking', 'Jordan Ellenberg', '9780143127536', 'Penguin Books', 2014, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780143127536-L.jpg', 4, 'M-08', 'available', 11, 4.4, 'Ellenberg shows how math shapes our lives. The book is witty and insightful. It encourages logical thinking in everyday situations.'),
 (49, 'The Joy of x', 'Steven Strogatz', '9780544105850', 'Mariner Books', 2012, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780544105850-L.jpg', 3, 'M-09', 'available', 10, 4.3, 'Strogatz makes math fun and relatable. He explains concepts with real-life examples. The book is perfect for math enthusiasts and novices alike.'),
 (50, 'Love and Math', 'Edward Frenkel', '9780465050741', 'Basic Books', 2013, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780465050741-L.jpg', 3, 'M-10', 'available', 7, 4.1, 'Frenkel shares his journey into the world of mathematics. The book blends autobiography with mathematical ideas. It inspires a love for learning.'),
-(54, 'Test Title', 'JK Marinas', '0915293', 'JK Publishing', 2004, 'Technology', '', 3, '1B', 'not_available', 0, 0, NULL);
+(55, 'Test Title', 'JK Marinas', '0915293', 'JK Publishing', 2004, 'Technology', '', 3, '1B', 'available', 0, 0, NULL),
+(58, 'Insidious', 'JK', '1234567891234', 'JK Publishing', 2001, 'Horror', 'https://flxt.tmsimg.com/assets/p8494407_p_v10_ak.jpg', 3, 'A-52', 'available', NULL, 4, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `category` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `category`) VALUES
+(4, 'Action'),
+(2, 'Fiction'),
+(5, 'Historical'),
+(3, 'Horror'),
+(6, 'Mathematics'),
+(7, 'Science'),
+(8, 'Technology');
 
 -- --------------------------------------------------------
 
@@ -122,13 +147,13 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `borrow_start_date`, `reserved_at`, `due_date`, `status`) VALUES
-(14, 4, 19, '0000-00-00', '2025-06-01 13:28:40', '2025-06-27', 'reserved'),
-(15, 4, 9, '0000-00-00', '2025-06-01 13:46:22', '2025-06-07', 'reserved'),
+(14, 4, 7, '0000-00-00', '2025-06-01 13:28:40', '2025-06-27', 'returned'),
+(15, 4, 19, '0000-00-00', '2025-06-01 13:46:22', '2025-06-09', 'reserved'),
 (16, 7, 16, '2025-06-11', '2025-06-06 09:51:30', '2025-06-20', 'returned'),
 (17, 7, 49, '2025-06-13', '2025-06-06 09:53:14', '2025-06-15', 'returned'),
 (18, 7, 4, '2025-06-06', '2025-06-06 09:55:06', '2025-06-19', 'returned'),
 (19, 7, 33, '2025-06-06', '2025-06-06 10:01:18', '2025-06-08', 'returned'),
-(20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'reserved');
+(20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'returned');
 
 -- --------------------------------------------------------
 
@@ -156,7 +181,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `student_teacher_id`, `password`, `phone`, `role`, `created_at`) VALUES
 (4, 'Admin', '', 'Account', 'admin@iscp.edu.ph', '2324-0696', '$2y$10$brZOoUZQyowvKOimmwfvIOpg1NmHNFyDlfsD087dSuKS4117ndJS6', '', 'admin', '2025-06-01 05:26:45'),
 (6, 'JK', '', 'Marinas', 'jk@iscp.edu.ph', '2324-0915', '$2y$10$oM2euX2v0s5Bv7Oqp9X3tePtqmeKRz7FZXr./pcvUYNnhVxSLCdey', '', 'student', '2025-06-06 01:36:31'),
-(7, 'Lee', 'Gabrielle', 'Rimorin', 'lee@iscp.edu.ph', '2324-1920', '$2y$10$T/I1Nh2sCdDCmS1dIMjyyuKswtw9KCfL8sSWgHVSkvTH9DtxMT1cW', '', 'student', '2025-06-06 01:41:26');
+(7, 'Lee', 'Gabrielle', 'Rimorin', 'lee@iscp.edu.ph', '2324-1920', '$2y$10$T/I1Nh2sCdDCmS1dIMjyyuKswtw9KCfL8sSWgHVSkvTH9DtxMT1cW', '', 'teacher', '2025-06-06 01:41:26');
 
 --
 -- Indexes for dumped tables
@@ -168,6 +193,13 @@ INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `s
 ALTER TABLE `books`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_isbn` (`isbn`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `category` (`category`);
 
 --
 -- Indexes for table `reservations`
@@ -193,7 +225,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `reservations`
