@@ -10,10 +10,12 @@
         <div class="bg-overlay"></div>
     </div>
     <div class="form-section">
-        <h2>Login Form</h2>
+        <h2>LOGIN</h2>
         <form method="post" action="login.php" autocomplete="off">
             <?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
-                <div class="success" style="margin-bottom:10px;">You have successfully registered! Please login.</div>
+                <script>
+                    window.alert('You have successfully registered! Please login.');
+                </script>
             <?php endif; ?>
             <label>Email:
                 <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
