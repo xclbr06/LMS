@@ -608,48 +608,48 @@
                     <div class="modal-body">
                         <form class="crud-form" method="post">
                             <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">ISBN</label>
                                 <input type="text" name="isbn" value="<?= htmlspecialchars($book['isbn']) ?>" 
                                        pattern="\d{13}" title="ISBN must be exactly 13 digits" required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Year Published</label>
                                 <input type="number" name="year_published" value="<?= htmlspecialchars($book['year_published']) ?>" 
                                        min="1000" max="<?= date('Y')+1 ?>" required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Rating</label>
                                 <input type="number" name="total_rating" value="<?= htmlspecialchars($book['total_rating']) ?>" 
                                        min="0" max="5" step="0.1" required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Total Borrowed</label>
                                 <input type="number" name="total_borrow" value="<?= htmlspecialchars($book['total_borrow']) ?>" 
                                        min="0" required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Shelf Location</label>
                                 <input type="text" name="shelf_location" value="<?= htmlspecialchars($book['shelf_location']) ?>" 
                                        pattern="[A-Z]-\d{2}" title="Format: A-01, Z-21, etc." required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Cover Image Path (URL)</label>
                                 <input type="url" name="cover_image" value="<?= htmlspecialchars($book['cover_image']) ?>" required>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label">Synopsis</label>
                                 <textarea name="synopsis" class="form-control" rows="4"><?= htmlspecialchars($book['synopsis'] ?? '') ?></textarea>
                             </div>
                         
-                            <button type="submit" name="edit_book_details" class="btn btn-primary w-100">Go Back to Save</button>
+                            <button type="submit" name="edit_book_details" class="btn btn-primary w-100">Save</button>
                         </form>
                     </div>
                 </div>
