@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 09:55 AM
+-- Generation Time: Jun 10, 2025 at 06:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_published`, `category`, `cover_image`, `copies`, `shelf_location`, `availability_status`, `total_borrow`, `total_rating`, `synopsis`) VALUES
-(1, 'Good Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '9780132350884', 'Prentice Hall', 2008, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg', 4, 'T-01', 'available', 9, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
+(1, 'Good Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '9780132350884', 'Prentice Hall', 2008, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg', 3, 'T-02', 'available', 8, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
 (2, 'The Pragmatic Programmer', 'Andrew Hunt, David Thomas', '9780201616224', 'Addison-Wesley', 1999, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201616224-L.jpg', 4, 'T-02', 'available', 28, 4.2, 'This book offers practical advice for programmers. It covers a wide range of topics from career development to architectural techniques. A must-read for software professionals.'),
 (3, 'Introduction to Algorithms', 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', '9780262033848', 'MIT Press', 2009, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780262033848-L.jpg', 4, 'T-03', 'available', 5, 2.9, 'A widely used textbook for algorithms. Covers a broad range of algorithms in depth. Suitable for students and professionals alike.'),
 (4, 'Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', '9780201633610', 'Addison-Wesley', 1994, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201633610-L.jpg', 4, 'T-04', 'available', 12, 1, 'A classic on reusable object-oriented software design. Introduces 23 foundational design patterns. Essential for every software engineer.'),
@@ -100,7 +100,8 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (49, 'The Joy of x', 'Steven Strogatz', '9780544105850', 'Mariner Books', 2012, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780544105850-L.jpg', 3, 'M-09', 'available', 10, 4.3, 'Strogatz makes math fun and relatable. He explains concepts with real-life examples. The book is perfect for math enthusiasts and novices alike.'),
 (50, 'Love and Math', 'Edward Frenkel', '9780465050741', 'Basic Books', 2013, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780465050741-L.jpg', 3, 'M-10', 'available', 7, 4.1, 'Frenkel shares his journey into the world of mathematics. The book blends autobiography with mathematical ideas. It inspires a love for learning.'),
 (55, 'Test Title', 'JK Marinas', '0915293', 'JK Publishing', 2004, 'Technology', '', 3, '1B', 'available', 0, 0, NULL),
-(58, 'Insidious', 'JK', '1234567891234', 'JK Publishing', 2001, 'Horror', 'https://flxt.tmsimg.com/assets/p8494407_p_v10_ak.jpg', 3, 'A-52', 'available', NULL, 4, NULL);
+(58, 'Insidious', 'JK', '1234567891234', 'JK Publishing', 2001, 'Horror', 'https://flxt.tmsimg.com/assets/p8494407_p_v10_ak.jpg', 3, 'A-52', 'available', 5, 4, ''),
+(59, 'Insidious 2', 'JK', '1234561234527', 'Jk Publishing', 2001, 'Horror', 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Insidious_%E2%80%93_Chapter_2_Poster.jpg/250px-Insidious_%E2%80%93_Chapter_2_Poster.jpg', 5, 'A-91', 'not_available', 5, 4.1, '');
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,6 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category`) VALUES
-(4, 'Action'),
 (2, 'Fiction'),
 (5, 'Historical'),
 (3, 'Horror'),
@@ -147,13 +147,15 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `borrow_start_date`, `reserved_at`, `due_date`, `status`) VALUES
-(14, 4, 7, '0000-00-00', '2025-06-01 13:28:40', '2025-06-27', 'returned'),
-(15, 4, 19, '0000-00-00', '2025-06-01 13:46:22', '2025-06-09', 'reserved'),
+(14, 4, 7, '2025-05-13', '2025-06-01 13:28:40', '2025-06-27', 'returned'),
+(15, 4, 19, '2025-06-06', '2025-06-01 13:46:22', '2025-06-09', 'reserved'),
 (16, 7, 16, '2025-06-11', '2025-06-06 09:51:30', '2025-06-20', 'returned'),
 (17, 7, 49, '2025-06-13', '2025-06-06 09:53:14', '2025-06-15', 'returned'),
 (18, 7, 4, '2025-06-06', '2025-06-06 09:55:06', '2025-06-19', 'returned'),
 (19, 7, 33, '2025-06-06', '2025-06-06 10:01:18', '2025-06-08', 'returned'),
-(20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'returned');
+(20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'returned'),
+(21, 9, 2, '2025-06-13', '2025-06-10 22:46:18', '2025-06-23', 'returned'),
+(22, 9, 38, '2025-06-11', '2025-06-10 23:04:52', '2025-06-24', 'canceled');
 
 -- --------------------------------------------------------
 
@@ -180,8 +182,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `student_teacher_id`, `password`, `phone`, `role`, `created_at`) VALUES
 (4, 'Admin', '', 'Account', 'admin@iscp.edu.ph', '2324-0696', '$2y$10$brZOoUZQyowvKOimmwfvIOpg1NmHNFyDlfsD087dSuKS4117ndJS6', '', 'admin', '2025-06-01 05:26:45'),
-(6, 'JK', '', 'Marinas', 'jk@iscp.edu.ph', '2324-0915', '$2y$10$oM2euX2v0s5Bv7Oqp9X3tePtqmeKRz7FZXr./pcvUYNnhVxSLCdey', '', 'student', '2025-06-06 01:36:31'),
-(7, 'Lee', 'Gabrielle', 'Rimorin', 'lee@iscp.edu.ph', '2324-1920', '$2y$10$T/I1Nh2sCdDCmS1dIMjyyuKswtw9KCfL8sSWgHVSkvTH9DtxMT1cW', '', 'teacher', '2025-06-06 01:41:26');
+(6, 'JK', 'Garcia', 'Marinas', 'jk@iscp.edu.ph', '2324-0915', '$2y$10$oM2euX2v0s5Bv7Oqp9X3tePtqmeKRz7FZXr./pcvUYNnhVxSLCdey', '', 'student', '2025-06-06 01:36:31'),
+(7, 'Lee', 'Gabrielle', 'Rimorin', 'lee@iscp.edu.ph', '2324-1920', '$2y$10$T/I1Nh2sCdDCmS1dIMjyyuKswtw9KCfL8sSWgHVSkvTH9DtxMT1cW', '', 'teacher', '2025-06-06 01:41:26'),
+(8, 'Chad', '', 'Ocampo', 'chad@iscp.edu.ph', '2324-6969', '$2y$10$erWr/6pqsMzQe56HblBiXOiiTbnGXxn.i0Ob4Ipah6xsal1/1Zl7C', '', 'teacher', '2025-06-10 10:54:29'),
+(9, 'Ivan', '', 'Illahi', 'ivan@iscp.edu.ph', '2354-1234', '$2y$10$6uZiAAH5tZ/coe50m7LzoeUKNbjY4crfyjFfFlQkNvjfCgcWA9YXW', '', 'student', '2025-06-10 14:25:57');
 
 --
 -- Indexes for dumped tables
@@ -225,25 +229,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
