@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
     min-width: 100vw;
     display: flex;
-    justify-content: flex-start; /* Start at top for scrollability */
+    justify-content: center; /* Start at top for scrollability */
     align-items: center;
     flex-direction: column;
     overflow-x: hidden;
@@ -35,14 +35,14 @@ body {
 .bg-overlay {
     position: absolute;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(9,132,227,0.12);
+    background: rgba(9,132,227,0.18);
 }
 
 h2,
 .form-section h2 {
     color: #eaf6fb;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 15px;
     margin-bottom: 1rem;
     font-size: 2rem;
     letter-spacing: 1px;
@@ -94,7 +94,8 @@ input[type="text"], input[type="email"], input[type="password"] {
     max-width: 300px;
     min-width: 100px;
     padding: 0.3rem 0.3rem;
-    margin: 0.2rem auto 1.1rem auto;
+    margin: 0.2rem auto 1.0rem auto;
+    margin-bottom: 4px;
     border: 1.5px solid #b2bec3;
     border-radius: 5px;
     font-size: 1.08rem;
@@ -134,6 +135,7 @@ button[type="submit"]:hover {
 
 .error {
     color: #d3c722;
+    margin-top: 0;
     font-size: 1em;
     font-weight: bold;
     border-radius: 4px;
