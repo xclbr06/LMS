@@ -190,14 +190,38 @@ a:hover {
     transition: color 0.18s;
 }
 .book-cover {
-    width: 100px;
-    height: 140px;
+    width: 90px;
+    height: 130px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 0.7rem;
     background: #eaf6fb;
     box-shadow: 0 1px 8px rgba(9,132,227,0.10);
 }
+
+.book-cover:not([src]), 
+.book-cover[src=""],
+.book-cover[src="../img/no-book.png"] {
+    background: linear-gradient(135deg, #eaf6fb 25%, #d3e8f4 25%, #d3e8f4 50%, #eaf6fb 50%, #eaf6fb 75%, #d3e8f4 75%);
+    background-size: 20px 20px;
+    border: 1.5px solid #0984e3;
+    position: relative;
+}
+
+.book-cover[src="../img/no-book.png"]::after {
+    content: "No Cover";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    color: #0984e3;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    text-shadow: 1px 1px 0 #fff;
+}
+
 .book-title {
     font-weight: bold;
     font-size: 1.08rem;
@@ -366,6 +390,10 @@ a:hover {
         min-height: 220px;
         padding: 0.8rem 0.5rem 0.7rem 0.5rem;
     }
+    .book-cover {
+        width: 80px;
+        height: 115px;
+    }
 }
 @media (max-width: 700px) {
     .reservation-section {
@@ -388,6 +416,9 @@ a:hover {
         width: 70px;
         height: 100px;
     }
+    .book-cover[src="../img/no-book.png"]::after {
+        font-size: 0.6rem;
+    }
 }
 @media (max-width: 500px) {
     .reservation-section {
@@ -407,7 +438,10 @@ a:hover {
         padding: 0.2rem 0.1rem 0.2rem 0.1rem;
     }
     .book-cover {
-        width: 50px;
-        height: 70px;
+        width: 60px;
+        height: 85px;
+    }
+    .book-cover[src="../img/no-book.png"]::after {
+        font-size: 0.5rem;
     }
 }

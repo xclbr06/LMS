@@ -56,7 +56,8 @@
                                 <div class="book-card">
                                     <img class="book-cover"
                                         src="<?= !empty($book['cover_image']) ? htmlspecialchars($book['cover_image']) : '../img/no-book.png' ?>"
-                                        alt="Book Cover">
+                                        alt="Book Cover"
+                                        onerror="this.src='../img/no-book.png';">
                                     <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                                     <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                                     <div class="book-year"><?= htmlspecialchars($book['year_published'] ?? '') ?></div>
@@ -79,8 +80,9 @@
                 <div class="book-list">
                     <div class="book-card">
                         <img class="book-cover"
-                            src="<?= !empty($book['cover_image']) ? htmlspecialchars($book['cover_image']) : '../img/no-book.png' ?>"
-                            alt="Book Cover">
+                            src="<?= !empty($selectedBook['cover_image']) ? htmlspecialchars($selectedBook['cover_image']) : '../img/no-book.png' ?>"
+                            alt="Book Cover"
+                            onerror="this.src='../img/no-book.png';">
                         <div class="book-title"><?= htmlspecialchars($selectedBook['title']) ?></div>
                         <div class="book-author"><?= htmlspecialchars($selectedBook['author']) ?></div>
                         <div class="book-year"><?= htmlspecialchars($selectedBook['year_published'] ?? '') ?></div>

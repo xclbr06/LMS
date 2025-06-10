@@ -33,14 +33,14 @@ if (isset($_POST['add_book'])) {
     $copies = trim($_POST['copies'] ?? '');
     $shelf_location = trim($_POST['shelf_location'] ?? '');
     $total_rating = trim($_POST['total_rating'] ?? '');
-    $total_borrowed = trim($_POST['total_borrowed'] ?? '');
+    $total_borrow = trim($_POST['total_borrowed']);
     $availability_status = trim($_POST['availability_status'] ?? '');
 
     // Validation
     if (
         $title === '' || $author === '' || $isbn === '' || $publisher === '' ||
         $year_published === '' || $category === '' || $cover_image === '' ||
-        $copies === '' || $shelf_location === '' || $total_rating === '' || $total_borrowed === '' || $availability_status === ''
+        $copies === '' || $shelf_location === '' || $total_rating === '' || $total_borrow === '' || $availability_status === ''
     ) {
         $bookAddError = "Please fill in all required fields (no whitespace only).";
     } elseif (!preg_match('/^\d{13}$/', $isbn)) {
@@ -55,7 +55,7 @@ if (isset($_POST['add_book'])) {
         $bookAddError = "Shelf Location must be in the format A-01, Z-21, etc.";
     } elseif (!is_numeric($total_rating) || $total_rating < 0 || $total_rating > 5) {
         $bookAddError = "Rating must be a number between 0 and 5.";
-    } elseif (!is_numeric($total_borrowed) || $total_borrowed < 0) {
+    } elseif (!is_numeric($total_borrow) || $total_borrow < 0) {
         $bookAddError = "Total Borrowed must be a non-negative number.";
     } else {
         // Validate category exists
@@ -78,7 +78,7 @@ if (isset($_POST['add_book'])) {
                 copies, 
                 shelf_location, 
                 total_rating,
-                total_borrow,
+                total_borrow,  // Changed from total_borrowed
                 availability_status
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param(
@@ -93,7 +93,7 @@ if (isset($_POST['add_book'])) {
                 $copies, 
                 $shelf_location, 
                 $total_rating,
-                $total_borrow,  // Changed from total_borrowed to total_borrow
+                $total_borrow,  // Changed from total_borrowed
                 $availability_status
             );
             if ($stmt->execute()) {
@@ -773,5 +773,58 @@ if (isset($_POST['delete_category'])) {
     }
     $stmt->close();
     header("Location: admin.php?activeTab=categories&categoryDeleteSuccess=" . urlencode($categoryDeleteSuccess) . "&categoryDeleteError=" . urlencode($categoryDeleteError));
+    exit();
+}
+
+// Add this with your other book handlers
+if (isset($_POST['edit_book_details'])) {
+    $id = intval($_POST['book_id']);
+    $isbn = trim($_POST['isbn']);
+    $year_published = trim($_POST['year_published']);
+    $total_rating = trim($_POST['total_rating']);
+    $total_borrow = trim($_POST['total_borrow']);
+    $shelf_location = trim($_POST['shelf_location']);
+    $cover_image = trim($_POST['cover_image']);
+    $synopsis = trim($_POST['synopsis']);
+
+    // Validation
+    $editDetailsError = '';
+    if (!preg_match('/^\d{13}$/', $isbn)) {
+        $editDetailsError = "ISBN must be exactly 13 digits.";
+    } elseif (!preg_match('/^\d{4}$/', $year_published) || 
+              intval($year_published) < 1000 || 
+              intval($year_published) > intval(date('Y')) + 1) {
+        $editDetailsError = "Invalid year.";
+    } elseif (!is_numeric($total_rating) || $total_rating < 0 || $total_rating > 5) {
+        $editDetailsError = "Rating must be between 0 and 5.";
+    } elseif (!is_numeric($total_borrow) || $total_borrow < 0) {
+        $editDetailsError = "Total borrowed must be non-negative.";
+    } elseif (!preg_match('/^[A-Z]-\d{2}$/', $shelf_location)) {
+        $editDetailsError = "Invalid shelf location format.";
+    } elseif (!filter_var($cover_image, FILTER_VALIDATE_URL)) {
+        $editDetailsError = "Invalid cover image URL.";
+    }
+
+    if (empty($editDetailsError)) {
+        $stmt = $conn->prepare("UPDATE books SET 
+            isbn=?, year_published=?, total_rating=?, total_borrow=?, 
+            shelf_location=?, cover_image=?, synopsis=? 
+            WHERE id=?");
+        $stmt->bind_param("sisisssi", 
+            $isbn, $year_published, $total_rating, $total_borrow,
+            $shelf_location, $cover_image, $synopsis, $id
+        );
+        
+        if ($stmt->execute()) {
+            $editBookSuccess = "Book details updated successfully.";
+        } else {
+            $editBookError = "Failed to update book details.";
+        }
+        $stmt->close();
+    } else {
+        $editBookError = $editDetailsError;
+    }
+    
+    header("Location: admin.php?activeTab=inventory&editBookSuccess=" . urlencode($editBookSuccess ?? '') . "&editBookError=" . urlencode($editBookError ?? ''));
     exit();
 }

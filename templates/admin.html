@@ -80,6 +80,7 @@
                 <table class="table table-striped table-hover table-sm align-middle" id="inventoryTable">
                     <thead>
                         <tr>
+                            <th style="width:30px;"></th> <!-- New column for three-dot menu -->
                             <th style="width:60px;">ID</th>
                             <th style="width:180px;">Title</th>
                             <th style="width:140px;">Author</th>
@@ -92,6 +93,11 @@
                     <tbody>
                         <?php foreach ($books as $book): ?>
                         <tr>
+                            <td>
+                                <button type="button" class="icon-btn menu-btn" data-bs-toggle="modal" data-bs-target="#editBookDetailsModal<?= $book['id'] ?>">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
                             <td>
                                 <input type="hidden" name="book_id" value="<?= $book['id'] ?>" form="book-form-<?= $book['id'] ?>">
                                 <input type="text" name="id" class="form-control form-control-sm input-short" value="<?= $book['id'] ?>" readonly form="book-form-<?= $book['id'] ?>">
@@ -437,7 +443,7 @@
                         <input type="number" name="copies" placeholder="Copies" required>
                         <input type="text" name="shelf_location" placeholder="Shelf Location (e.g. A-01)" required>
                         <input type="number" name="total_rating" placeholder="Rating" min="0" max="5" step="0.01" required>
-                        <input type="number" name="total_borrowed" placeholder="Total Borrowed" min="0" required>
+                        <input type="number" name="total_borrowed" placeholder="Total Borrowed" min="0" value="0" required>
                         <select name="availability_status" required>
                             <option value="available">Available</option>
                             <option value="not_available">Not Available</option>
@@ -578,3 +584,62 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php foreach ($books as $book): ?>
+<div class="modal fade" id="editBookDetailsModal<?= $book['id'] ?>" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Book Details: <?= htmlspecialchars($book['title']) ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="crud-form" method="post">
+                    <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ISBN</label>
+                        <input type="text" name="isbn" value="<?= htmlspecialchars($book['isbn']) ?>" 
+                               pattern="\d{13}" title="ISBN must be exactly 13 digits" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Year Published</label>
+                        <input type="number" name="year_published" value="<?= htmlspecialchars($book['year_published']) ?>" 
+                               min="1000" max="<?= date('Y')+1 ?>" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Rating</label>
+                        <input type="number" name="total_rating" value="<?= htmlspecialchars($book['total_rating']) ?>" 
+                               min="0" max="5" step="0.1" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Total Borrowed</label>
+                        <input type="number" name="total_borrow" value="<?= htmlspecialchars($book['total_borrow']) ?>" 
+                               min="0" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Shelf Location</label>
+                        <input type="text" name="shelf_location" value="<?= htmlspecialchars($book['shelf_location']) ?>" 
+                               pattern="[A-Z]-\d{2}" title="Format: A-01, Z-21, etc." required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Cover Image Path (URL)</label>
+                        <input type="url" name="cover_image" value="<?= htmlspecialchars($book['cover_image']) ?>" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Synopsis</label>
+                        <textarea name="synopsis" class="form-control" rows="4"><?= htmlspecialchars($book['synopsis'] ?? '') ?></textarea>
+                    </div>
+
+                    <button type="submit" name="edit_book_details" class="btn btn-primary w-100">Go Back to Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>

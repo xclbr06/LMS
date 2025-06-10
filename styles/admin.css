@@ -404,3 +404,91 @@ a {
 a:hover {
     color: #ffb347;
 }
+
+/* Add these to your existing CSS */
+.menu-btn {
+    padding: 4px !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: transparent !important;
+    color: #0984e3 !important;
+}
+
+.menu-btn:hover {
+    background: #eaf6fb !important;
+    color: #0984e3 !important;
+}
+
+.menu-btn .bi {
+    font-size: 16px;
+}
+
+/* Modal form improvements */
+.crud-form label {
+    color: #0984e3;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.crud-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Add these styles for the edit book details modal */
+.crud-form .mb-3 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem !important;
+}
+
+.crud-form .mb-3 input,
+.crud-form .mb-3 textarea {
+    width: 100%;
+    max-width: none;
+}
+
+.crud-form .form-label {
+    width: 100%;
+    margin-bottom: 0.3rem;
+    color: #0984e3;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Specific styles for the edit book details modal */
+#editBookDetailsModal .modal-dialog {
+    max-width: 500px;
+}
+
+#editBookDetailsModal .modal-body {
+    padding: 1.5rem;
+}
+
+#editBookDetailsModal .crud-form input,
+#editBookDetailsModal .crud-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1.5px solid #e3e3e3;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+#editBookDetailsModal .crud-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Add hover and focus states */
+#editBookDetailsModal .crud-form input:hover,
+#editBookDetailsModal .crud-form textarea:hover {
+    border-color: #0984e3;
+}
+
+#editBookDetailsModal .crud-form input:focus,
+#editBookDetailsModal .crud-form textarea:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
+    outline: none;
+}
