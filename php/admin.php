@@ -2,24 +2,22 @@
 session_start();
 require_once "config.php";
 
-function is_ajax() {
-    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-}
-
-// Only allow admin
+// Check if user is logged in and has admin privileges
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
     header("Location: login.php");
     exit();
 }
 
-// --- BOOKS CRUD ---
-
+// Category Management Block
+// Fetches all categories and their book counts for display and management
 $categoryCounts = [];
 $categoryCountResult = $conn->query("SELECT category, COUNT(*) as total_titles FROM books GROUP BY category");
 while ($row = $categoryCountResult->fetch_assoc()) {
     $categoryCounts[$row['category']] = $row['total_titles'];
 }
 
+// Book Management Block
+// Handles adding new books with validation
 $bookAddError = $bookAddSuccess = "";
 if (isset($_POST['add_book'])) {
     // Trim all fields to remove whitespace
@@ -147,7 +145,8 @@ if (isset($_POST['delete_book'])) {
     exit();
 }
 
-// --- USERS CRUD (add/edit/delete) ---
+// User Management Block
+// Handles user CRUD operations
 $userAddError = $userAddSuccess = "";
 if (isset($_POST['add_user'])) {
     $first_name = trim($_POST['first_name']);
@@ -479,7 +478,8 @@ if (isset($_POST['delete_reservation']) && isset($_POST['reservation_id'])) {
     exit();
 }
 
-// --- INVENTORY SEARCH & SORT ---
+// Search and Filter Block
+// Handles search functionality across all tables
 $inventorySearch = trim($_GET['inventorySearch'] ?? '');
 $inventorySortField = $_GET['inventorySortField'] ?? 'id';
 $inventorySortOrder = $_GET['inventorySortOrder'] ?? 'asc';
@@ -747,8 +747,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
 
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
 
-// Move this section BEFORE the template include and after the categories fetch
-
 // Initialize category delete variables
 $categoryDeleteError = $categoryDeleteSuccess = "";
 
@@ -779,10 +777,6 @@ if (isset($_POST['delete_category'])) {
     }
     $stmt->close();
 }
-
-// Move the template include after all handlers
-// Pass all variables to the HTML template
-include __DIR__ . '/../templates/admin.html';
 
 // Add this with your other book handlers
 if (isset($_POST['edit_book_details'])) {
@@ -836,3 +830,6 @@ if (isset($_POST['edit_book_details'])) {
     header("Location: admin.php?activeTab=inventory&editBookSuccess=" . urlencode($editBookSuccess ?? '') . "&editBookError=" . urlencode($editBookError ?? ''));
     exit();
 }
+
+// Pass all variables to the HTML template
+include __DIR__ . '/../templates/admin.html';

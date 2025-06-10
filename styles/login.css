@@ -11,6 +11,7 @@ body {
     position: relative;
 }
 
+/* Base Layout Structure */
 .split-container {
     position: relative;
     z-index: 1;
@@ -18,6 +19,7 @@ body {
     min-height: 100vh;
 }
 
+/* Logo Side Styling */
 .logo-side {
     flex: 1.2;
     background: transparent;
@@ -34,7 +36,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 4rem 2rem 4rem 0; /* Adjusted padding */
+    padding: 4rem 2rem 4rem 0; 
     position: relative;
     overflow: hidden;
 }
@@ -46,7 +48,7 @@ body {
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
     margin-right: 0;
-    position: relative; /* Changed from fixed */
+    position: relative;
     transition: all 0.3s ease;
     margin-right: 1rem;
 }
@@ -86,6 +88,7 @@ h2 {
     letter-spacing: 1px;
 }
 
+/* Form Section Styling */
 .form-section {
     background: rgba(9, 132, 227, 0.85);
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -97,7 +100,7 @@ h2 {
     position: relative;
     z-index: 1;
     transition: all 0.3s ease;
-    margin-left: 8rem; /* Added margin to move away from logo */
+    margin-left: 8rem; 
 }
 
 label {
@@ -111,7 +114,7 @@ label {
 input[type="text"], 
 input[type="email"], 
 input[type="password"] {
-    width: calc(100% - 20px);  /* Account for padding */
+    width: calc(100% - 20px);
     padding: 0.7rem 10px;
     margin-top: 0.3rem;
     margin-bottom: 0.5rem;
@@ -195,7 +198,6 @@ button[type="submit"]:hover {
     margin-bottom: 28px;
 }
 
-/* Remove the old back-btn styles and add new arrow button */
 .back-btn {
     position: absolute;
     top: 1.2rem;
@@ -219,7 +221,7 @@ button[type="submit"]:hover {
 }
 
 .back-btn::before {
-    content: '←';  /* Left arrow */
+    content: '←';  
     font-size: 1.8rem;
 }
 
@@ -243,7 +245,7 @@ button[type="submit"]:hover {
     .logo-side {
         justify-content: center;
         padding: 2rem;
-        min-height: 30vh; /* Reduced from 40vh */
+        min-height: 30vh;
     }
     
     .big-logo {
@@ -257,7 +259,7 @@ button[type="submit"]:hover {
     }
 
     .form-section {
-        margin-left: 0; /* Remove margin on mobile */
+        margin-left: 0; 
         max-width: 450px;
         padding: 1.5rem;
     }
