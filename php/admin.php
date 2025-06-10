@@ -33,7 +33,7 @@ if (isset($_POST['add_book'])) {
     $copies = trim($_POST['copies'] ?? '');
     $shelf_location = trim($_POST['shelf_location'] ?? '');
     $total_rating = trim($_POST['total_rating'] ?? '');
-    $total_borrow = trim($_POST['total_borrowed']);
+    $total_borrow = trim($_POST['total_borrowed']); // Change this line
     $availability_status = trim($_POST['availability_status'] ?? '');
 
     // Validation
@@ -78,7 +78,7 @@ if (isset($_POST['add_book'])) {
                 copies, 
                 shelf_location, 
                 total_rating,
-                total_borrow,  // Changed from total_borrowed
+                total_borrow, 
                 availability_status
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param(
@@ -93,7 +93,7 @@ if (isset($_POST['add_book'])) {
                 $copies, 
                 $shelf_location, 
                 $total_rating,
-                $total_borrow,  // Changed from total_borrowed
+                $total_borrow,
                 $availability_status
             );
             if ($stmt->execute()) {
@@ -746,8 +746,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_user"])) {
 }
 
 $hasUserError = !empty($firstNameErr) || !empty($middleNameErr) || !empty($lastNameErr) || !empty($emailErr) || !empty($studentIdErr) || !empty($passwordErr) || !empty($confirmPasswordErr) || !empty($phoneErr);
-// Pass all variables to the HTML template
-include __DIR__ . '/../templates/admin.html';
+
+// Move this section BEFORE the template include and after the categories fetch
+
+// Initialize category delete variables
+$categoryDeleteError = $categoryDeleteSuccess = "";
 
 // --- CATEGORY DELETE HANDLER ---
 if (isset($_POST['delete_category'])) {
@@ -767,14 +770,19 @@ if (isset($_POST['delete_category'])) {
         $stmt->bind_param("s", $category);
         if ($stmt->execute()) {
             $categoryDeleteSuccess = "Category deleted successfully.";
+            // Redirect before any output
+            header("Location: admin.php?activeTab=categories&categoryDeleteSuccess=" . urlencode($categoryDeleteSuccess));
+            exit();
         } else {
             $categoryDeleteError = "Failed to delete category.";
         }
     }
     $stmt->close();
-    header("Location: admin.php?activeTab=categories&categoryDeleteSuccess=" . urlencode($categoryDeleteSuccess) . "&categoryDeleteError=" . urlencode($categoryDeleteError));
-    exit();
 }
+
+// Move the template include after all handlers
+// Pass all variables to the HTML template
+include __DIR__ . '/../templates/admin.html';
 
 // Add this with your other book handlers
 if (isset($_POST['edit_book_details'])) {

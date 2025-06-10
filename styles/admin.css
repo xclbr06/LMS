@@ -492,3 +492,18 @@ a:hover {
     box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
     outline: none;
 }
+
+/* Add or update these styles */
+.inventory-category-input {
+    min-width: 120px;
+    max-width: 200px;
+    font-size: 0.92rem !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+@media (max-width: 768px) {
+    .inventory-category-input {
+        min-width: 100px;
+        max-width: 150px;
+    }
+}
