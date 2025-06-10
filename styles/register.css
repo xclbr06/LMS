@@ -32,8 +32,8 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 4rem;
+    justify-content: flex-start;  
+    padding: 4rem 2rem 4rem 0;    
     position: relative;
     overflow: hidden;
 }
@@ -242,8 +242,8 @@ button[type="submit"]:hover {
     }
 
     .content-side {
-        justify-content: center;
-        padding: 2rem;
+        justify-content: center;  /* Center on mobile */
+        padding: 2rem;           /* Reset padding on mobile */
     }
 
     .form-row-2col {

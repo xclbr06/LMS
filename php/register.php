@@ -130,7 +130,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_teacher_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $firstName, $middleName, $lastName, $email, $studentId, $passwordHash, $phone, $role);
         if ($stmt->execute()) {
-            $success = true;
+            header("Location: login.php?registered=1");
+            exit();
         } else {
             $emailErr = "Database error: " . htmlspecialchars($stmt->error);
         }

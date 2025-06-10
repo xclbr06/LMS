@@ -39,7 +39,7 @@ body {
 }
 
 .logo-side {
-    flex: 1;
+    flex: 1.2;  /* Increased from 1 to match login/register */
     background: transparent; /* Remove blue background */
     display: flex;
     align-items: center;
@@ -58,8 +58,8 @@ body {
 }
 
 .big-logo {
-    width: 80%;
-    max-width: 400px;
+    width: 90%;  /* Increased from 80% */
+    max-width: 500px;  /* Increased from 400px */
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2)); /* Optional: add subtle shadow */
@@ -136,8 +136,8 @@ body {
     }
     
     .big-logo {
-        width: 60%;
-        max-width: 300px;
+        width: 70%;
+        max-width: 400px;  /* Increased from 300px */
     }
     
     .content-side {
