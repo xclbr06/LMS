@@ -5,66 +5,73 @@
     <link rel="stylesheet" href="../styles/register.css">
 </head>
 <body>
-    <div class="body-bg">
-        <img src="../img/school.jpg" alt="Background" class="bg-img">
-        <div class="bg-overlay"></div>
-    </div>
-    
-    <?php if ($success): ?>
-        <script>
-            setTimeout(function() {
-                window.location.href = "login.php?registered=1";
-            }, 1000);
-        </script>
-        <p class="success">Registration successful! Redirecting to login...</p>
-    <?php else: ?>
-        <div class="form-section">
-            <form method="post" action="register.php">
-                <h2>Registration Form</h2>
-                <div class="form-row-2col">
-                    <div class="form-col">
-                        <label>First Name:
-                            <input type="text" name="first_name" value="<?= htmlspecialchars($firstName) ?>">
-                            <span class="error"><?= $firstNameErr ?></span>
-                        </label>
-                        <label>Middle Name (optional):
-                            <input type="text" name="middle_name" value="<?= htmlspecialchars($middleName) ?>">
-                            <span class="error"><?= $middleNameErr ?></span>
-                        </label>
-                        <label>Last Name:
-                            <input type="text" name="last_name" value="<?= htmlspecialchars($lastName) ?>">
-                            <span class="error"><?= $lastNameErr ?></span>
-                        </label>
-                        <label>Phone Number (optional):
-                            <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
-                            <span class="error"><?= $phoneErr ?></span>
-                        </label>
-                    </div>
-                    <div class="form-col">
-                        <label>Email:
-                            <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
-                            <span class="error"><?= $emailErr ?></span>
-                        </label>
-                        <label>Student/Teacher ID:
-                            <input type="text" name="student_teacher_id" value="<?= htmlspecialchars($studentId) ?>">
-                            <span class="error"><?= $studentIdErr ?></span>
-                        </label>
-                        <label>Password:
-                            <input type="password" name="password">
-                            <span class="error"><?= $passwordErr ?></span>
-                        </label>
-                        <label>Confirm Password:
-                            <input type="password" name="confirm_password">
-                            <span class="error"><?= $confirmPasswordErr ?></span>
-                        </label>
-                    </div>
-                </div>
-                <button type="submit">Register</button>
-                <div class="login-link">
-                    Already have an account? <a href="login.php">Login Here!</a>
-                </div>
-            </form>
+    <div class="split-container">
+        <div class="logo-side">
+            <img src="../img/iscp.png" alt="School Logo" class="big-logo">
         </div>
-    <?php endif; ?>
+        <div class="content-side">
+            <div class="body-bg">
+                <img src="../img/school.jpg" alt="Background" class="bg-img">
+                <div class="bg-overlay"></div>
+            </div>
+            <a href="../main.php" class="back-btn">Back</a>
+            <?php if ($success): ?>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "login.php?registered=1";
+                    }, 1000);
+                </script>
+                <p class="success">Registration successful! Redirecting to login...</p>
+            <?php else: ?>
+                <div class="form-section">
+                    <form method="post" action="register.php">
+                        <h2>Registration Form</h2>
+                        <div class="form-row-2col">
+                            <div class="form-col">
+                                <label>First Name:
+                                    <input type="text" name="first_name" value="<?= htmlspecialchars($firstName) ?>">
+                                    <span class="error"><?= $firstNameErr ?></span>
+                                </label>
+                                <label>Middle Name (optional):
+                                    <input type="text" name="middle_name" value="<?= htmlspecialchars($middleName) ?>">
+                                    <span class="error"><?= $middleNameErr ?></span>
+                                </label>
+                                <label>Last Name:
+                                    <input type="text" name="last_name" value="<?= htmlspecialchars($lastName) ?>">
+                                    <span class="error"><?= $lastNameErr ?></span>
+                                </label>
+                                <label>Phone Number (optional):
+                                    <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
+                                    <span class="error"><?= $phoneErr ?></span>
+                                </label>
+                            </div>
+                            <div class="form-col">
+                                <label>Email:
+                                    <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
+                                    <span class="error"><?= $emailErr ?></span>
+                                </label>
+                                <label>Student/Teacher ID:
+                                    <input type="text" name="student_teacher_id" value="<?= htmlspecialchars($studentId) ?>">
+                                    <span class="error"><?= $studentIdErr ?></span>
+                                </label>
+                                <label>Password:
+                                    <input type="password" name="password">
+                                    <span class="error"><?= $passwordErr ?></span>
+                                </label>
+                                <label>Confirm Password:
+                                    <input type="password" name="confirm_password">
+                                    <span class="error"><?= $confirmPasswordErr ?></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit">Register</button>
+                        <div class="login-link">
+                            Already have an account? <a href="login.php">Login Here!</a>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </body>
 </html>

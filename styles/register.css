@@ -4,37 +4,70 @@ html, body {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f7fafd;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
     min-height: 100vh;
-    min-width: 100vw;
+    position: relative;
+}
+
+.split-container {
+    position: relative;
+    z-index: 1;
     display: flex;
-    justify-content: flex-start; /* Start at top for scrollability */
+    min-height: 100vh;
+}
+
+.logo-side {
+    flex: 1;
+    background: transparent; /* Remove blue background */
+    display: flex;
     align-items: center;
-    flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: auto;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;  /* Make sure logo appears above background */
+}
+
+.content-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.big-logo {
+    width: 80%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
 }
 
 .body-bg {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: -1;
-    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 .bg-img {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     filter: blur(2px) brightness(0.7);
-    position: absolute;
-    top: 0; left: 0;
 }
+
 .bg-overlay {
     position: absolute;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(9,132,227,0.12);
 }
 
@@ -50,13 +83,15 @@ h2,
 }
 
 .form-section {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;  /* Reduced from 2rem */
     background: rgba(9, 132, 227, 0.97);
     border: 2px solid #0984e3;
     border-radius: 12px;
-    max-width: 520px;
-    width: 95vw;
     margin: 2.5rem auto 2rem auto;
-    padding: 2.2rem 2.2rem 2.5rem 2.2rem;
     box-shadow: 0 4px 24px rgba(9, 132, 227, 0.18), 0 2px 12px rgba(9, 132, 227, 0.13);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -83,25 +118,19 @@ h2,
 
 label {
     display: block;
-    margin-bottom: 1.1rem;
-    font-weight: bold;
+    margin-bottom: 1.5rem;
     color: #eaf6fb;
-    font-size: 0.93rem;
+    font-size: 0.9rem;
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
-    max-width: 300px;
-    min-width: 100px;
-    padding: 0.3rem 0.3rem;
-    margin: 0.2rem auto 1.1rem auto;
-    border: 1.5px solid #b2bec3;
-    border-radius: 5px;
-    font-size: 1.08rem;
-    box-sizing: border-box;
-    background-color: #eaf6fb;
-    color: #222f3e;
-    transition: border-color 0.2s, background 0.2s;
+    padding: 0.8rem;
+    margin-top: 0.3rem;
+    border: 1.5px solid #e3e3e3;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
     display: block;
 }
 
@@ -109,35 +138,34 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: #0984e3;
-    background: #fff;
+    box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
     outline: none;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 0.38rem;
+    padding: 1rem;
     background: #ffb347;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 0.95rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 0.3rem;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
 button[type="submit"]:hover {
-    background: #ffb247be;
-    color: #ffffff;
+    background: #ffd600;
+    color: #222f3e;
 }
 
 .error {
-    color: #d3c722;
-    font-size: 1em;
-    font-weight: bold;
-    border-radius: 4px;
-    max-width: 100%;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block;
 }
 
 .success {
@@ -168,25 +196,26 @@ button[type="submit"]:hover {
 }
 
 .login-link {
-    margin-top: 18px;
     text-align: center;
-    font-size: 1em;
-    color: #EEEEEE;
-    letter-spacing: 0.2px;
+    margin-top: 1rem;
+    color: #eaf6fb;
 }
+
 .login-link a {
-    color: #ffb347;
+    color: #ffd600;
+    text-decoration: none;
     font-weight: bold;
-    text-decoration: underline;
-    transition: color 0.2s;
 }
+
 .login-link a:hover {
-    color: #fff;
+    color: #ffb347;
+    text-decoration: underline;
 }
 
 .form-row-2col {
     display: flex;
     gap: 2rem;
+    margin-bottom: 1rem;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
@@ -194,8 +223,53 @@ button[type="submit"]:hover {
     margin: 0 auto 1.2rem auto;
 }
 .form-col {
-    flex: 1 1 0;
-    min-width: 220px;
+    flex: 1;
+}
+
+.back-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background: #ffb347;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.back-btn:hover {
+    background: #ffd600;
+    color: #222f3e;
+}
+
+@media (max-width: 900px) {
+    .split-container {
+        flex-direction: column;
+    }
+    
+    .logo-side {
+        padding: 2rem;
+        min-height: 30vh;
+    }
+    
+    .big-logo {
+        width: 60%;
+        max-width: 300px;
+    }
+    
+    .form-row-2col {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-section {
+        padding: 1rem;
+    }
 }
 
 @media (max-width: 700px) {
@@ -227,5 +301,24 @@ button[type="submit"]:hover {
         padding: 0.45rem 0.3rem;
         min-width: 0;
         max-width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .form-section {
+        padding: 1rem 0.8rem;  /* Even smaller padding for mobile */
+    }
+    .form-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        font-size: 0.9rem;
+    }
+    
+    button[type="submit"] {
+        font-size: 1rem;
     }
 }
