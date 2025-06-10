@@ -20,6 +20,7 @@ body {
 
 .logo-side {
     flex: 1.2;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,10 +40,11 @@ body {
 }
 
 .big-logo {
-    width: 80%;
-    max-width: 450px;
+    width: 90%;
+    max-width: 700px;
     height: auto;
     object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
     margin-right: 0;
 }
 
@@ -115,7 +117,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: calc(100% - 20px);
-    padding: 0.7rem 10px;
+    padding: 0.5rem 10px;
     margin-top: 0.3rem;
     margin-bottom: 0.5rem;
     border: 1.5px solid #b2bec3;
@@ -232,13 +234,13 @@ button[type="submit"]:hover {
     }
     
     .logo-side {
-        justify-content: center;
-        padding: 1rem;
+        padding: 2rem;
+        min-height: 40vh;
     }
     
     .big-logo {
-        margin-right: 0;
         width: 70%;
+        max-width: 400px;
     }
 
     .content-side {

@@ -20,9 +20,10 @@ body {
 
 .logo-side {
     flex: 1.2;
+    background: transparent;
     display: flex;
     align-items: center;
-    justify-content: center;  /* Changed to center */
+    justify-content: center;
     padding: 2rem;
     position: relative;
     z-index: 2;
@@ -39,11 +40,12 @@ body {
 }
 
 .big-logo {
-    width: 80%;  /* Adjusted size */
-    max-width: 450px;
+    width: 90%;
+    max-width: 700px;
     height: auto;
     object-fit: contain;
-    margin-right: 0;  /* Removed negative margin */
+    filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
+    margin-right: 0;
 }
 
 .body-bg {
@@ -234,12 +236,13 @@ button[type="submit"]:hover {
     
     .logo-side {
         justify-content: center;
-        padding: 1rem;
+        padding: 2rem;
+        min-height: 40vh;
     }
     
     .big-logo {
-        margin-right: 0;
         width: 70%;
+        max-width: 400px;
     }
 
     .content-side {

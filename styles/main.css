@@ -39,8 +39,8 @@ body {
 }
 
 .logo-side {
-    flex: 1.2;  /* Increased from 1 to match login/register */
-    background: transparent; /* Remove blue background */
+    flex: 1.2;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,11 +58,11 @@ body {
 }
 
 .big-logo {
-    width: 90%;  /* Increased from 80% */
-    max-width: 500px;  /* Increased from 400px */
+    width: 90%;
+    max-width: 700px;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2)); /* Optional: add subtle shadow */
+    filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
 }
 
 .content-box {
@@ -91,6 +91,7 @@ body {
     font-size: 1.3rem;
     color: #ffb347;
     margin-bottom: 1.5rem;
+    font-weight: bold;
 }
 
 .welcome-msg {
@@ -137,7 +138,7 @@ body {
     
     .big-logo {
         width: 70%;
-        max-width: 400px;  /* Increased from 300px */
+        max-width: 400px;
     }
     
     .content-side {
