@@ -19,33 +19,31 @@ body {
 }
 
 .logo-side {
-    flex: 1;
-    background: transparent; /* Remove blue background */
+    flex: 1.2;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     position: relative;
-    z-index: 2;  /* Make sure logo appears above background */
+    z-index: 2;
 }
 
 .content-side {
     flex: 1;
     display: flex;
-    justify-content: center; /* Start at top for scrollability */
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    background: transparent;
+    justify-content: flex-start;
+    padding: 4rem;
     position: relative;
     overflow: hidden;
 }
 
 .big-logo {
     width: 80%;
-    max-width: 400px;
+    max-width: 450px;
     height: auto;
     object-fit: contain;
+    margin-right: 0;
 }
 
 .body-bg {
@@ -56,6 +54,7 @@ body {
     height: 100%;
     z-index: 0;
 }
+
 .bg-img {
     width: 100%;
     height: 100%;
@@ -65,98 +64,88 @@ body {
 
 .bg-overlay {
     position: absolute;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(9,132,227,0.12);
 }
 
-h2,
-.form-section h2 {
-    color: #eaf6fb;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(9, 132, 227, 0.18), 0 1px 0 #0984e3;
-}
-
 .form-section {
-    position: relative;
-    z-index: 1;
+    background: rgba(9, 132, 227, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    padding: 2rem;
     width: 100%;
     max-width: 800px;
-    padding: 1.5rem;  /* Reduced from 2rem */
-    background: rgba(9, 132, 227, 0.97);
-    border: 2px solid #0984e3;
-    border-radius: 12px;
-    margin: 2.5rem auto 2rem auto;
-    box-shadow: 0 4px 24px rgba(9, 132, 227, 0.18), 0 2px 12px rgba(9, 132, 227, 0.13);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: none !important;
-    overflow-y: visible !important;
+    position: relative;
+    z-index: 1;
 }
 
-/* For Webkit browsers (Chrome, Edge, Safari) */
-.form-section::-webkit-scrollbar {
-    width: 8px;
+h2 {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 0.7rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    letter-spacing: 1px;
 }
-.form-section::-webkit-scrollbar-thumb {
-    background: #0984e3;
-    border-radius: 6px;
+
+.form-row-2col {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
 }
-.form-section::-webkit-scrollbar-track {
-    background: #eaf6fb;
-    border-radius: 6px;
+
+.form-col {
+    flex: 1;
 }
 
 label {
     display: block;
-    margin-bottom: 1.5rem;
-    color: #eaf6fb;
-    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: #fff;
+    font-size: 0.93rem;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
-    width: 100%;
-    max-width: 300px;
-    min-width: 100px;
-    padding: 0.3rem 0.3rem;
-    margin: 0.2rem auto 1.1rem auto;
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 0.7rem 10px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
     border: 1.5px solid #b2bec3;
     border-radius: 5px;
-    font-size: 1.08rem;
-    box-sizing: border-box;
-    background-color: #eaf6fb;
+    font-size: 0.92rem;
+    background-color: rgba(255, 255, 255, 0.9);
     color: #222f3e;
-    transition: border-color 0.2s, background 0.2s;
-    display: block;
+    transition: all 0.2s ease;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: #0984e3;
-    box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
+    background: #fff;
     outline: none;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 1rem;
+    padding: 0.38rem;
     background: #ffb347;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    margin-top: 0.3rem;
+    transition: background 0.2s, color 0.2s;
 }
 
 button[type="submit"]:hover {
@@ -165,11 +154,34 @@ button[type="submit"]:hover {
 }
 
 .error {
-    color: #d3c722;
-    font-size: 1em;
+    color: #ffd600;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    display: block;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.login-link {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.95em;
+    color: #eaf6fb;
+    letter-spacing: 0.2px;
+}
+
+.login-link a {
+    color: #ffd600;
     font-weight: bold;
-    border-radius: 4px;
-    max-width: 100%;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.login-link a:hover {
+    color: #ffb347;
 }
 
 .success {
@@ -177,78 +189,41 @@ button[type="submit"]:hover {
     max-width: 400px;
     margin: 24px auto 0 auto;
     padding: 16px 20px;
-    background: #43b581;
-    color: #fff;
-    border: 1.5px solid #0984e3;
-    border-radius: 8px;
+    color: #2ed573;
+    background: rgba(46, 213, 115, 0.15);
+    border: 1px solid rgba(46, 213, 115, 0.3);
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;
-    box-shadow: 0 2px 12px rgba(30, 10, 10, 0.10);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     letter-spacing: 0.5px;
     margin-bottom: 28px;
-}
-.success a {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: bold;
-}
-.success a:hover {
-    color: #ffb347;
-}
-
-.login-link {
-    text-align: center;
-    margin-top: 1rem;
-    color: #eaf6fb;
-}
-
-.login-link a {
-    color: #ffd600;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.login-link a:hover {
-    color: #ffb347;
-    text-decoration: underline;
-}
-
-.form-row-2col {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 1.2rem auto;
-}
-.form-col {
-    flex: 1;
 }
 
 .back-btn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    background: #ffb347;
+    top: 1.2rem;
+    right: 1.2rem;
     color: #fff;
-    border: none;
-    border-radius: 4px;
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    line-height: 1;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }
 
 .back-btn:hover {
-    background: #ffd600;
-    color: #222f3e;
+    opacity: 1;
+    background: none;
+    color: #fff;
+}
+
+.back-btn::before {
+    content: '←';
+    font-size: 1.8rem;
 }
 
 @media (max-width: 900px) {
@@ -257,72 +232,38 @@ button[type="submit"]:hover {
     }
     
     .logo-side {
-        padding: 2rem;
-        min-height: 30vh;
+        justify-content: center;
+        padding: 1rem;
     }
     
     .big-logo {
-        width: 60%;
-        max-width: 300px;
+        margin-right: 0;
+        width: 70%;
     }
-    
+
+    .content-side {
+        justify-content: center;
+        padding: 2rem;
+    }
+
     .form-row-2col {
         flex-direction: column;
         gap: 0;
     }
-    
-    .form-section {
-        padding: 1rem;
-    }
-}
 
-@media (max-width: 700px) {
-    .form-row-2col {
-        flex-direction: column;
-        gap: 0.5rem;
-        max-width: 98vw;
-    }
-    .form-col {
-        min-width: 0;
-    }
-}
-
-@media (max-width: 600px) {
     .form-section {
-        max-width: 99vw;
-        padding: 1rem 0.3rem 1rem 0.3rem;
-        margin: 1rem 0 1rem 0;
-        max-height: 98vh;
-    }
-    h2,
-    .form-section h2 {
-        font-size: 1.1rem;
-        margin-top: 0.7rem;
-    }
-    input[type="text"], input[type="email"], input[type="password"] {
-        width: 100%;
-        font-size: 1rem;
-        padding: 0.45rem 0.3rem;
-        min-width: 0;
-        max-width: 100%;
+        max-width: 400px;
     }
 }
 
 @media (max-width: 500px) {
     .form-section {
-        padding: 1rem 0.8rem;  /* Even smaller padding for mobile */
-    }
-    .form-section h2 {
-        font-size: 1.5rem;
+        max-width: 98vw;
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
     }
     
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        font-size: 0.9rem;
-    }
-    
-    button[type="submit"] {
-        font-size: 1rem;
+    h2 {
+        font-size: 1.1rem;
+        margin-top: 0.7rem;
     }
 }

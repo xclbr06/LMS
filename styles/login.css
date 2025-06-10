@@ -19,29 +19,31 @@ body {
 }
 
 .logo-side {
-    flex: 1;
-    background: transparent; /* Remove blue background */
+    flex: 1.2;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;  /* Changed to center */
     padding: 2rem;
     position: relative;
-    z-index: 2;  /* Make sure logo appears above background */
+    z-index: 2;
 }
 
 .content-side {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
+    justify-content: flex-start;  /* Changed from center */
+    padding: 4rem;  /* Increased padding */
+    position: relative;
+    overflow: hidden;
 }
 
 .big-logo {
-    width: 80%;
-    max-width: 400px;
+    width: 80%;  /* Adjusted size */
+    max-width: 450px;
     height: auto;
     object-fit: contain;
+    margin-right: 0;  /* Removed negative margin */
 }
 
 .body-bg {
@@ -70,7 +72,8 @@ body {
 }
 
 h2 {
-    color: #eaf6fb;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-top: 0.7rem;
     margin-bottom: 1rem;
@@ -79,40 +82,38 @@ h2 {
 }
 
 .form-section {
+    background: rgba(9, 132, 227, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    padding: 2rem;
     width: 100%;
     max-width: 400px;
-    padding: 2rem;
     position: relative;
     z-index: 1;
-    background: rgba(9, 132, 227, 0.97); 
-    border: 2px solid #0984e3;
-    border-radius: 8px;
-    margin: 1rem auto 0 auto;
-    box-shadow: 0 2px 12px rgba(9, 132, 227, 0.13);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 label {
     display: block;
     margin-bottom: 0.4rem;
-    font-weight: bold;
-    color: #eaf6fb;
+    font-weight: 500;
+    color: #fff;
     font-size: 0.93rem;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.2rem;
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+    width: calc(100% - 20px);  /* Account for padding */
+    padding: 0.7rem 10px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
     border: 1.5px solid #b2bec3;
-    margin-bottom: -0.5px;
     border-radius: 5px;
     font-size: 0.92rem;
-    box-sizing: border-box;
-    background-color: #eaf6fb;
+    background-color: rgba(255, 255, 255, 0.9);
     color: #222f3e;
-    transition: border-color 0.2s, background 0.2s;
+    transition: all 0.2s ease;
     display: inline-block;
 }
 
@@ -144,15 +145,15 @@ button[type="submit"]:hover {
 }
 
 .error {
-    color: #ffb347;
-    font-size: 0.95em;
+    color: #ffd600;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    margin-bottom: 8px;
+    font-weight: 700;
     display: block;
-    margin-top: 2.5px;
-    margin-bottom: 10px;
-    margin-left: 0;
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 4px;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 .login-link {
@@ -177,7 +178,9 @@ button[type="submit"]:hover {
     max-width: 400px;
     margin: 24px auto 0 auto;
     padding: 16px 20px;
-    color: #00ff8c;
+    color: #2ed573;
+    background: rgba(46, 213, 115, 0.15);
+    border: 1px solid rgba(46, 213, 115, 0.3);
     text-align: center;
     font-size: 1.1em;
     font-weight: 600;
@@ -185,26 +188,32 @@ button[type="submit"]:hover {
     margin-bottom: 28px;
 }
 
-/* Add back button styles */
+/* Remove the old back-btn styles and add new arrow button */
 .back-btn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    background: #ffb347;
+    top: 1.2rem;
+    right: 1.2rem;
     color: #fff;
-    border: none;
-    border-radius: 4px;
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    line-height: 1;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }
 
 .back-btn:hover {
-    background: #ffd600;
-    color: #222f3e;
+    opacity: 1;
+    background: none;
+    color: #fff;
+}
+
+.back-btn::before {
+    content: '←';  /* Left arrow */
+    font-size: 1.8rem;
 }
 
 @media (max-width: 500px) {
@@ -224,12 +233,17 @@ button[type="submit"]:hover {
     }
     
     .logo-side {
-        padding: 2rem;
-        min-height: 30vh;
+        justify-content: center;
+        padding: 1rem;
     }
     
     .big-logo {
-        width: 60%;
-        max-width: 300px;
+        margin-right: 0;
+        width: 70%;
+    }
+
+    .content-side {
+        justify-content: center;
+        padding: 2rem;
     }
 }

@@ -5,36 +5,44 @@
     <link rel="stylesheet" href="../styles/login.css">
 </head>
 <body>
-    <div class="body-bg">
-        <img src="../img/school.jpg" alt="Background" class="bg-img">
-        <div class="bg-overlay"></div>
-    </div>
-    <div class="form-section">
-        <h2>Login Form</h2>
-        <form method="post" action="login.php" autocomplete="off">
-            <?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
-                <div class="success" style="margin-bottom:10px;">You have successfully registered! Please login.</div>
-            <?php endif; ?>
-            <label>Email:
-                <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
-            </label>
-            <?php if ($emailErr): ?>
-                <span class="error"><?= $emailErr ?></span>
-            <?php endif; ?>
-            <label>Password:
-                <input type="password" name="password">
-            </label>
-            <?php if ($passwordErr): ?>
-                <span class="error"><?= $passwordErr ?></span>
-            <?php endif; ?>
-            <?php if ($loginErr): ?>
-                <span class="error"><?= htmlspecialchars($loginErr) ?></span>
-            <?php endif; ?>
-            <button type="submit">Login</button>
-            <div class="login-link">
-                No account? <a href="register.php">Register Here!</a>
+    <div class="split-container">
+        <div class="logo-side">
+            <img src="../img/iscp.png" alt="School Logo" class="big-logo">
+        </div>
+        <div class="content-side">
+            <div class="body-bg">
+                <img src="../img/school.jpg" alt="Background" class="bg-img">
+                <div class="bg-overlay"></div>
             </div>
-        </form>
+            <div class="form-section">
+                <a href="../main.php" class="back-btn" title="Back to Main"></a>
+                <h2>Login Form</h2>
+                <form method="post" action="login.php" autocomplete="off">
+                    <?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
+                        <div class="success">You have successfully registered! Please login.</div>
+                    <?php endif; ?>
+                    <label>Email:
+                        <input type="email" name="email" value="<?= htmlspecialchars($email) ?>">
+                    </label>
+                    <?php if ($emailErr): ?>
+                        <span class="error"><?= $emailErr ?></span>
+                    <?php endif; ?>
+                    <label>Password:
+                        <input type="password" name="password">
+                    </label>
+                    <?php if ($passwordErr): ?>
+                        <span class="error"><?= $passwordErr ?></span>
+                    <?php endif; ?>
+                    <?php if ($loginErr): ?>
+                        <span class="error"><?= htmlspecialchars($loginErr) ?></span>
+                    <?php endif; ?>
+                    <button type="submit">Login</button>
+                    <div class="login-link">
+                        No account? <a href="register.php">Register Here!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>
