@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!table) return;
         const rows = Array.from(table.tBodies[0].rows);
 
-        // Filter
+        // Filter and Sort Implementation
         rows.forEach(row => {
             const text = searchFields.map(f => {
                 const td = row.querySelector(`td[data-field="${f}"]`);
@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
             row.style.display = text.includes(search) ? '' : 'none';
         });
 
-        // Sort
         const visibleRows = rows.filter(row => row.style.display !== 'none');
         visibleRows.sort((a, b) => {
             let aVal = a.querySelector(`td[data-field="${sortField}"]`);
@@ -150,47 +149,38 @@ document.addEventListener('DOMContentLoaded', function () {
         
         if (!borrowStartDate || !dueDate || !userSelect) return;
 
-        // Set initial borrow period based on selected user's role
-        function updateBorrowPeriod() {
-            const selectedOption = userSelect.options[userSelect.selectedIndex];
-            const userRole = selectedOption?.getAttribute('data-role');
-            return userRole === 'teacher' ? 30 : 14;
+        // Always return 30 days for borrow period
+        function getBorrowPeriod() {
+            return 30;
         }
 
-        // Set borrow start date constraints
         function setBorrowStartConstraints() {
             const today = new Date();
             const maxStart = new Date();
             maxStart.setDate(today.getDate() + 7);
-            
             borrowStartDate.min = today.toISOString().split('T')[0];
             borrowStartDate.max = maxStart.toISOString().split('T')[0];
-            
-            // Set to today if no date is selected or date is invalid
             if (!borrowStartDate.value || new Date(borrowStartDate.value) < today) {
                 borrowStartDate.value = today.toISOString().split('T')[0];
             }
         }
 
-        // Update return date constraints
         function updateDueDateLimits() {
             if (!borrowStartDate.value) return;
-
-            const borrowPeriod = updateBorrowPeriod();
+            const borrowPeriod = getBorrowPeriod();
             const selectedStart = new Date(borrowStartDate.value);
-            
+
             // Set minimum return date (next day)
             const minDue = new Date(selectedStart);
             minDue.setDate(selectedStart.getDate() + 1);
-            
-            // Set maximum return date (borrowPeriod days later)
+
+            // Set maximum return date (borrowPeriod days from start)
             const maxDue = new Date(selectedStart);
             maxDue.setDate(selectedStart.getDate() + borrowPeriod);
-            
-            // Update return date constraints
+
             dueDate.min = minDue.toISOString().split('T')[0];
             dueDate.max = maxDue.toISOString().split('T')[0];
-            
+
             // Auto-set to minimum date if current value is invalid
             if (!dueDate.value || 
                 new Date(dueDate.value) < minDue || 
@@ -199,16 +189,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Event Listeners
-        userSelect.addEventListener('change', function() {
-            updateDueDateLimits();
-        });
+        userSelect.addEventListener('change', updateDueDateLimits);
+        borrowStartDate.addEventListener('change', updateDueDateLimits);
 
-        borrowStartDate.addEventListener('change', function() {
-            updateDueDateLimits();
-        });
-
-        // Initialize on modal show
+        // When modal is shown, re-apply constraints
         const modal = document.getElementById('addReservationModal');
         if (modal) {
             modal.addEventListener('shown.bs.modal', function() {
@@ -222,12 +206,74 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDueDateLimits();
     }
 
+    // Initialize Reservation Dates
     setupReservationDates();
-
-    // Re-initialize dates when modal is shown
     const addReservationModal = document.getElementById('addReservationModal');
     if (addReservationModal) {
         addReservationModal.addEventListener('shown.bs.modal', setupReservationDates);
+    }
+
+    // Add User Form Handler
+    const addUserForm = document.getElementById('addUserForm');
+    if (addUserForm) {
+        addUserForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset previous error states
+            addUserForm.querySelectorAll('.is-invalid').forEach(el => {
+                el.classList.remove('is-invalid');
+            });
+            
+            const formData = new FormData(addUserForm);
+            formData.append('ajax_request', 'true');
+
+            fetch('php/admin.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    document.getElementById('userFormMessages').innerHTML = 
+                        '<div class="alert alert-success">User added successfully!</div>';
+                    
+                    // Reset form
+                    addUserForm.reset();
+                    
+                    // Optionally close modal after success
+                    setTimeout(() => {
+                        bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
+                        // Refresh the users table
+                        location.reload();
+                    }, 1500);
+                } else {
+                    // Handle validation errors
+                    Object.keys(data.errors).forEach(field => {
+                        const input = addUserForm.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            input.classList.add('is-invalid');
+                            const feedbackDiv = input.nextElementSibling;
+                            if (feedbackDiv && feedbackDiv.classList.contains('invalid-feedback')) {
+                                feedbackDiv.textContent = data.errors[field];
+                            }
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('userFormMessages').innerHTML = 
+                    '<div class="alert alert-danger">An error occurred. Please try again.</div>';
+            });
+        });
+    }
+
+    // Show modal if there are validation errors
+    const hasErrors = document.querySelector('#addUserModal .is-invalid');
+    if (hasErrors) {
+        const addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+        addUserModal.show();
     }
 });
 

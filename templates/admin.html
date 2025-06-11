@@ -373,8 +373,11 @@
                 <td>
                     <select name="user_id" class="form-select form-select-sm" form="reservation-form-<?= $res['id'] ?>">
                         <?php foreach ($users as $user): ?>
-                            <option value="<?= $user['id'] ?>" <?= $user['id'] == $res['user_id'] ? 'selected' : '' ?>>
+                            <option value="<?= $user['id'] ?>" 
+                                    data-role="<?= htmlspecialchars($user['role']) ?>"
+                                    data-borrow-period="<?= $user['role'] === 'student' ? '14' : '30' ?>">
                                 <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
+                                (<?= htmlspecialchars($user['student_teacher_id']) ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -474,67 +477,79 @@
     </div>
 
     <!-- Add User Modal -->
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <?php if (isset($success) && $success): ?>
-                    <div class="alert alert-success">User added successfully.</div>
-                <?php endif; ?>
-                <form class="crud-form" method="post" autocomplete="off" novalidate>
-                    <input type="hidden" name="activeTab" value="users">
-                    <div class="mb-2">
-                        <input type="text" name="first_name" placeholder="First Name" class="form-control <?= !empty($firstNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($firstName ?? ($_POST['first_name'] ?? '')) ?>">
-                        <?php if (!empty($firstNameErr)): ?><div class="invalid-feedback"><?= $firstNameErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="middle_name" placeholder="Middle Name" class="form-control <?= !empty($middleNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($middleName ?? ($_POST['middle_name'] ?? '')) ?>">
-                        <?php if (!empty($middleNameErr)): ?><div class="invalid-feedback"><?= $middleNameErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="last_name" placeholder="Last Name" class="form-control <?= !empty($lastNameErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($lastName ?? ($_POST['last_name'] ?? '')) ?>">
-                        <?php if (!empty($lastNameErr)): ?><div class="invalid-feedback"><?= $lastNameErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="email" name="email" placeholder="Email" class="form-control <?= !empty($emailErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($email ?? ($_POST['email'] ?? '')) ?>">
-                        <?php if (!empty($emailErr)): ?><div class="invalid-feedback"><?= $emailErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="student_teacher_id" placeholder="Student ID (e.g. 1234-5678)" class="form-control <?= !empty($studentIdErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($studentId ?? ($_POST['student_teacher_id'] ?? '')) ?>">
-                        <?php if (!empty($studentIdErr)): ?><div class="invalid-feedback"><?= $studentIdErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="phone" placeholder="Phone" class="form-control <?= !empty($phoneErr)?'is-invalid':''; ?>" value="<?= htmlspecialchars($phone ?? ($_POST['phone'] ?? '')) ?>">
-                        <?php if (!empty($phoneErr)): ?><div class="invalid-feedback"><?= $phoneErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <select name="role" class="form-select">
-                            <option value="student" <?= ((isset($_POST['role']) && $_POST['role']=='student') || (!isset($_POST['role'])))?'selected':''; ?>>Student</option>
-                            <option value="teacher" <?= (isset($_POST['role']) && $_POST['role']=='teacher')?'selected':''; ?>>Teacher</option>
-                            <option value="admin" <?= (isset($_POST['role']) && $_POST['role']=='admin')?'selected':''; ?>>Admin</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <input type="password" name="password" placeholder="Password" class="form-control <?= !empty($passwordErr)?'is-invalid':''; ?>">
-                        <?php if (!empty($passwordErr)): ?><div class="invalid-feedback"><?= $passwordErr ?></div><?php endif; ?>
-                    </div>
-                    <div class="mb-2">
-                        <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control <?= !empty($confirmPasswordErr)?'is-invalid':''; ?>">
-                        <?php if (!empty($confirmPasswordErr)): ?><div class="invalid-feedback"><?= $confirmPasswordErr ?></div><?php endif; ?>
-                    </div>
-                    <button type="submit" name="add_user" class="btn btn-primary w-100 mt-2">Add</button>
-                </form>
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="mb-2">
+                            <input type="text" name="first_name" placeholder="First Name" class="form-control <?= !empty($firstNameErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($firstName ?? '') ?>">
+                            <?php if (!empty($firstNameErr)): ?>
+                                <div class="invalid-feedback"><?= $firstNameErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" name="middle_name" placeholder="Middle Name" class="form-control <?= !empty($middleNameErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($middleName ?? '') ?>">
+                            <?php if (!empty($middleNameErr)): ?>
+                                <div class="invalid-feedback"><?= $middleNameErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" name="last_name" placeholder="Last Name" class="form-control <?= !empty($lastNameErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($lastName ?? '') ?>">
+                            <?php if (!empty($lastNameErr)): ?>
+                                <div class="invalid-feedback"><?= $lastNameErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="email" name="email" placeholder="Email" class="form-control <?= !empty($emailErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($email ?? '') ?>">
+                            <?php if (!empty($emailErr)): ?>
+                                <div class="invalid-feedback"><?= $emailErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" name="student_teacher_id" placeholder="Student ID (e.g. 1234-5678)" class="form-control <?= !empty($studentIdErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($studentId ?? '') ?>">
+                            <?php if (!empty($studentIdErr)): ?>
+                                <div class="invalid-feedback"><?= $studentIdErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" name="phone" placeholder="Phone" class="form-control <?= !empty($phoneErr) ? 'is-invalid' : '' ?>" value="<?= htmlspecialchars($phone ?? '') ?>">
+                            <?php if (!empty($phoneErr)): ?>
+                                <div class="invalid-feedback"><?= $phoneErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <select name="role" class="form-select">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <input type="password" name="password" placeholder="Password" class="form-control <?= !empty($passwordErr) ? 'is-invalid' : '' ?>">
+                            <?php if (!empty($passwordErr)): ?>
+                                <div class="invalid-feedback"><?= $passwordErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="mb-2">
+                            <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control <?= !empty($confirmPasswordErr) ? 'is-invalid' : '' ?>">
+                            <?php if (!empty($confirmPasswordErr)): ?>
+                                <div class="invalid-feedback"><?= $confirmPasswordErr ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="submit" name="add_user" class="btn btn-primary w-100 mt-2">Add</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<?php if ($hasUserError): ?>
-    <span id="showAddUserModalFlag" style="display:none"></span>
-<?php endif; ?>
+    <?php if ($hasUserError): ?>
+        <span id="showAddUserModalFlag" style="display:none"></span>
+    <?php endif; ?>
 
     <!-- Add Reservation Modal -->
     <div class="modal fade" id="addReservationModal" tabindex="-1" aria-hidden="true">
@@ -545,6 +560,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <?php if (isset($reservationAddError)): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($reservationAddError) ?></div>
+    <?php endif; ?>
                     <form class="crud-form" method="post">
                     <!-- User Selection -->
                     <div class="mb-3">
@@ -552,7 +570,9 @@
                         <select name="user_id" class="form-select" required>
                             <option value="">Select User</option>
                             <?php foreach ($users as $user): ?>
-                                <option value="<?= $user['id'] ?>" data-role="<?= $user['role'] ?>">
+                                <option value="<?= $user['id'] ?>" 
+                                        data-role="<?= htmlspecialchars($user['role']) ?>"
+                                        data-borrow-period="<?= $user['role'] === 'student' ? '14' : '30' ?>">
                                     <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
                                     (<?= htmlspecialchars($user['student_teacher_id']) ?>)
                                 </option>

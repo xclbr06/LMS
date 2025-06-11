@@ -507,3 +507,9 @@ a:hover {
         max-width: 150px;
     }
 }
+
+.alert-danger {
+    background-color: transparent !important;
+    color: #dc3545; /* Keep the text color red for visibility */
+    border: none !important;
+}

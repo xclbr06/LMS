@@ -78,5 +78,10 @@ $randomBooks = getRandomBooks($conn, 7);
 $user_id = $_SESSION['id'];
 $overdueMsg = getOverdueMsg($conn, $user_id);
 
+// Prevent browser caching
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 // Pass all variables to the HTML template
 include __DIR__ . '/../templates/dashboard.html';
