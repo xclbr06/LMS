@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 06:03 PM
+-- Generation Time: Jun 11, 2025 at 06:46 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,7 +67,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (16, 'A Brief History of Time', 'Stephen Hawking', '9780553380163', 'Bantam Books', 1988, 'Science', 'https://covers.openlibrary.org/b/isbn/9780553380163-L.jpg', 3, 'S-01', 'available', 15, 4.6, 'A landmark book on cosmology and black holes. Explains complex scientific concepts for a general audience. Written by one of the greatest physicists of our time.'),
 (17, 'The Selfish Gene', 'Richard Dawkins', '9780199291151', 'Oxford University Press', 1976, 'Science', 'https://covers.openlibrary.org/b/isbn/9780199291151-L.jpg', 5, 'S-02', 'available', 6, 2, 'Introduces the concept of the selfish gene as a driver of evolution. Explores natural selection and animal behavior. A groundbreaking work in biology.'),
 (18, 'The Origin of Species', 'Charles Darwin', '9781509827695', 'John Murray', 1859, 'Science', 'https://covers.openlibrary.org/b/olid/OL23278117M-L.jpg', 5, 'S-03', 'available', 7, 3.2, 'Darwin’s revolutionary theory of evolution by natural selection. Changed the way we understand life on Earth. One of the most important scientific works ever written.'),
-(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 4, 'S-04', 'available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
+(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 5, 'S-04', 'available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
 (20, 'The Double Helix', 'James D. Watson', '9780743216302', 'Atheneum', 1968, 'Science', 'https://covers.openlibrary.org/b/isbn/9780743216302-L.jpg', 5, 'S-05', 'available', 7, 2.6, 'The discovery of the structure of DNA, told by one of its co-discoverers. Reveals the drama and personalities behind a major scientific breakthrough. A fascinating memoir.'),
 (21, 'A Mathematician\'s Apology', 'G.H. Hardy', '9780521427067', 'Cambridge University Press', 1940, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780521427067-L.jpg', 5, 'M-01', 'available', 23, 4.6, 'A mathematician reflects on his life and work. Explores the beauty and creativity of mathematics. A classic essay on the nature of mathematical thought.'),
 (22, 'Flatland: A Romance of Many Dimensions', 'Edwin A. Abbott', '9780486272634', 'Seeley & Co.', 1884, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780486272634-L.jpg', 5, 'M-02', 'available', 10, 2.4, 'A satirical novella exploring dimensions and social hierarchy. Uses geometry to comment on Victorian society. A unique blend of math and literature.'),
@@ -86,7 +86,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (35, 'Never Let Me Go', 'Kazuo Ishiguro', '9781400078776', 'Vintage', 2005, 'Fiction', 'https://covers.openlibrary.org/b/isbn/9781400078776-L.jpg', 4, 'F-10', 'available', 10, 4.2, 'A haunting story of friendship and loss. Students at a mysterious school uncover their fate. Ishiguro\'s novel is poignant and unforgettable.'),
 (36, 'Wolf Hall', 'Hilary Mantel', '9780312429980', 'Picador', 2009, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780312429980-L.jpg', 3, 'H-06', 'available', 8, 4.4, 'A vivid portrait of Thomas Cromwell\'s rise in Tudor England. Mantel brings history to life with rich detail. Winner of the Man Booker Prize.'),
 (37, 'The Pillars of the Earth', 'Ken Follett', '9780451225245', 'Signet', 1989, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780451225245-L.jpg', 5, 'H-07', 'available', 15, 4.7, 'Set in 12th-century England, this epic follows the building of a cathedral. It weaves together love, betrayal, and ambition. Follett\'s storytelling is masterful.'),
-(38, 'All the Light We Cannot See', 'Anthony Doerr', '9781501173219', 'Scribner', 2014, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781501173219-L.jpg', 4, 'H-08', 'available', 12, 4.6, 'A blind French girl and a German boy cross paths during WWII. Their stories intertwine in occupied France. The novel is beautifully written and deeply moving.'),
+(38, 'All the Light We Cannot See', 'Anthony Doerr', '9781501173219', 'Scribner', 2014, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781501173219-L.jpg', 3, 'H-08', 'available', 12, 4.6, 'A blind French girl and a German boy cross paths during WWII. Their stories intertwine in occupied France. The novel is beautifully written and deeply moving.'),
 (39, 'The Nightingale', 'Kristin Hannah', '9781250080400', 'St. Martin\'s Press', 2015, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781250080400-L.jpg', 4, 'H-09', 'available', 10, 4.5, 'Two sisters struggle to survive and resist during the Nazi occupation of France. The story explores love, sacrifice, and resilience. A powerful tale of women in war.'),
 (40, 'The Other Boleyn Girl', 'Philippa Gregory', '9780743227445', 'Touchstone', 2001, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780743227445-L.jpg', 3, 'H-10', 'available', 9, 4.1, 'Mary Boleyn navigates the intrigue of Henry VIII\'s court. Her story is one of ambition and rivalry. Gregory\'s novel is rich in historical detail.'),
 (41, 'Silent Spring', 'Rachel Carson', '9780618249060', 'Houghton Mifflin', 1962, 'Science', 'https://covers.openlibrary.org/b/isbn/9780618249060-L.jpg', 4, 'S-06', 'available', 14, 4.5, 'Carson\'s book launched the environmental movement. It exposes the dangers of pesticides. The work is both scientific and poetic.'),
@@ -148,14 +148,15 @@ CREATE TABLE `reservations` (
 
 INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `borrow_start_date`, `reserved_at`, `due_date`, `status`) VALUES
 (14, 4, 7, '2025-05-13', '2025-06-01 13:28:40', '2025-06-27', 'returned'),
-(15, 4, 19, '2025-06-06', '2025-06-01 13:46:22', '2025-06-09', 'reserved'),
+(15, 4, 19, '2025-06-06', '2025-06-01 13:46:22', '2025-06-09', 'returned'),
 (16, 7, 16, '2025-06-11', '2025-06-06 09:51:30', '2025-06-20', 'returned'),
 (17, 7, 49, '2025-06-13', '2025-06-06 09:53:14', '2025-06-15', 'returned'),
 (18, 7, 4, '2025-06-06', '2025-06-06 09:55:06', '2025-06-19', 'returned'),
 (19, 7, 33, '2025-06-06', '2025-06-06 10:01:18', '2025-06-08', 'returned'),
 (20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'returned'),
 (21, 9, 2, '2025-06-13', '2025-06-10 22:46:18', '2025-06-23', 'returned'),
-(22, 9, 38, '2025-06-11', '2025-06-10 23:04:52', '2025-06-24', 'canceled');
+(22, 9, 38, '2025-06-11', '2025-06-10 23:04:52', '2025-06-24', 'reserved'),
+(23, 4, 16, '2025-06-14', '2025-06-11 12:29:58', '2025-06-27', 'returned');
 
 -- --------------------------------------------------------
 
@@ -241,7 +242,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
