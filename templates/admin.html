@@ -545,36 +545,64 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <?php if (!empty($reservationAddError)): ?>
-                        <div class="error"><?= $reservationAddError ?></div>
-                    <?php elseif (!empty($reservationAddSuccess)): ?>
-                        <div class="success"><?= $reservationAddSuccess ?></div>
-                    <?php endif; ?>
                     <form class="crud-form" method="post">
-                        <select name="user_id" required>
+                    <!-- User Selection -->
+                    <div class="mb-3">
+                        <label class="form-label">Select User</label>
+                        <select name="user_id" class="form-select" required>
                             <option value="">Select User</option>
                             <?php foreach ($users as $user): ?>
-                                <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></option>
+                                <option value="<?= $user['id'] ?>" data-role="<?= $user['role'] ?>">
+                                    <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
+                                    (<?= htmlspecialchars($user['student_teacher_id']) ?>)
+                                </option>
                             <?php endforeach; ?>
                         </select>
-                        <select name="book_id" required>
+                    </div>
+
+                    <!-- Book Selection -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Book</label>
+                        <select name="book_id" class="form-select" required>
                             <option value="">Select Book</option>
                             <?php foreach ($books as $book): ?>
-                                <option value="<?= $book['id'] ?>"><?= htmlspecialchars($book['title']) ?></option>
+                                <?php if ($book['copies'] > 0 && $book['availability_status'] == 'available'): ?>
+                                    <option value="<?= $book['id'] ?>">
+                                        <?= htmlspecialchars($book['title']) ?>
+                                        (Available: <?= $book['copies'] ?>)
+                                    </option>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
-                        <input type="date" name="due_date" placeholder="Due Date" required>
-                        <select name="status" required>
-                            <option value="reserved">Reserved</option>
-                            <option value="returned">Returned</option>
-                            <option value="canceled">Canceled</option>
-                        </select>
-                        <button type="submit" name="add_reservation" class="btn btn-primary">Add</button>
-                    </form>
-                </div>
+                    </div>
+
+                    <!-- Borrow Start Date -->
+                    <div class="mb-3">
+                        <label class="form-label">Borrow Start Date</label>
+                        <input type="date" 
+                               name="borrow_start_date" 
+                               id="admin_borrow_start_date" 
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <!-- Return Date -->
+                    <div class="mb-3">
+                        <label class="form-label">Return Date</label>
+                        <input type="date" 
+                               name="due_date" 
+                               id="admin_due_date" 
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <input type="hidden" name="status" value="reserved">
+                    <button type="submit" name="add_reservation" class="btn btn-primary w-100">Add Reservation</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
     <!-- Add Category Modal -->
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

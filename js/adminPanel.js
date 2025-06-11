@@ -141,6 +141,94 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('reservationsTable')) {
         reservationSearchSort();
     }
+
+    // Reservation date handling
+    function setupReservationDates() {
+        const borrowStartDate = document.getElementById('admin_borrow_start_date');
+        const dueDate = document.getElementById('admin_due_date');
+        const userSelect = document.querySelector('select[name="user_id"]');
+        
+        if (!borrowStartDate || !dueDate || !userSelect) return;
+
+        // Set initial borrow period based on selected user's role
+        function updateBorrowPeriod() {
+            const selectedOption = userSelect.options[userSelect.selectedIndex];
+            const userRole = selectedOption?.getAttribute('data-role');
+            return userRole === 'teacher' ? 30 : 14;
+        }
+
+        // Set borrow start date constraints
+        function setBorrowStartConstraints() {
+            const today = new Date();
+            const maxStart = new Date();
+            maxStart.setDate(today.getDate() + 7);
+            
+            borrowStartDate.min = today.toISOString().split('T')[0];
+            borrowStartDate.max = maxStart.toISOString().split('T')[0];
+            
+            // Set to today if no date is selected or date is invalid
+            if (!borrowStartDate.value || new Date(borrowStartDate.value) < today) {
+                borrowStartDate.value = today.toISOString().split('T')[0];
+            }
+        }
+
+        // Update return date constraints
+        function updateDueDateLimits() {
+            if (!borrowStartDate.value) return;
+
+            const borrowPeriod = updateBorrowPeriod();
+            const selectedStart = new Date(borrowStartDate.value);
+            
+            // Set minimum return date (next day)
+            const minDue = new Date(selectedStart);
+            minDue.setDate(selectedStart.getDate() + 1);
+            
+            // Set maximum return date (borrowPeriod days later)
+            const maxDue = new Date(selectedStart);
+            maxDue.setDate(selectedStart.getDate() + borrowPeriod);
+            
+            // Update return date constraints
+            dueDate.min = minDue.toISOString().split('T')[0];
+            dueDate.max = maxDue.toISOString().split('T')[0];
+            
+            // Auto-set to minimum date if current value is invalid
+            if (!dueDate.value || 
+                new Date(dueDate.value) < minDue || 
+                new Date(dueDate.value) > maxDue) {
+                dueDate.value = minDue.toISOString().split('T')[0];
+            }
+        }
+
+        // Event Listeners
+        userSelect.addEventListener('change', function() {
+            updateDueDateLimits();
+        });
+
+        borrowStartDate.addEventListener('change', function() {
+            updateDueDateLimits();
+        });
+
+        // Initialize on modal show
+        const modal = document.getElementById('addReservationModal');
+        if (modal) {
+            modal.addEventListener('shown.bs.modal', function() {
+                setBorrowStartConstraints();
+                updateDueDateLimits();
+            });
+        }
+
+        // Initial setup
+        setBorrowStartConstraints();
+        updateDueDateLimits();
+    }
+
+    setupReservationDates();
+
+    // Re-initialize dates when modal is shown
+    const addReservationModal = document.getElementById('addReservationModal');
+    if (addReservationModal) {
+        addReservationModal.addEventListener('shown.bs.modal', setupReservationDates);
+    }
 });
 
 // Modal Management Block
