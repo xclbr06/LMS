@@ -161,7 +161,6 @@ if (isset($_POST['reserve_book']) && isset($_POST['book_id'])) {
     $conn->query("UPDATE books SET copies = copies - 1 WHERE id = $book_id");
     // Set status to not_available if copies is now 0
     $conn->query("UPDATE books SET availability_status = 'not_available' WHERE id = $book_id AND copies <= 0");
-    $_SESSION['reserve_success'] = "Book reserved successfully! Borrow start: $borrow_start_date, Due date: $due_date";
     header("Location: reservation.php");
     exit();
                     } else {

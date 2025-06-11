@@ -426,6 +426,12 @@ if (
                 $book_stmt->bind_param("i", $new_book_id);
                 $book_stmt->execute();
                 $book_stmt->close();
+                // Set session message for user
+                if ($new_status === 'returned') {
+                    $_SESSION['reservation_success_message'] = "Book returned successfully!";
+                } elseif ($new_status === 'canceled') {
+                    $_SESSION['reservation_success_message'] = "Reservation canceled successfully!";
+                }
             }
             // If status changed from not reserved to reserved, decrement copies for the current book
             else if ($prevStatus !== 'reserved' && $new_status === 'reserved') {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2025 at 06:46 AM
+-- Generation Time: Jun 11, 2025 at 10:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_published`, `category`, `cover_image`, `copies`, `shelf_location`, `availability_status`, `total_borrow`, `total_rating`, `synopsis`) VALUES
-(1, 'Good Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '9780132350884', 'Prentice Hall', 2008, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg', 3, 'T-02', 'available', 8, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
+(1, 'Good Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', '9780132350884', 'Prentice Hall', 2008, 'Technology', 'https://flxt.tmsimg.com/assets/p8494407_p_v10_ak.jpg', 0, 'A-52', 'not_available', 156, 1.6, 'A handbook of agile software craftsmanship. It teaches principles and best practices for writing clean, maintainable code. Essential for every developer.'),
 (2, 'The Pragmatic Programmer', 'Andrew Hunt, David Thomas', '9780201616224', 'Addison-Wesley', 1999, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201616224-L.jpg', 4, 'T-02', 'available', 28, 4.2, 'This book offers practical advice for programmers. It covers a wide range of topics from career development to architectural techniques. A must-read for software professionals.'),
 (3, 'Introduction to Algorithms', 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', '9780262033848', 'MIT Press', 2009, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780262033848-L.jpg', 4, 'T-03', 'available', 5, 2.9, 'A widely used textbook for algorithms. Covers a broad range of algorithms in depth. Suitable for students and professionals alike.'),
 (4, 'Design Patterns: Elements of Reusable Object-Oriented Software', 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', '9780201633610', 'Addison-Wesley', 1994, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201633610-L.jpg', 4, 'T-04', 'available', 12, 1, 'A classic on reusable object-oriented software design. Introduces 23 foundational design patterns. Essential for every software engineer.'),
@@ -67,18 +67,18 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (16, 'A Brief History of Time', 'Stephen Hawking', '9780553380163', 'Bantam Books', 1988, 'Science', 'https://covers.openlibrary.org/b/isbn/9780553380163-L.jpg', 3, 'S-01', 'available', 15, 4.6, 'A landmark book on cosmology and black holes. Explains complex scientific concepts for a general audience. Written by one of the greatest physicists of our time.'),
 (17, 'The Selfish Gene', 'Richard Dawkins', '9780199291151', 'Oxford University Press', 1976, 'Science', 'https://covers.openlibrary.org/b/isbn/9780199291151-L.jpg', 5, 'S-02', 'available', 6, 2, 'Introduces the concept of the selfish gene as a driver of evolution. Explores natural selection and animal behavior. A groundbreaking work in biology.'),
 (18, 'The Origin of Species', 'Charles Darwin', '9781509827695', 'John Murray', 1859, 'Science', 'https://covers.openlibrary.org/b/olid/OL23278117M-L.jpg', 5, 'S-03', 'available', 7, 3.2, 'Darwin’s revolutionary theory of evolution by natural selection. Changed the way we understand life on Earth. One of the most important scientific works ever written.'),
-(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 5, 'S-04', 'available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
+(19, 'Cosmos', 'Carl Sagan', '9780345331359', 'Random House', 1980, 'Science', 'https://covers.openlibrary.org/b/isbn/9780345331359-L.jpg', 2, 'S-04', 'available', 12, 1, 'A journey through the universe, exploring science, philosophy, and the human experience. Written with wonder and clarity. A classic of popular science.'),
 (20, 'The Double Helix', 'James D. Watson', '9780743216302', 'Atheneum', 1968, 'Science', 'https://covers.openlibrary.org/b/isbn/9780743216302-L.jpg', 5, 'S-05', 'available', 7, 2.6, 'The discovery of the structure of DNA, told by one of its co-discoverers. Reveals the drama and personalities behind a major scientific breakthrough. A fascinating memoir.'),
-(21, 'A Mathematician\'s Apology', 'G.H. Hardy', '9780521427067', 'Cambridge University Press', 1940, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780521427067-L.jpg', 5, 'M-01', 'available', 23, 4.6, 'A mathematician reflects on his life and work. Explores the beauty and creativity of mathematics. A classic essay on the nature of mathematical thought.'),
+(21, 'A Mathematician\'s Apology', 'G.H. Hardy', '9780521427067', 'Cambridge University Press', 1940, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780521427067-L.jpg', 6, 'M-01', 'available', 23, 4.6, 'A mathematician reflects on his life and work. Explores the beauty and creativity of mathematics. A classic essay on the nature of mathematical thought.'),
 (22, 'Flatland: A Romance of Many Dimensions', 'Edwin A. Abbott', '9780486272634', 'Seeley & Co.', 1884, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780486272634-L.jpg', 5, 'M-02', 'available', 10, 2.4, 'A satirical novella exploring dimensions and social hierarchy. Uses geometry to comment on Victorian society. A unique blend of math and literature.'),
-(23, 'The Princeton Companion to Mathematics', 'Timothy Gowers', '9780691118802', 'Princeton University Press', 2008, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780691118802-L.jpg', 5, 'M-03', 'available', 28, 1.2, 'A comprehensive reference on mathematics. Covers topics from algebra to logic and probability. Written by leading mathematicians.'),
-(24, 'Fermat\'s Enigma', 'Simon Singh', '9780385493629', 'Fourth Estate', 1997, 'Mathematics', 'https://covers.openlibrary.org/b/olid/OL7508767M-L.jpg', 4, 'M-04', 'available', 29, 1.8, 'The story of the world’s most famous math problem. Chronicles the search for proof of Fermat’s Last Theorem. A tale of perseverance and discovery.'),
+(23, 'The Princeton Companion to Mathematics', 'Timothy Gowers', '9780691118802', 'Princeton University Press', 2008, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780691118802-L.jpg', 4, 'M-03', 'available', 28, 1.2, 'A comprehensive reference on mathematics. Covers topics from algebra to logic and probability. Written by leading mathematicians.'),
+(24, 'Fermat\'s Enigma', 'Simon Singh', '9780385493629', 'Fourth Estate', 1997, 'Mathematics', 'https://covers.openlibrary.org/b/olid/OL7508767M-L.jpg', 3, 'M-04', 'available', 29, 1.8, 'The story of the world’s most famous math problem. Chronicles the search for proof of Fermat’s Last Theorem. A tale of perseverance and discovery.'),
 (25, 'Journey through Genius: The Great Theorems of Mathematics', 'William Dunham', '9780140147391', 'Penguin Books', 1990, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780140147391-L.jpg', 5, 'M-05', 'available', 30, 4.5, 'Explores the great theorems of mathematics and the minds behind them. Blends history and mathematics in an engaging narrative. Inspires appreciation for mathematical genius.'),
 (26, 'The Mythical Man-Month', 'Frederick P. Brooks Jr.', '9780201835953', 'Addison-Wesley', 1995, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201835953-L.jpg', 4, 'T-06', 'available', 17, 4.4, 'A classic on software engineering and project management. Brooks shares insights from his experience at IBM. The book is famous for the concept \"adding manpower to a late software project makes it later.\"'),
 (27, 'Refactoring: Improving the Design of Existing Code', 'Martin Fowler', '9780201485677', 'Addison-Wesley', 1999, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201485677-L.jpg', 3, 'T-07', 'available', 12, 4.6, 'This book teaches how to improve code structure without changing its behavior. It introduces key refactoring techniques. Essential for maintainable software.'),
 (28, 'Structure and Interpretation of Computer Programs', 'Harold Abelson, Gerald Jay Sussman', '9780262510875', 'MIT Press', 1996, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780262510875-L.jpg', 5, 'T-08', 'available', 9, 4.2, 'A foundational text in computer science. It covers core programming concepts using Scheme. Known for its depth and clarity.'),
 (29, 'The Art of Computer Programming', 'Donald E. Knuth', '9780201896831', 'Addison-Wesley', 2011, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780201896831-L.jpg', 2, 'T-09', 'available', 21, 4.9, 'Knuth\'s multi-volume work is a cornerstone of computer science. It covers algorithms, data structures, and mathematical techniques. Highly regarded for its rigor.'),
-(30, 'Don\'t Make Me Think', 'Steve Krug', '9780321965516', 'New Riders', 2014, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780321965516-L.jpg', 4, 'T-10', 'available', 8, 4.1, 'A guide to web usability and user experience. Krug explains how to make websites intuitive. The book is practical and easy to read.'),
+(30, 'Don\'t Make Me Think', 'Steve Krug', '9780321965516', 'New Riders', 2014, 'Technology', 'https://covers.openlibrary.org/b/isbn/9780321965516-L.jpg', 2, 'T-10', 'available', 8, 4.1, 'A guide to web usability and user experience. Krug explains how to make websites intuitive. The book is practical and easy to read.'),
 (31, 'Brave New World', 'Aldous Huxley', '9780060850524', 'Harper Perennial', 1932, 'Fiction', 'https://covers.openlibrary.org/b/isbn/9780060850524-L.jpg', 3, 'F-06', 'available', 13, 4.3, 'A dystopian vision of a future society. Explores themes of control, technology, and freedom. Huxley\'s classic remains thought-provoking.'),
 (32, 'The Hobbit', 'J.R.R. Tolkien', '9780547928227', 'Houghton Mifflin', 1937, 'Fiction', 'https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg', 5, 'F-07', 'available', 20, 4.8, 'Bilbo Baggins embarks on an unexpected adventure. He faces dragons, trolls, and discovers courage. A timeless fantasy classic.'),
 (33, 'The Alchemist', 'Paulo Coelho', '9780061122415', 'HarperOne', 1988, 'Fiction', 'https://covers.openlibrary.org/b/isbn/9780061122415-L.jpg', 2, 'F-08', 'available', 11, 4.5, 'A young shepherd pursues his dreams across the desert. The story is about destiny and self-discovery. It inspires readers to follow their hearts.'),
@@ -86,7 +86,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (35, 'Never Let Me Go', 'Kazuo Ishiguro', '9781400078776', 'Vintage', 2005, 'Fiction', 'https://covers.openlibrary.org/b/isbn/9781400078776-L.jpg', 4, 'F-10', 'available', 10, 4.2, 'A haunting story of friendship and loss. Students at a mysterious school uncover their fate. Ishiguro\'s novel is poignant and unforgettable.'),
 (36, 'Wolf Hall', 'Hilary Mantel', '9780312429980', 'Picador', 2009, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780312429980-L.jpg', 3, 'H-06', 'available', 8, 4.4, 'A vivid portrait of Thomas Cromwell\'s rise in Tudor England. Mantel brings history to life with rich detail. Winner of the Man Booker Prize.'),
 (37, 'The Pillars of the Earth', 'Ken Follett', '9780451225245', 'Signet', 1989, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780451225245-L.jpg', 5, 'H-07', 'available', 15, 4.7, 'Set in 12th-century England, this epic follows the building of a cathedral. It weaves together love, betrayal, and ambition. Follett\'s storytelling is masterful.'),
-(38, 'All the Light We Cannot See', 'Anthony Doerr', '9781501173219', 'Scribner', 2014, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781501173219-L.jpg', 3, 'H-08', 'available', 12, 4.6, 'A blind French girl and a German boy cross paths during WWII. Their stories intertwine in occupied France. The novel is beautifully written and deeply moving.'),
+(38, 'All the Light We Cannot See', 'Anthony Doerr', '9781501173219', 'Scribner', 2014, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781501173219-L.jpg', 4, 'H-08', 'available', 12, 4.6, 'A blind French girl and a German boy cross paths during WWII. Their stories intertwine in occupied France. The novel is beautifully written and deeply moving.'),
 (39, 'The Nightingale', 'Kristin Hannah', '9781250080400', 'St. Martin\'s Press', 2015, 'Historical', 'https://covers.openlibrary.org/b/isbn/9781250080400-L.jpg', 4, 'H-09', 'available', 10, 4.5, 'Two sisters struggle to survive and resist during the Nazi occupation of France. The story explores love, sacrifice, and resilience. A powerful tale of women in war.'),
 (40, 'The Other Boleyn Girl', 'Philippa Gregory', '9780743227445', 'Touchstone', 2001, 'Historical', 'https://covers.openlibrary.org/b/isbn/9780743227445-L.jpg', 3, 'H-10', 'available', 9, 4.1, 'Mary Boleyn navigates the intrigue of Henry VIII\'s court. Her story is one of ambition and rivalry. Gregory\'s novel is rich in historical detail.'),
 (41, 'Silent Spring', 'Rachel Carson', '9780618249060', 'Houghton Mifflin', 1962, 'Science', 'https://covers.openlibrary.org/b/isbn/9780618249060-L.jpg', 4, 'S-06', 'available', 14, 4.5, 'Carson\'s book launched the environmental movement. It exposes the dangers of pesticides. The work is both scientific and poetic.'),
@@ -99,9 +99,7 @@ INSERT INTO `books` (`id`, `title`, `author`, `isbn`, `publisher`, `year_publish
 (48, 'How Not to Be Wrong: The Power of Mathematical Thinking', 'Jordan Ellenberg', '9780143127536', 'Penguin Books', 2014, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780143127536-L.jpg', 4, 'M-08', 'available', 11, 4.4, 'Ellenberg shows how math shapes our lives. The book is witty and insightful. It encourages logical thinking in everyday situations.'),
 (49, 'The Joy of x', 'Steven Strogatz', '9780544105850', 'Mariner Books', 2012, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780544105850-L.jpg', 3, 'M-09', 'available', 10, 4.3, 'Strogatz makes math fun and relatable. He explains concepts with real-life examples. The book is perfect for math enthusiasts and novices alike.'),
 (50, 'Love and Math', 'Edward Frenkel', '9780465050741', 'Basic Books', 2013, 'Mathematics', 'https://covers.openlibrary.org/b/isbn/9780465050741-L.jpg', 3, 'M-10', 'available', 7, 4.1, 'Frenkel shares his journey into the world of mathematics. The book blends autobiography with mathematical ideas. It inspires a love for learning.'),
-(55, 'Test Title', 'JK Marinas', '0915293', 'JK Publishing', 2004, 'Technology', '', 3, '1B', 'available', 0, 0, NULL),
-(58, 'Insidious', 'JK', '1234567891234', 'JK Publishing', 2001, 'Horror', 'https://flxt.tmsimg.com/assets/p8494407_p_v10_ak.jpg', 3, 'A-52', 'available', 5, 4, ''),
-(59, 'Insidious 2', 'JK', '1234561234527', 'Jk Publishing', 2001, 'Horror', 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Insidious_%E2%80%93_Chapter_2_Poster.jpg/250px-Insidious_%E2%80%93_Chapter_2_Poster.jpg', 5, 'A-91', 'not_available', 5, 4.1, '');
+(55, 'Test Title', 'JK Marinas', '0915293', 'JK Publishing', 2004, 'Technology', '', 3, '1B', 'available', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -121,7 +119,7 @@ CREATE TABLE `categories` (
 INSERT INTO `categories` (`id`, `category`) VALUES
 (2, 'Fiction'),
 (5, 'Historical'),
-(3, 'Horror'),
+(17, 'Horror'),
 (6, 'Mathematics'),
 (7, 'Science'),
 (8, 'Technology');
@@ -153,10 +151,22 @@ INSERT INTO `reservations` (`id`, `user_id`, `book_id`, `borrow_start_date`, `re
 (17, 7, 49, '2025-06-13', '2025-06-06 09:53:14', '2025-06-15', 'returned'),
 (18, 7, 4, '2025-06-06', '2025-06-06 09:55:06', '2025-06-19', 'returned'),
 (19, 7, 33, '2025-06-06', '2025-06-06 10:01:18', '2025-06-08', 'returned'),
-(20, 7, 20, '2025-06-13', '2025-06-06 10:08:07', '2025-06-30', 'returned'),
 (21, 9, 2, '2025-06-13', '2025-06-10 22:46:18', '2025-06-23', 'returned'),
-(22, 9, 38, '2025-06-11', '2025-06-10 23:04:52', '2025-06-24', 'reserved'),
-(23, 4, 16, '2025-06-14', '2025-06-11 12:29:58', '2025-06-27', 'returned');
+(22, 9, 38, '2025-06-11', '2025-06-10 23:04:52', '2025-06-24', 'returned'),
+(23, 4, 16, '2025-06-14', '2025-06-11 12:29:58', '2025-06-27', 'canceled'),
+(24, 9, 19, '2025-06-11', '2025-06-11 12:50:19', '2025-06-12', 'returned'),
+(25, 9, 2, '2025-06-11', '2025-06-11 13:03:41', '2025-06-12', 'returned'),
+(28, 7, 30, '2025-06-16', '2025-06-11 14:14:37', '2025-07-16', 'reserved'),
+(29, 7, 23, '2025-06-11', '2025-06-11 14:16:04', '2025-06-12', 'reserved'),
+(30, 7, 21, '2025-06-11', '2025-06-11 14:16:11', '2025-06-12', 'reserved'),
+(31, 7, 30, '2025-06-11', '2025-06-11 14:16:57', '2025-06-20', 'reserved'),
+(32, 7, 19, '2025-06-11', '2025-06-11 14:18:04', '2025-06-12', 'reserved'),
+(33, 10, 18, '2025-06-11', '2025-06-11 14:32:21', '2025-06-12', 'returned'),
+(34, 4, 21, '2025-06-12', '2025-06-11 14:34:23', '2025-06-13', 'returned'),
+(35, 4, 19, '2025-06-12', '2025-06-11 14:51:47', '2025-06-13', 'reserved'),
+(36, 4, 24, '2025-06-11', '2025-06-11 14:56:08', '2025-06-12', 'reserved'),
+(37, 4, 1, '2025-06-11', '2025-06-11 14:56:43', '2025-06-12', 'reserved'),
+(38, 10, 1, '2025-06-11', '2025-06-11 15:33:22', '2025-06-12', 'reserved');
 
 -- --------------------------------------------------------
 
@@ -186,7 +196,8 @@ INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `s
 (6, 'JK', 'Garcia', 'Marinas', 'jk@iscp.edu.ph', '2324-0915', '$2y$10$oM2euX2v0s5Bv7Oqp9X3tePtqmeKRz7FZXr./pcvUYNnhVxSLCdey', '', 'student', '2025-06-06 01:36:31'),
 (7, 'Lee', 'Gabrielle', 'Rimorin', 'lee@iscp.edu.ph', '2324-1920', '$2y$10$T/I1Nh2sCdDCmS1dIMjyyuKswtw9KCfL8sSWgHVSkvTH9DtxMT1cW', '', 'teacher', '2025-06-06 01:41:26'),
 (8, 'Chad', '', 'Ocampo', 'chad@iscp.edu.ph', '2324-6969', '$2y$10$erWr/6pqsMzQe56HblBiXOiiTbnGXxn.i0Ob4Ipah6xsal1/1Zl7C', '', 'teacher', '2025-06-10 10:54:29'),
-(9, 'Ivan', '', 'Illahi', 'ivan@iscp.edu.ph', '2354-1234', '$2y$10$6uZiAAH5tZ/coe50m7LzoeUKNbjY4crfyjFfFlQkNvjfCgcWA9YXW', '', 'student', '2025-06-10 14:25:57');
+(9, 'Ivan', '', 'Illahi', 'ivan@iscp.edu.ph', '2354-1234', '$2y$10$6uZiAAH5tZ/coe50m7LzoeUKNbjY4crfyjFfFlQkNvjfCgcWA9YXW', '', 'student', '2025-06-10 14:25:57'),
+(10, 'John Gabriel', '', 'Galang', 'gab@iscp.edu.ph', '1235-6969', '$2y$10$I13ulw1Qkz5KHvyKIA8LWePSxM6wdIahrZrd/mtrjgJkdepqLs9/G', '', 'teacher', '2025-06-11 05:56:07');
 
 --
 -- Indexes for dumped tables
@@ -236,19 +247,19 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

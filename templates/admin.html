@@ -310,19 +310,6 @@
 <div class="tab-pane fade <?= $activeTab=='reservations'?'show active':'' ?>" id="reservations" role="tabpanel">
     <div class="section-title d-flex justify-content-between align-items-center">
         Reservations
-        <?php if (!empty($_GET['editReservationSuccess'])): ?>
-            <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editReservationSuccess']) ?></span>
-        <?php elseif (!empty($_GET['editReservationError'])): ?>
-            <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['editReservationError']) ?></span>
-        <?php elseif (!empty($_GET['reservationAddSuccess']) || !empty($reservationAddSuccess)): ?>
-            <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationAddSuccess'] ?? $reservationAddSuccess) ?></span>
-        <?php elseif (!empty($_GET['reservationAddError']) || !empty($reservationAddError)): ?>
-            <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationAddError'] ?? $reservationAddError) ?></span>
-        <?php elseif (!empty($_GET['reservationDeleteSuccess'])): ?>
-            <span class="success" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationDeleteSuccess']) ?></span>
-        <?php elseif (!empty($_GET['reservationDeleteError'])): ?>
-            <span class="error" style="margin-left:1rem;"><?= htmlspecialchars($_GET['reservationDeleteError']) ?></span>
-        <?php endif; ?>
         <button type="button" class="btn btn-primary btn-add-main" data-bs-toggle="modal" data-bs-target="#addReservationModal">
             Add Reservation
         </button>
@@ -373,9 +360,10 @@
                 <td>
                     <select name="user_id" class="form-select form-select-sm" form="reservation-form-<?= $res['id'] ?>">
                         <?php foreach ($users as $user): ?>
-                            <option value="<?= $user['id'] ?>" 
-                                    data-role="<?= htmlspecialchars($user['role']) ?>"
-                                    data-borrow-period="<?= $user['role'] === 'student' ? '14' : '30' ?>">
+                            <option value="<?= $user['id'] ?>"
+                                <?= $user['id'] == $res['user_id'] ? 'selected' : '' ?>
+                                data-role="<?= htmlspecialchars($user['role']) ?>"
+                                data-borrow-period="<?= $user['role'] === 'student' ? '14' : '30' ?>">
                                 <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>
                                 (<?= htmlspecialchars($user['student_teacher_id']) ?>)
                             </option>
