@@ -38,7 +38,7 @@ if (isset($_POST['add_book'])) {
     $copies = trim($_POST['copies'] ?? '');
     $shelf_location = trim($_POST['shelf_location'] ?? '');
     $total_rating = trim($_POST['total_rating'] ?? '');
-    $total_borrow = trim($_POST['total_borrowed']); // Book borrow count
+    $total_borrow = trim($_POST['total_borrowed']);
     $availability_status = trim($_POST['availability_status'] ?? '');
 
     // Validation for book fields

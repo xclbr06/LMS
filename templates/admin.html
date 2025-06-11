@@ -80,7 +80,7 @@
                 <table class="table table-striped table-hover table-sm align-middle" id="inventoryTable">
                     <thead>
                         <tr>
-                            <th style="width:30px;"></th> <!-- New column for three-dot menu -->
+                            <th style="width:30px;"></th> 
                             <th style="width:60px;">ID</th>
                             <th style="width:180px;">Title</th>
                             <th style="width:140px;">Author</th>
@@ -278,7 +278,7 @@
                         <tr>
                             <th>Category</th>
                             <th>Book Count</th>
-                            <th style="width: 80px;">Actions</th>  <!-- Add this column -->
+                            <th style="width: 80px;">Actions</th>  
                         </tr>
                     </thead>
                     <tbody>
@@ -402,7 +402,6 @@
                         <option value="canceled" <?= $res['status']=='canceled'?'selected':''; ?>>Canceled</option>
                     </select>
                 </td>
-                <!-- Replace the Actions <td> in the Reservations tab with the following: -->
                 <td>
                     <form method="post" id="reservation-form-<?= $res['id'] ?>" class="d-inline-flex gap-1 align-items-center" style="display:inline;">
                         <input type="hidden" name="reservation_id" value="<?= $res['id'] ?>">
