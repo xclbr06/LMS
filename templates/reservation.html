@@ -50,10 +50,10 @@
             <?php if (!empty($searchResults)): ?>
                 <div class="book-list">
                     <?php foreach ($searchResults as $book): ?>
-                        <form method="post" style="display:inline;">
-                            <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
-                            <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:inline;">
-                                <div class="book-card">
+                        <div class="book-card">
+                            <form method="post" style="width:100%;">
+                                <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+                                <button type="submit" name="select_book" style="all:unset;cursor:pointer;display:block;width:100%;">
                                     <img class="book-cover"
                                         src="<?= !empty($book['cover_image']) ? htmlspecialchars($book['cover_image']) : '../img/no-book.png' ?>"
                                         alt="Book Cover"
@@ -67,9 +67,9 @@
                                     <div class="book-availability" style="margin-top:0.5rem;color:<?= $book['availability_status']=='available'?'#27ae60':'#e74c3c' ?>;">
                                         <?= $book['availability_status']=='available' ? 'Available' : 'Not Available' ?>
                                     </div>
-                                </div>
-                            </button>
-                        </form>
+                                </button>
+                            </form>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

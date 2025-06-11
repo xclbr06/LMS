@@ -41,7 +41,7 @@ if ($searchQuery !== '') {
                 <?php foreach ($searchResults as $book): ?>
                     <a class="book-link" href="book_details.php?id=<?= $book['id'] ?>">
                         <div class="book-card">
-                            <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?? 'default_cover.png') ?>" alt="Book Cover">
+                            <img class="book-cover" src="<?= htmlspecialchars($book['cover_image'] ?: '../img/no-book.png') ?>" alt="Book Cover">
                             <div class="book-title"><?= htmlspecialchars($book['title']) ?></div>
                             <div class="book-author"><?= htmlspecialchars($book['author']) ?></div>
                             <div class="book-year"><?= htmlspecialchars($book['year_published']) ?></div>
