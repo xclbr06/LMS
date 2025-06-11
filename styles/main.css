@@ -63,7 +63,7 @@ body {
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(9, 132, 227, 0.2));
-    position: relative; /* Changed from fixed */
+    position: relative;
     transition: all 0.3s ease;
 }
 
@@ -78,7 +78,7 @@ body {
     border-radius: 12px;
     padding: 2.5rem;
     box-shadow: 0 4px 24px rgba(9, 132, 227, 0.18);
-    margin-left: -4rem; /* Adjusted margin */
+    margin-left: -4rem; 
     transition: all 0.3s ease;
 }
 
@@ -156,7 +156,7 @@ body {
     }
     
     .content-box {
-        margin-left: 0; /* Remove negative margin on mobile */
+        margin-left: 0; 
         max-width: 450px;
     }
 }

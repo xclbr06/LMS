@@ -80,11 +80,11 @@ body {
     border-radius: 12px;
     backdrop-filter: blur(8px);
     padding: 2rem;
-    width: calc(100% - 4rem); /* Changed from 100% */
+    width: calc(100% - 4rem); 
     max-width: 800px;
-    position: relative; /* Changed from fixed */
+    position: relative; 
     z-index: 1;
-    margin: 0 auto; /* Center the form */
+    margin: 0 auto;
     margin-right: 2rem;
 }
 
@@ -247,8 +247,8 @@ button[type="submit"]:hover {
     }
 
     .content-side {
-        justify-content: center;  /* Center on mobile */
-        padding: 2rem;           /* Reset padding on mobile */
+        justify-content: center;  
+        padding: 2rem;        
     }
 
     .form-row-2col {

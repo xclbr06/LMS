@@ -1,19 +1,21 @@
 <?php
-// Prevent browser caching
+// Prevent browser caching for security
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+// Start session and include DB config
 session_start();
 require_once "config.php";
 
-// Check if user is logged in and has admin privileges
+// --- AUTHENTICATION CHECK ---
+// Ensure only logged-in admins can access this page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== "admin") {
     header("Location: login.php");
     exit();
 }
 
-// Category Management Block
+// --- CATEGORY COUNTS ---
 // Fetches all categories and their book counts for display and management
 $categoryCounts = [];
 $categoryCountResult = $conn->query("SELECT category, COUNT(*) as total_titles FROM books GROUP BY category");
@@ -21,7 +23,7 @@ while ($row = $categoryCountResult->fetch_assoc()) {
     $categoryCounts[$row['category']] = $row['total_titles'];
 }
 
-// Book Management Block
+// --- BOOK MANAGEMENT: ADD BOOK ---
 // Handles adding new books with validation
 $bookAddError = $bookAddSuccess = "";
 if (isset($_POST['add_book'])) {
@@ -36,10 +38,10 @@ if (isset($_POST['add_book'])) {
     $copies = trim($_POST['copies'] ?? '');
     $shelf_location = trim($_POST['shelf_location'] ?? '');
     $total_rating = trim($_POST['total_rating'] ?? '');
-    $total_borrow = trim($_POST['total_borrowed']); // Change this line
+    $total_borrow = trim($_POST['total_borrowed']); // Book borrow count
     $availability_status = trim($_POST['availability_status'] ?? '');
 
-    // Validation
+    // Validation for book fields
     if (
         $title === '' || $author === '' || $isbn === '' || $publisher === '' ||
         $year_published === '' || $category === '' || $cover_image === '' ||
@@ -70,6 +72,7 @@ if (isset($_POST['add_book'])) {
             $bookAddError = "Selected category does not exist.";
         } else {
             $stmt->close();
+            // Insert new book into database
             $stmt = $conn->prepare("INSERT INTO books (
                 title, 
                 author, 
@@ -111,7 +114,8 @@ if (isset($_POST['add_book'])) {
     }
 }
 
-// --- BOOKS CRUD: Edit Book ---
+// --- BOOK MANAGEMENT: EDIT BOOK ---
+// Handles editing existing books
 $editBookSuccess = $editBookError = "";
 if (isset($_POST['edit_book'])) {
     // Validate that category exists
@@ -125,6 +129,7 @@ if (isset($_POST['edit_book'])) {
         $editBookError = "Selected category does not exist.";
     } else {
         $stmt->close();
+        // Update book details
         $stmt = $conn->prepare("UPDATE books SET title=?, author=?, category=?, copies=?, availability_status=? WHERE id=?");
         $stmt->bind_param("sssssi", $_POST['title'], $_POST['author'], $_POST['category'], 
                          $_POST['copies'], $_POST['availability_status'], $_POST['book_id']);
@@ -139,7 +144,8 @@ if (isset($_POST['edit_book'])) {
     exit();
 }
 
-// Delete Book
+// --- BOOK MANAGEMENT: DELETE BOOK ---
+// Handles deleting a book
 if (isset($_POST['delete_book'])) {
     $id = intval($_POST['book_id']);
     $stmt = $conn->prepare("DELETE FROM books WHERE id=?");
@@ -150,8 +156,8 @@ if (isset($_POST['delete_book'])) {
     exit();
 }
 
-// User Management Block
-// Handles user CRUD operations
+// --- USER MANAGEMENT: ADD USER ---
+// Handles adding a new user
 $userAddError = $userAddSuccess = "";
 if (isset($_POST['add_user'])) {
     $first_name = trim($_POST['first_name']);
@@ -164,7 +170,7 @@ if (isset($_POST['add_user'])) {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Basic validation
+    // Basic validation for user fields
     if (empty($first_name) || empty($last_name) || empty($email) || empty($student_teacher_id) || empty($role) || empty($password) || empty($confirm_password)) {
         $userAddError = "Please fill in all required fields.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -181,6 +187,7 @@ if (isset($_POST['add_user'])) {
             $userAddError = "Email or School ID already exists.";
         } else {
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            // Insert new user into database
             $stmt = $conn->prepare("INSERT INTO users (first_name, middle_name, last_name, email, student_teacher_id, password, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssssssss", $first_name, $middle_name, $last_name, $email, $student_teacher_id, $passwordHash, $phone, $role);
             if ($stmt->execute()) {
@@ -196,7 +203,8 @@ if (isset($_POST['add_user'])) {
     }
 }
 
-// --- USERS CRUD: Edit User ---
+// --- USER MANAGEMENT: EDIT USER ---
+// Handles editing an existing user
 $editUserSuccess = $editUserError = "";
 if (isset($_POST['edit_user'])) {
     if ($stmt = $conn->prepare("UPDATE users SET first_name=?, middle_name=?, last_name=?, email=?, student_teacher_id=?, phone=?, role=? WHERE id=?")) {
@@ -214,6 +222,8 @@ if (isset($_POST['edit_user'])) {
     exit();
 }
 
+// --- USER MANAGEMENT: DELETE USER ---
+// Handles deleting a user
 if (isset($_POST['delete_user'])) {
     $id = intval($_POST['user_id']);
     $stmt = $conn->prepare("DELETE FROM users WHERE id=?");
@@ -224,13 +234,14 @@ if (isset($_POST['delete_user'])) {
     exit();
 }
 
-// --- Edit Category ---
+// --- CATEGORY MANAGEMENT: EDIT CATEGORY ---
+// Handles editing a category and updating related books
 if (isset($_POST['edit_category'])) {
     $original_category = trim($_POST['original_category']);
     $new_category = trim($_POST['category']);
     
     if ($original_category !== $new_category && !empty($new_category)) {
-        // Start transaction
+        // Start transaction for atomic update
         $conn->begin_transaction();
         try {
             // Update category in categories table
@@ -256,7 +267,8 @@ if (isset($_POST['edit_category'])) {
     exit();
 }
 
-// --- ADD CATEGORY HANDLER ---
+// --- CATEGORY MANAGEMENT: ADD CATEGORY ---
+// Handles adding a new category
 $categoryAddError = $categoryAddSuccess = "";
 if (isset($_POST['add_category'])) {
     $new_category = trim($_POST['new_category'] ?? '');
@@ -274,6 +286,7 @@ if (isset($_POST['add_category'])) {
             $categoryAddError = "Category already exists.";
         } else {
             $stmt->close();
+            // Insert new category
             $stmt = $conn->prepare("INSERT INTO categories (category) VALUES (?)");
             $stmt->bind_param("s", $new_category);
             if ($stmt->execute()) {
@@ -290,10 +303,11 @@ if (isset($_POST['add_category'])) {
 }
 
 // --- FETCH CATEGORIES FOR DROPDOWN & TAB ---
+// Loads all categories for dropdowns and tab display
 $categories = [];
 $categoryCounts = [];
 
-// First, get categories from the categories table
+// Get categories from the categories table
 $stmt = $conn->prepare("SELECT category FROM categories ORDER BY category ASC");
 $stmt->execute();
 $result = $stmt->get_result();
@@ -302,7 +316,7 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Then, get any additional categories from books table that aren't in categories table
+// Get any additional categories from books table that aren't in categories table
 $stmt = $conn->prepare("
     SELECT DISTINCT b.category 
     FROM books b 
@@ -334,7 +348,7 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Sort categories alphabetically
+// Sort categories alphabetically for display
 usort($categories, function($a, $b) {
     return strcasecmp($a['category'], $b['category']);
 });
@@ -833,7 +847,8 @@ if (isset($_POST['edit_book_details'])) {
     exit();
 }
 
-// Add this function at the top with other functions
+// --- HELPER FUNCTION: Get User's Current Reservations ---
+// Returns the count of current reservations for a user
 function getUserCurrentReservations($conn, $user_id) {
     $stmt = $conn->prepare("SELECT COUNT(*) FROM reservations WHERE user_id = ? AND status = 'reserved'");
     $stmt->bind_param("i", $user_id);
@@ -844,6 +859,6 @@ function getUserCurrentReservations($conn, $user_id) {
     return $count;
 }
 
-// Pass all variables to the HTML template
+// --- FINAL: Pass all variables to the HTML template ---
 include __DIR__ . '/../templates/admin.html';
 ?>

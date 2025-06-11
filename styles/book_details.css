@@ -58,16 +58,6 @@ a:hover {
     color: #ffb347;
 }
 
-/* Optional: If you show success messages on this page */
-.success a {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: bold;
-}
-.success a:hover {
-    color: #ffb347;
-}
-
 /* --- Book Details Section --- */
 .details-section {
     max-width: 700px;

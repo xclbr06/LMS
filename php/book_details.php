@@ -2,6 +2,11 @@
 session_start();
 require_once "config.php";
 
+// Prevent browser caching for security
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 // Get book ID from query
 $book_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $book = null;
